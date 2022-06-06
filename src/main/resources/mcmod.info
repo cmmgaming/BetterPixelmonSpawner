@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "betterpixelmonspawner",
+    "name": "BetterPixelmonSpawner",
+    "description": "Creates a replica of Pixelmon's natural Pokemon spawner but more customizable",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "Lypaka"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
