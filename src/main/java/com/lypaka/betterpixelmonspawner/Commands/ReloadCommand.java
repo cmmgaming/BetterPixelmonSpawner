@@ -1,5 +1,6 @@
 package com.lypaka.betterpixelmonspawner.Commands;
 
+import com.lypaka.betterpixelmonspawner.Areas.AreaRegistry;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Config.PokemonConfig;
@@ -76,6 +77,9 @@ public class ReloadCommand extends CommandBase {
 
             // Loads holidays from config, not worth having config getters for it since it only loads on startup unless reload command is ran
             HolidayHandler.loadHolidays();
+
+            // Loads the areas
+            AreaRegistry.loadAreas();
 
             BetterPixelmonSpawner.logger.info("Starting spawners...");
             PokemonSpawner.startTimer();

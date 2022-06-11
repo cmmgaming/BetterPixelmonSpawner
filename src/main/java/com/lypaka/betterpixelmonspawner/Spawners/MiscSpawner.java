@@ -1,6 +1,7 @@
 package com.lypaka.betterpixelmonspawner.Spawners;
 
 import com.lypaka.betterpixelmonspawner.API.Spawning.MiscSpawnEvent;
+import com.lypaka.betterpixelmonspawner.Areas.Area;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
@@ -44,6 +45,7 @@ public class MiscSpawner {
                     for (Map.Entry<UUID, EntityPlayerMP> playerEntry : JoinListener.playerMap.entrySet()) {
 
                         EntityPlayerMP player = playerEntry.getValue();
+                        if (Area.isInArea(player)) continue;
                         if (ConfigGetters.miscOptOut.contains(player.getUniqueID().toString())) continue;
                         if (MiscCounter.getCount(player.getUniqueID()) > ConfigGetters.maxMiscEntities) {
 

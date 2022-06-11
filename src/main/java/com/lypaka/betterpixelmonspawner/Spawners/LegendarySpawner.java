@@ -2,6 +2,7 @@ package com.lypaka.betterpixelmonspawner.Spawners;
 
 import com.lypaka.betterpixelmonspawner.API.HostileEvent;
 import com.lypaka.betterpixelmonspawner.API.Spawning.LegendarySpawnEvent;
+import com.lypaka.betterpixelmonspawner.Areas.Area;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
@@ -60,7 +61,8 @@ public class LegendarySpawner {
                 List<EntityPlayerMP> onlinePlayers = new ArrayList<>();
                 for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.playerMap.entrySet()) {
 
-                    if (!ConfigGetters.legendaryOptOut.contains(entry.getValue().getUniqueID().toString())) {
+                    if (!ConfigGetters.legendaryOptOut.contains(entry.getValue().getUniqueID().toString()) &&
+                        !Area.isInArea(entry.getValue())) {
 
                         onlinePlayers.add(entry.getValue());
 

@@ -2,6 +2,7 @@ package com.lypaka.betterpixelmonspawner.Spawners;
 
 import com.lypaka.betterpixelmonspawner.API.HostileEvent;
 import com.lypaka.betterpixelmonspawner.API.Spawning.*;
+import com.lypaka.betterpixelmonspawner.Areas.Area;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
@@ -51,6 +52,7 @@ public class PokemonSpawner {
 
                     List<String> usedNames = new ArrayList<>();
                     EntityPlayerMP player = playerEntry.getValue();
+                    if (Area.isInArea(player)) continue;
                     if (ConfigGetters.pokemonOptOut.contains(player.getUniqueID())) continue;
                     if (RepelHandler.hasRepel(player.getUniqueID())) continue;
                     if (PokemonCounter.getCount(player.getUniqueID()) > ConfigGetters.maxPokemon) {
