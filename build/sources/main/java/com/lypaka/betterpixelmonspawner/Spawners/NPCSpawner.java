@@ -17,10 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
+import java.util.*;
 
 public class NPCSpawner {
 
@@ -140,6 +137,17 @@ public class NPCSpawner {
                         }
 
                         if (selectedID == null) continue;
+                        if (Area.getAreaFromLocation(player) != null) {
+
+                            Area area = Area.getAreaFromLocation(player);
+                            List<String> entities = area.getEntities();
+                            if (entities.contains(selectedID)) {
+
+                                continue;
+
+                            }
+
+                        }
                         String biomeID = player.world.getBiome(spawn).getRegistryName().toString();
                         EntityLivingBase entity = EntityUtils.getEntityFromID(biomeID, selectedID, player.world);
                         if (entity == null) {

@@ -5,8 +5,11 @@ import com.lypaka.lypakautils.WorldDimGetter;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class Area {
 
+    private final List<String> entities;
     private final int maxX;
     private final int maxY;
     private final int maxZ;
@@ -15,8 +18,9 @@ public class Area {
     private final int minZ;
     private final World world;
 
-    public Area (int maxX, int maxY, int maxZ, int minX, int minY, int minZ, World world) {
+    public Area (List<String> entities, int maxX, int maxY, int maxZ, int minX, int minY, int minZ, World world) {
 
+        this.entities = entities;
         this.maxX = maxX;
         this.maxY = maxY;
         this.maxZ = maxZ;
@@ -30,6 +34,12 @@ public class Area {
     public void create() {
 
         BetterPixelmonSpawner.areas.add(this);
+
+    }
+
+    public List<String> getEntities() {
+
+        return this.entities;
 
     }
 
@@ -96,6 +106,32 @@ public class Area {
         }
 
         return false;
+
+    }
+
+    public static Area getAreaFromLocation (EntityPlayerMP player) {
+
+        Area area = null;
+        int x = player.getPosition().getX();
+        int y = player.getPosition().getY();
+        int z = player.getPosition().getZ();
+        int playerDim = WorldDimGetter.getDimID(player.world);
+
+        for (Area a : BetterPixelmonSpawner.areas) {
+
+            if (x >= area.getMinX() && x <= area.getMaxX() &&
+                    y >= area.getMinY() && y <= area.getMaxY() &&
+                    z >= area.getMinZ() && z <= area.getMaxZ() &&
+                    WorldDimGetter.getDimID(area.getWorld()) == playerDim) {
+
+                area = a;
+                break;
+
+            }
+
+        }
+
+        return area;
 
     }
 

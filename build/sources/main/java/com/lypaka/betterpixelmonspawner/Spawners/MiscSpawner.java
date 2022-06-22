@@ -14,10 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
+import java.util.*;
 
 public class MiscSpawner {
 
@@ -124,6 +121,17 @@ public class MiscSpawner {
 
                         }
                         if (selectedID == null) continue;
+                        if (Area.getAreaFromLocation(player) != null) {
+
+                            Area area = Area.getAreaFromLocation(player);
+                            List<String> entities = area.getEntities();
+                            if (entities.contains(selectedID)) {
+
+                                continue;
+
+                            }
+
+                        }
                         EntityLivingBase entity = EntityUtils.getEntityFromID(null, selectedID, player.world);
                         if (entity == null) {
 

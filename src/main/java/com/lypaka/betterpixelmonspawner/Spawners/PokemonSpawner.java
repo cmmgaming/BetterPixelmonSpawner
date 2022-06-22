@@ -52,7 +52,25 @@ public class PokemonSpawner {
 
                     List<String> usedNames = new ArrayList<>();
                     EntityPlayerMP player = playerEntry.getValue();
-                    if (Area.isInArea(player)) continue;
+                    if (Area.isInArea(player)) {
+
+                        continue;
+
+                    } else {
+
+                        if (Area.getAreaFromLocation(player) != null) {
+
+                            Area area = Area.getAreaFromLocation(player);
+                            List<String> entities = area.getEntities();
+                            if (entities.contains("pokemon")) {
+
+                                continue;
+
+                            }
+
+                        }
+
+                    }
                     if (ConfigGetters.pokemonOptOut.contains(player.getUniqueID())) continue;
                     if (RepelHandler.hasRepel(player.getUniqueID())) continue;
                     if (PokemonCounter.getCount(player.getUniqueID()) > ConfigGetters.maxPokemon) {

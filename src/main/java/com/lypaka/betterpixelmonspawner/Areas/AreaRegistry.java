@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class AreaRegistry {
@@ -20,6 +21,12 @@ public class AreaRegistry {
 
             String name = entry.getKey(); // not needed, just there
             Map<String, String> actualArea = entry.getValue();
+            List<String> entities = new ArrayList<>();
+            if (!ConfigManager.getConfigNode(7, "Areas", name, "Entities").isVirtual()) {
+
+                entities = ConfigManager.getConfigNode(7, "Areas", name, "Entities").getList(TypeToken.of(String.class));
+
+            }
             int maxX = Integer.parseInt(actualArea.get("Max-X"));
             int maxY = Integer.parseInt(actualArea.get("Max-Y"));
             int maxZ = Integer.parseInt(actualArea.get("Max-Z"));
@@ -41,7 +48,7 @@ public class AreaRegistry {
 
             if (w != null) {
 
-                Area area = new Area(maxX, maxY, maxZ, minX, minY, minZ, w);
+                Area area = new Area(entities, maxX, maxY, maxZ, minX, minY, minZ, w);
                 area.create();
                 BetterPixelmonSpawner.logger.info("Successfully registered area: " + name + "!");
 

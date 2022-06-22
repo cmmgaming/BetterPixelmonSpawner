@@ -61,10 +61,31 @@ public class LegendarySpawner {
                 List<EntityPlayerMP> onlinePlayers = new ArrayList<>();
                 for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.playerMap.entrySet()) {
 
-                    if (!ConfigGetters.legendaryOptOut.contains(entry.getValue().getUniqueID().toString()) &&
-                        !Area.isInArea(entry.getValue())) {
+                    if (!ConfigGetters.legendaryOptOut.contains(entry.getValue().getUniqueID().toString())) {
 
-                        onlinePlayers.add(entry.getValue());
+                        if (!Area.isInArea(entry.getValue())) {
+
+                            onlinePlayers.add(entry.getValue());
+
+                        } else {
+
+                            if (Area.getAreaFromLocation(entry.getValue()) != null) {
+
+                                Area area = Area.getAreaFromLocation(entry.getValue());
+                                List<String> entities = area.getEntities();
+                                if (!entities.contains("legendaries")) {
+
+                                    onlinePlayers.add(entry.getValue());
+
+                                }
+
+                            } else {
+
+                                onlinePlayers.add(entry.getValue());
+
+                            }
+
+                        }
 
                     }
 
