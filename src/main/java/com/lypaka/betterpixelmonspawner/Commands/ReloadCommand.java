@@ -3,6 +3,7 @@ package com.lypaka.betterpixelmonspawner.Commands;
 import com.lypaka.betterpixelmonspawner.Areas.AreaRegistry;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
+import com.lypaka.betterpixelmonspawner.Config.ConfigManager;
 import com.lypaka.betterpixelmonspawner.Config.PokemonConfig;
 import com.lypaka.betterpixelmonspawner.Holidays.HolidayHandler;
 import com.lypaka.betterpixelmonspawner.PokeClear.ClearTask;
@@ -56,8 +57,9 @@ public class ReloadCommand extends CommandBase {
         try {
 
             sender.sendMessage(FancyText.getFancyText("&eStarting reloading of BPS spawner, please wait..."));
+            ConfigManager.load();
+            PokemonConfig.load();
             ConfigGetters.load();
-            PokemonConfig.setup(BetterPixelmonSpawner.dir.resolve("pokemon"));
             BetterPixelmonSpawner.logger.info("Registering Pokemon spawns...");
             InfoRegistry.loadPokemonSpawnData();
             BetterPixelmonSpawner.logger.info("Registering Boss Pokemon spawns...");
