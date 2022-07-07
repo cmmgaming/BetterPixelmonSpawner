@@ -1,4 +1,4 @@
-package com.lypaka.betterpixelmonspawner.Utils;
+package com.lypaka.betterpixelmonspawner.Utils.PokemonUtils;
 
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.pixelmongenerations.core.util.helper.RandomHelper;

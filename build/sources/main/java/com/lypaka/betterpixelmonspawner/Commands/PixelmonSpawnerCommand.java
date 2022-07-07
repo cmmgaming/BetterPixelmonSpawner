@@ -17,6 +17,7 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
 
         addSubcommand(new OptCommand());
         addSubcommand(new ReloadCommand());
+        addSubcommand(new ListCommand());
 
     }
 
@@ -112,6 +113,12 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
             case "reload":
                 ReloadCommand reloadCommand = new ReloadCommand();
                 reloadCommand.execute(server, sender, args);
+                break;
+
+            case "list":
+            case "check":
+                ListCommand listCommand = new ListCommand();
+                listCommand.execute(server, sender, args);
                 break;
 
         }

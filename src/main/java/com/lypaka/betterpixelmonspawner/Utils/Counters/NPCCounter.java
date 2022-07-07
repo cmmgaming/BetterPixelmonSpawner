@@ -1,4 +1,4 @@
-package com.lypaka.betterpixelmonspawner.Utils;
+package com.lypaka.betterpixelmonspawner.Utils.Counters;
 
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.pixelmongenerations.common.entity.npcs.EntityNPC;

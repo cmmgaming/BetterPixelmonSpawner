@@ -1,6 +1,8 @@
-package com.lypaka.betterpixelmonspawner.Utils;
+package com.lypaka.betterpixelmonspawner.Utils.PokemonUtils;
 
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
+import com.lypaka.betterpixelmonspawner.Utils.Counters.MiscCounter;
+import com.lypaka.betterpixelmonspawner.Utils.Counters.NPCCounter;
 import com.pixelmongenerations.common.entity.EntityDynamaxEnergy;
 import com.pixelmongenerations.common.entity.EntitySpaceTimeDistortion;
 import com.pixelmongenerations.common.entity.EntityWishingStar;

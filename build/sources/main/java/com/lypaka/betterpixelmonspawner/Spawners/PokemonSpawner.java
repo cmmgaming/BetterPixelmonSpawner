@@ -9,6 +9,11 @@ import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.PokemonSpawnInfo;
 import com.lypaka.betterpixelmonspawner.Utils.*;
+import com.lypaka.betterpixelmonspawner.Utils.Counters.PokemonCounter;
+import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.AlphaPokemonUtils;
+import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.BossPokemonUtils;
+import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.PokemonUtils;
+import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.TotemPokemonUtils;
 import com.pixelmongenerations.api.pokemon.PokemonSpec;
 import com.pixelmongenerations.api.spawning.conditions.WorldTime;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
@@ -17,6 +22,7 @@ import com.pixelmongenerations.core.config.PixelmonConfig;
 import com.pixelmongenerations.core.event.RepelHandler;
 import com.pixelmongenerations.core.util.PixelmonMethods;
 import com.pixelmongenerations.core.util.helper.RandomHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -102,25 +108,54 @@ public class PokemonSpawner {
 
                     }
                     String location;
-                    if (player.isInWater()) {
+                    if (player.getRidingEntity() != null) {
 
-                        location = "water";
+                        Entity mount = player.getRidingEntity();
+                        if (mount.isInWater()) {
 
-                    } else if (player.onGround) {
+                            location = "water";
 
-                        if (player.getPosition().getY() <= 63) {
+                        } else if (mount.onGround) {
 
-                            location = "underground";
+                            if (player.getPosition().getY() <= 63) {
+
+                                location = "underground";
+
+                            } else {
+
+                                location = "land";
+
+                            }
 
                         } else {
 
-                            location = "land";
+                            location = "air";
 
                         }
 
-                    }  else {
+                    } else {
 
-                        location = "air";
+                        if (player.isInWater()) {
+
+                            location = "water";
+
+                        } else if (player.onGround) {
+
+                            if (player.getPosition().getY() <= 63) {
+
+                                location = "underground";
+
+                            } else {
+
+                                location = "land";
+
+                            }
+
+                        } else {
+
+                            location = "air";
+
+                        }
 
                     }
                     FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
@@ -404,7 +439,7 @@ public class PokemonSpawner {
 
                                         if (AlphaPokemonUtils.isDefaultAlpha(pokemon.getSpecies())) {
 
-                                            pokemon.setAlpha(true);
+                                            pokemon.setAlpha(true, true);
                                             pokeModified = true;
                                             AlphaSpawnEvent alphaSpawnEvent = new AlphaSpawnEvent(pokemon, player, selectedSpawn);
                                             MinecraftForge.EVENT_BUS.post(alphaSpawnEvent);

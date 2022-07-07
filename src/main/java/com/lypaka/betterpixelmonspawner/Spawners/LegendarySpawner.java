@@ -10,7 +10,7 @@ import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.LegendarySpawnInfo;
 import com.lypaka.betterpixelmonspawner.Utils.FancyText;
 import com.lypaka.betterpixelmonspawner.Utils.FormIndexFromName;
-import com.lypaka.betterpixelmonspawner.Utils.LegendaryUtils;
+import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.LegendaryUtils;
 import com.pixelmongenerations.api.pokemon.PokemonSpec;
 import com.pixelmongenerations.api.spawning.conditions.WorldTime;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;

@@ -11,6 +11,7 @@ import java.util.Map;
 public class BiomeList {
 
     public static Map<String, List<String>> biomesToPokemon = new HashMap<>();
+    public static Map<String, List<PokemonSpawnInfo>> biomePokemonMap = new HashMap<>();
 
     public static void addToBiomeList (String pokemonName, String biomeID) {
 

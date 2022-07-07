@@ -3,7 +3,7 @@ package com.lypaka.betterpixelmonspawner.PokeClear;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Utils.FancyText;
-import com.lypaka.betterpixelmonspawner.Utils.PokemonCounter;
+import com.lypaka.betterpixelmonspawner.Utils.Counters.PokemonCounter;
 import com.lypaka.lypakautils.WorldMap;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 import com.pixelmongenerations.core.enums.EnumSpecies;
@@ -21,6 +21,7 @@ public class ClearTask {
     private static Timer warningTimer = null;
     private static Timer clearTimer = null;
     private static final Map<String, World> worlds = WorldMap.worldMap;
+    private static int count = 0;
 
     public static void startClearTask() {
 
@@ -61,7 +62,6 @@ public class ClearTask {
 
                 FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-                    int count = 0;
                     for (Map.Entry<String, World> entry : worlds.entrySet()) {
 
                         World world = entry.getValue();
@@ -103,9 +103,11 @@ public class ClearTask {
 
                     }
 
-                    BetterPixelmonSpawner.server.getPlayerList().sendMessage(FancyText.getFancyText(ConfigGetters.pokeClearMessage
+                    BetterPixelmonSpawner.server.getPlayerList().sendMessage(FancyText.getFancyText(msg
                             .replace("%number%", String.valueOf(count))
                     ));
+
+                    count = 0;
 
                 });
 

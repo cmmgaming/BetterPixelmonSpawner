@@ -9,12 +9,13 @@ import com.lypaka.betterpixelmonspawner.Config.PokemonConfig;
 import com.lypaka.betterpixelmonspawner.Holidays.HolidayHandler;
 import com.lypaka.betterpixelmonspawner.Listeners.*;
 import com.lypaka.betterpixelmonspawner.PokeClear.ClearTask;
+import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.InfoRegistry;
 import com.lypaka.betterpixelmonspawner.Spawners.LegendarySpawner;
 import com.lypaka.betterpixelmonspawner.Spawners.MiscSpawner;
 import com.lypaka.betterpixelmonspawner.Spawners.NPCSpawner;
 import com.lypaka.betterpixelmonspawner.Spawners.PokemonSpawner;
-import com.lypaka.betterpixelmonspawner.Utils.BossPokemonUtils;
+import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.BossPokemonUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -32,6 +33,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Mod(
@@ -39,7 +41,7 @@ import java.util.Random;
         name = BetterPixelmonSpawner.MOD_NAME,
         version = BetterPixelmonSpawner.VERSION,
         acceptableRemoteVersions = "*",
-        dependencies = "required-after:lypakautils"
+        dependencies = "required-after:lypakautils;required-after:gooeylibs2"
 )
 public class BetterPixelmonSpawner {
 

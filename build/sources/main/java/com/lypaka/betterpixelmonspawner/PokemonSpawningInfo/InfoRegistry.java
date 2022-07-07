@@ -111,8 +111,16 @@ public class InfoRegistry {
 
                                 } else {
 
+                                    List<PokemonSpawnInfo> psi = new ArrayList<>();
+                                    if (BiomeList.biomePokemonMap.containsKey(biome)) {
+
+                                        psi = BiomeList.biomePokemonMap.get(biome);
+
+                                    }
                                     PokemonSpawnInfo pInfo = new PokemonSpawnInfo(name, biome, time, weather, levelRange, groupSize, spawnChance, spawnLocation, texture, heldItemID, hostile);
                                     pInfo.register();
+                                    psi.add(pInfo);
+                                    BiomeList.biomePokemonMap.put(biome, psi);
 
                                 }
 

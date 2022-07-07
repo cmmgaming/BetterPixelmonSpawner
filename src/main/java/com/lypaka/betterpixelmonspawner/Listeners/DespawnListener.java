@@ -1,6 +1,6 @@
 package com.lypaka.betterpixelmonspawner.Listeners;
 
-import com.lypaka.betterpixelmonspawner.Utils.PokemonCounter;
+import com.lypaka.betterpixelmonspawner.Utils.Counters.PokemonCounter;
 import com.pixelmongenerations.api.events.spawning.DespawnEvent;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

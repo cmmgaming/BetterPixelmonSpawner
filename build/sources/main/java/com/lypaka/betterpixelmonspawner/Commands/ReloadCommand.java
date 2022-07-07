@@ -12,7 +12,7 @@ import com.lypaka.betterpixelmonspawner.Spawners.LegendarySpawner;
 import com.lypaka.betterpixelmonspawner.Spawners.MiscSpawner;
 import com.lypaka.betterpixelmonspawner.Spawners.NPCSpawner;
 import com.lypaka.betterpixelmonspawner.Spawners.PokemonSpawner;
-import com.lypaka.betterpixelmonspawner.Utils.BossPokemonUtils;
+import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.BossPokemonUtils;
 import com.lypaka.betterpixelmonspawner.Utils.FancyText;
 import com.lypaka.betterpixelmonspawner.Utils.PermissionHandler;
 import net.minecraft.command.CommandBase;
