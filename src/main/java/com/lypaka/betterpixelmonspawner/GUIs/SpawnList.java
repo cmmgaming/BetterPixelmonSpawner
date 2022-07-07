@@ -21,10 +21,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SpawnList {
 
@@ -61,19 +58,20 @@ public class SpawnList {
 
             }
 
-            List<PokemonSpawnInfo> pokemonToDisplay = new ArrayList<>(pokemonNames.size());
+            List<PokemonSpawnInfo> base = new ArrayList<>(pokemonNames.size());
             List<String> usedNames = new ArrayList<>();
             for (PokemonSpawnInfo pokemonSpawnInfo : pokemonThatSpawn) {
 
                 if (!usedNames.contains(pokemonSpawnInfo.getName())) {
 
                     usedNames.add(pokemonSpawnInfo.getName());
-                    pokemonToDisplay.add(pokemonSpawnInfo);
+                    base.add(pokemonSpawnInfo);
 
                 }
 
             }
 
+            List<PokemonSpawnInfo> pokemonToDisplay = arrangePokemon(base);
             int spawnAmount = pokemonNames.size(); // we use this list because of the different PokemonSpawnInfo objects for each Pokemon
             int pages = 1;
             if (spawnAmount > 54) {
@@ -98,7 +96,7 @@ public class SpawnList {
             for (int i = 1; i <= pages; i++) {
 
                 setInts(i);
-                List<PokemonSpawnInfo> pokemonToPutInMap = new ArrayList<>();
+                List<PokemonSpawnInfo> pokemonToPutInMap = new ArrayList<>(pokemonToDisplay.size());
                 for (int j = this.min; j < this.max; j++) {
 
                     try {
@@ -114,7 +112,8 @@ public class SpawnList {
 
                 }
 
-                this.spawns.put(i, pokemonToPutInMap);
+                List<PokemonSpawnInfo> arrangedList = arrangePokemon(pokemonToPutInMap);
+                this.spawns.put(i, arrangedList);
 
             }
 
@@ -153,6 +152,76 @@ public class SpawnList {
         }
 
         UIManager.openUIForcefully(this.player, page);
+
+    }
+
+    private List<PokemonSpawnInfo> arrangePokemon (List<PokemonSpawnInfo> pokemonList) {
+
+        List<PokemonSpawnInfo> listToReturn = new ArrayList<>(pokemonList.size());
+        List<Integer> pokedexNumbers = new ArrayList<>(pokemonList.size());
+        Map<PokemonSpawnInfo, Integer> map = new HashMap<>();
+        for (int i = 0; i < pokemonList.size(); i++) {
+
+            PokemonSpawnInfo info = pokemonList.get(i);
+            String name = info.getName().replace(".conf", "");
+            EntityPixelmon pokemon;
+            if (name.contains("-")) {
+
+                if (name.equalsIgnoreCase("porygon-z")) {
+
+                    name = "porygon-z";
+                    pokemon = PokemonSpec.from(name).create(player.world);
+
+                } else {
+
+                    String[] split = name.split("-");
+                    name = split[0];
+                    String form = "";
+                    for (int f = 1; f < split.length; f++) {
+
+                        form = form + "-" + split[f];
+
+                    }
+
+                    pokemon = PokemonSpec.from(name).create(player.world);
+                    int pokemonForm = FormIndexFromName.getFormNumberFromFormName(name, form);
+                    pokemon.setForm(pokemonForm, true);
+
+                }
+
+            } else {
+
+                pokemon = PokemonSpec.from(name).create(player.world);
+
+            }
+
+            int dex = pokemon.baseStats.nationalPokedexNumber;
+            pokedexNumbers.add(i, dex);
+            map.put(info, dex);
+
+        }
+
+        Collections.sort(pokedexNumbers);
+        for (int i = 0; i < pokemonList.size(); i++) {
+
+            int dex = pokedexNumbers.get(i);
+            int finalI = i;
+            map.entrySet().removeIf(entry -> {
+
+                if (entry.getValue() == dex) {
+
+                    listToReturn.add(finalI, entry.getKey());
+                    return true;
+
+                }
+
+                return false;
+
+            });
+
+        }
+
+        return listToReturn;
 
     }
 
