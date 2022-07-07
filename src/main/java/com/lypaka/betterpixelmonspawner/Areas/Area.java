@@ -87,23 +87,41 @@ public class Area {
 
     public static boolean isInArea (EntityPlayerMP player) {
 
-        int x = player.getPosition().getX();
-        int y = player.getPosition().getY();
-        int z = player.getPosition().getZ();
-        int playerDim = WorldDimGetter.getDimID(player.world);
+        try {
 
-        for (Area area : BetterPixelmonSpawner.areas) {
+            int x = player.getPosition().getX();
+            int y = player.getPosition().getY();
+            int z = player.getPosition().getZ();
+            int playerDim = WorldDimGetter.getDimID(player.world);
 
-            if (x >= area.getMinX() && x <= area.getMaxX() &&
-                y >= area.getMinY() && y <= area.getMaxY() &&
-                z >= area.getMinZ() && z <= area.getMaxZ() &&
-                WorldDimGetter.getDimID(area.getWorld()) == playerDim) {
+            for (Area area : BetterPixelmonSpawner.areas) {
 
+                if (x >= area.getMinX() && x <= area.getMaxX() &&
+                        y >= area.getMinY() && y <= area.getMaxY() &&
+                        z >= area.getMinZ() && z <= area.getMaxZ() &&
+                        WorldDimGetter.getDimID(area.getWorld()) == playerDim) {
+
+                    return true;
+
+                }
+
+            }
+
+        } catch (IndexOutOfBoundsException er) {
+
+            if (!player.world.getMinecraftServer().isDedicatedServer()) {
+
+                return false;
+
+            } else {
+
+                BetterPixelmonSpawner.logger.error("Couldn't get dimension ID!");
                 return true;
 
             }
 
         }
+
 
         return false;
 
@@ -112,20 +130,32 @@ public class Area {
     public static Area getAreaFromLocation (EntityPlayerMP player) {
 
         Area area = null;
-        int x = player.getPosition().getX();
-        int y = player.getPosition().getY();
-        int z = player.getPosition().getZ();
-        int playerDim = WorldDimGetter.getDimID(player.world);
+        try {
 
-        for (Area a : BetterPixelmonSpawner.areas) {
+            int x = player.getPosition().getX();
+            int y = player.getPosition().getY();
+            int z = player.getPosition().getZ();
+            int playerDim = WorldDimGetter.getDimID(player.world);
 
-            if (x >= area.getMinX() && x <= area.getMaxX() &&
-                    y >= area.getMinY() && y <= area.getMaxY() &&
-                    z >= area.getMinZ() && z <= area.getMaxZ() &&
-                    WorldDimGetter.getDimID(area.getWorld()) == playerDim) {
+            for (Area a : BetterPixelmonSpawner.areas) {
 
-                area = a;
-                break;
+                if (x >= area.getMinX() && x <= area.getMaxX() &&
+                        y >= area.getMinY() && y <= area.getMaxY() &&
+                        z >= area.getMinZ() && z <= area.getMaxZ() &&
+                        WorldDimGetter.getDimID(area.getWorld()) == playerDim) {
+
+                    area = a;
+                    break;
+
+                }
+
+            }
+
+        } catch (IndexOutOfBoundsException er) {
+
+            if (player.world.getMinecraftServer().isDedicatedServer()) {
+
+                BetterPixelmonSpawner.logger.error("Detected an error getting an Area from a location!");
 
             }
 

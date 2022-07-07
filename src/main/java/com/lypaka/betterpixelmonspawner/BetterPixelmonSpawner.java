@@ -38,7 +38,7 @@ import java.util.Random;
         name = BetterPixelmonSpawner.MOD_NAME,
         version = BetterPixelmonSpawner.VERSION,
         acceptableRemoteVersions = "*",
-        dependencies = "required-after:lypakautils;required-after:gooeylibs2"
+        dependencies = "required-after:lypakautils"
 )
 public class BetterPixelmonSpawner {
 

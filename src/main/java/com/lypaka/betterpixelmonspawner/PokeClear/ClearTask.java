@@ -8,13 +8,11 @@ import com.lypaka.lypakautils.WorldMap;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 import com.pixelmongenerations.core.enums.EnumSpecies;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
+import java.util.*;
 
 public class ClearTask {
 
@@ -65,7 +63,18 @@ public class ClearTask {
                     for (Map.Entry<String, World> entry : worlds.entrySet()) {
 
                         World world = entry.getValue();
-                        for (Entity ent : world.loadedEntityList) {
+                        List<Entity> entityList;
+                        if (!world.getMinecraftServer().isDedicatedServer()) {
+
+                            EntityPlayerMP player = world.getMinecraftServer().getPlayerList().getPlayerByUsername(world.getMinecraftServer().getPlayerList().getOnlinePlayerNames()[0]);
+                            entityList = player.world.loadedEntityList;
+
+                        } else {
+
+                            entityList = world.loadedEntityList;
+
+                        }
+                        for (Entity ent : entityList) {
 
                             if (ent instanceof EntityPixelmon) {
 
