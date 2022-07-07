@@ -24,15 +24,20 @@ public class MainSpawnMenu {
                 .title(FancyText.getFormattedString("&dMain Menu"))
                 .build();
 
-        // 12 pokemon
-        // 14 legendary
+        // 11 pokemon
+        // 13 fish
+        // 15 legendary
         for (int i = 0; i < 27; i++) {
 
-            if (i == 12) {
+            if (i == 11) {
 
                 page.getTemplate().getSlot(i).setButton(getPokemonButton(player));
 
-            } else if (i == 14) {
+            } else if (i == 13) {
+
+                page.getTemplate().getSlot(i).setButton(getFishButton(player));
+
+            } else if (i == 15) {
 
                 page.getTemplate().getSlot(i).setButton(getLegendaryButton(player));
 
@@ -67,6 +72,24 @@ public class MainSpawnMenu {
                 .onClick(() -> {
 
                     PokemonSpawnList list = new PokemonSpawnList(player);
+                    list.build();
+                    list.open(1);
+
+                })
+                .build();
+
+    }
+
+    private static Button getFishButton (EntityPlayerMP player) {
+
+        EntityPixelmon pixelmon = PokemonSpec.from("Magikarp").create(FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld());
+        ItemStack magikarp = ItemPixelmonSprite.getPhoto(pixelmon);
+        magikarp.setStackDisplayName(FancyText.getFormattedString("&eClick me to view spawns for fishing!"));
+        return GooeyButton.builder()
+                .display(magikarp)
+                .onClick(() -> {
+
+                    FishSpawnList list = new FishSpawnList(player);
                     list.build();
                     list.open(1);
 

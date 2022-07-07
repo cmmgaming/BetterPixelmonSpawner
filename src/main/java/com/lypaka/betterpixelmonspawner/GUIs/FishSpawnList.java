@@ -6,6 +6,7 @@ import ca.landonjw.gooeylibs2.api.button.GooeyButton;
 import ca.landonjw.gooeylibs2.api.page.GooeyPage;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
+import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.FishingSpawnInfo;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.LegendarySpawnInfo;
 import com.lypaka.betterpixelmonspawner.Utils.FormIndexFromName;
 import com.lypaka.lypakautils.FancyText;
@@ -22,15 +23,15 @@ import net.minecraft.nbt.NBTTagString;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class LegendarySpawnList {
+public class FishSpawnList {
 
     private final EntityPlayerMP player;
-    private final Map<Integer, List<LegendarySpawnInfo>> spawns;
+    private final Map<Integer, List<FishingSpawnInfo>> spawns;
     private int min;
     private int max;
     private final List<Integer> pages;
 
-    public LegendarySpawnList (EntityPlayerMP player) {
+    public FishSpawnList (EntityPlayerMP player) {
 
         this.player = player;
         this.spawns = new HashMap<>();
@@ -45,9 +46,9 @@ public class LegendarySpawnList {
         String biome = this.player.world.getBiome(this.player.getPosition()).getRegistryName().toString();
         if (BiomeList.biomePokemonMap.containsKey(biome)) {
 
-            List<LegendarySpawnInfo> pokemonThatSpawn = BiomeList.biomeLegendaryMap.get(biome);
+            List<FishingSpawnInfo> pokemonThatSpawn = BiomeList.biomeFishMap.get(biome);
             List<String> pokemonNames = new ArrayList<>();
-            for (LegendarySpawnInfo psi : pokemonThatSpawn) {
+            for (FishingSpawnInfo psi : pokemonThatSpawn) {
 
                 if (!pokemonNames.contains(psi.getName())) {
 
@@ -57,9 +58,9 @@ public class LegendarySpawnList {
 
             }
 
-            List<LegendarySpawnInfo> base = new ArrayList<>(pokemonNames.size());
+            List<FishingSpawnInfo> base = new ArrayList<>(pokemonNames.size());
             List<String> usedNames = new ArrayList<>();
-            for (LegendarySpawnInfo pokemonSpawnInfo : pokemonThatSpawn) {
+            for (FishingSpawnInfo pokemonSpawnInfo : pokemonThatSpawn) {
 
                 if (!usedNames.contains(pokemonSpawnInfo.getName())) {
 
@@ -70,7 +71,7 @@ public class LegendarySpawnList {
 
             }
 
-            List<LegendarySpawnInfo> pokemonToDisplay = arrangePokemon(base);
+            List<FishingSpawnInfo> pokemonToDisplay = arrangePokemon(base);
             int spawnAmount = pokemonNames.size(); // we use this list because of the different PokemonSpawnInfo objects for each Pokemon
             int pages = 1;
             if (spawnAmount > 54) {
@@ -95,12 +96,12 @@ public class LegendarySpawnList {
             for (int i = 1; i <= pages; i++) {
 
                 setInts(i);
-                List<LegendarySpawnInfo> pokemonToPutInMap = new ArrayList<>(pokemonToDisplay.size());
+                List<FishingSpawnInfo> pokemonToPutInMap = new ArrayList<>(pokemonToDisplay.size());
                 for (int j = this.min; j < this.max; j++) {
 
                     try {
 
-                        LegendarySpawnInfo spawnInfo = pokemonToDisplay.get(j);
+                        FishingSpawnInfo spawnInfo = pokemonToDisplay.get(j);
                         pokemonToPutInMap.add(spawnInfo);
 
                     } catch (IndexOutOfBoundsException er) {
@@ -111,7 +112,7 @@ public class LegendarySpawnList {
 
                 }
 
-                List<LegendarySpawnInfo> arrangedList = arrangePokemon(pokemonToPutInMap);
+                List<FishingSpawnInfo> arrangedList = arrangePokemon(pokemonToPutInMap);
                 this.spawns.put(i, arrangedList);
 
             }
@@ -120,7 +121,7 @@ public class LegendarySpawnList {
 
     }
 
-    public void open(int pageNum) {
+    public void open (int pageNum) {
 
         ChestTemplate template = ChestTemplate.builder(6).build();
         GooeyPage page = GooeyPage.builder()
@@ -128,7 +129,7 @@ public class LegendarySpawnList {
                 .title(FancyText.getFormattedString("&dSpawns: P" + pageNum))
                 .build();
 
-        List<LegendarySpawnInfo> pokemon = this.spawns.get(pageNum);
+        List<FishingSpawnInfo> pokemon = this.spawns.get(pageNum);
         int startingIndex = 0;
         if (pageNum > 1) {
 
@@ -137,7 +138,7 @@ public class LegendarySpawnList {
             page.getTemplate().getSlot(0).setButton(getPrevButton(pageToGoTo));
 
         }
-        for (LegendarySpawnInfo psi : pokemon) {
+        for (FishingSpawnInfo psi : pokemon) {
 
             page.getTemplate().getSlot(startingIndex).setButton(getPokemonSprite(psi.getName(), psi));
             startingIndex++;
@@ -154,14 +155,14 @@ public class LegendarySpawnList {
 
     }
 
-    private List<LegendarySpawnInfo> arrangePokemon(List<LegendarySpawnInfo> pokemonList) {
+    private List<FishingSpawnInfo> arrangePokemon(List<FishingSpawnInfo> pokemonList) {
 
-        List<LegendarySpawnInfo> listToReturn = new ArrayList<>(pokemonList.size());
+        List<FishingSpawnInfo> listToReturn = new ArrayList<>(pokemonList.size());
         List<Integer> pokedexNumbers = new ArrayList<>(pokemonList.size());
-        Map<LegendarySpawnInfo, Integer> map = new HashMap<>();
+        Map<FishingSpawnInfo, Integer> map = new HashMap<>();
         for (int i = 0; i < pokemonList.size(); i++) {
 
-            LegendarySpawnInfo info = pokemonList.get(i);
+            FishingSpawnInfo info = pokemonList.get(i);
             String name = info.getName().replace(".conf", "");
             EntityPixelmon pokemon;
             if (name.contains("-")) {
@@ -270,7 +271,7 @@ public class LegendarySpawnList {
 
     }
 
-    private Button getPokemonSprite(String name, LegendarySpawnInfo info) {
+    private Button getPokemonSprite(String name, FishingSpawnInfo info) {
 
         name = name.replace(".conf", "");
         EntityPixelmon pokemon;
@@ -322,11 +323,9 @@ public class LegendarySpawnList {
             percent = df.format(spawnChance * 100) + "%";
 
         }
-        String spawnLocation = info.getSpawnLocation();
         sprite.setStackDisplayName(FancyText.getFormattedString("&e" + pokemon.getPokemonName()));
         NBTTagList lore = new NBTTagList();
         lore.appendTag(new NBTTagString(FancyText.getFormattedString("&eSpawn Chance:&a " + percent)));
-        lore.appendTag(new NBTTagString(FancyText.getFormattedString("&eSpawn Location:&a " + spawnLocation)));
         sprite.getOrCreateSubCompound("display").setTag("Lore", lore);
         return GooeyButton.builder().display(sprite).build();
 

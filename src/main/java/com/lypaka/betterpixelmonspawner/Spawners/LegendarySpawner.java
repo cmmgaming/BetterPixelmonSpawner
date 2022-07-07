@@ -195,7 +195,7 @@ public class LegendarySpawner {
 
                                                     if (!usedNames.contains(info.getName())) {
 
-                                                        if (RandomHelper.getRandomChance(info.getSpawnChance() * 25)) {
+                                                        if (RandomHelper.getRandomChance(info.getSpawnChance())) {
 
                                                             possibleSpawns.add(info);
                                                             usedNames.add(info.getName());
