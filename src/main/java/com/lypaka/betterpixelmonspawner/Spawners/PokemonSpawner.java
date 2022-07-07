@@ -68,11 +68,7 @@ public class PokemonSpawner {
 
                             Area area = Area.getAreaFromLocation(player);
                             List<String> entities = area.getEntities();
-                            if (entities.contains("pokemon")) {
-
-                                continue;
-
-                            }
+                            if (entities.contains("pokemon")) continue;
 
                         }
 
@@ -81,11 +77,7 @@ public class PokemonSpawner {
                     if (RepelHandler.hasRepel(player.getUniqueID())) continue;
                     if (PokemonCounter.getCount(player.getUniqueID()) > ConfigGetters.maxPokemon) {
 
-                        if (ConfigGetters.maxPokemon > 0) {
-
-                            continue;
-
-                        }
+                        if (ConfigGetters.maxPokemon > 0) continue;
 
                     }
                     String worldName = player.world.getWorldInfo().getWorldName();
@@ -182,7 +174,7 @@ public class PokemonSpawner {
 
                                                         if (!usedNames.contains(info.getName())) {
 
-                                                            if (RandomHelper.getRandomChance(info.getSpawnChance() * 25)) {
+                                                            if (RandomHelper.getRandomChance(info.getSpawnChance())) {
 
                                                                 possibleSpawns.add(info);
                                                                 usedNames.add(info.getName());

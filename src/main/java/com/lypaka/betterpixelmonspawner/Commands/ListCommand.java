@@ -1,6 +1,6 @@
 package com.lypaka.betterpixelmonspawner.Commands;
 
-import com.lypaka.betterpixelmonspawner.GUIs.SpawnList;
+import com.lypaka.betterpixelmonspawner.GUIs.MainSpawnMenu;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -29,9 +29,7 @@ public class ListCommand extends CommandBase {
         if (sender instanceof EntityPlayerMP) {
 
             EntityPlayerMP player = (EntityPlayerMP) sender;
-            SpawnList list = new SpawnList(player);
-            list.build();
-            list.open(1);
+            MainSpawnMenu.open(player);
 
         }
 

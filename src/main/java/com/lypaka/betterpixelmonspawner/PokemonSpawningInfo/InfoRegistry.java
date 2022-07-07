@@ -98,16 +98,40 @@ public class InfoRegistry {
 
                                     LegendarySpawnInfo lInfo = new LegendarySpawnInfo(name, biome, time, weather, levelRange, groupSize, spawnChance, spawnLocation, texture, heldItemID, hostile);
                                     lInfo.register();
+                                    List<LegendarySpawnInfo> lsi = new ArrayList<>();
+                                    if (BiomeList.biomeLegendaryMap.containsKey(biome)) {
+
+                                        lsi = BiomeList.biomeLegendaryMap.get(biome);
+
+                                    }
+                                    lsi.add(lInfo);
+                                    BiomeList.biomeLegendaryMap.put(biome, lsi);
 
                                 } else if (tempSpecies.getPokemonName().equalsIgnoreCase("Meltan") && ConfigGetters.removeMeltan) {
 
                                     LegendarySpawnInfo lInfo = new LegendarySpawnInfo(name, biome, time, weather, levelRange, groupSize, spawnChance, spawnLocation, texture, heldItemID, hostile);
                                     lInfo.register();
+                                    List<LegendarySpawnInfo> lsi = new ArrayList<>();
+                                    if (BiomeList.biomeLegendaryMap.containsKey(biome)) {
+
+                                        lsi = BiomeList.biomeLegendaryMap.get(biome);
+
+                                    }
+                                    lsi.add(lInfo);
+                                    BiomeList.biomeLegendaryMap.put(biome, lsi);
 
                                 } else if (tempSpecies.getPokemonName().equalsIgnoreCase("Eternatus") && ConfigGetters.removeEternatus) {
 
                                     LegendarySpawnInfo lInfo = new LegendarySpawnInfo(name, biome, time, weather, levelRange, groupSize, spawnChance, spawnLocation, texture, heldItemID, hostile);
                                     lInfo.register();
+                                    List<LegendarySpawnInfo> lsi = new ArrayList<>();
+                                    if (BiomeList.biomeLegendaryMap.containsKey(biome)) {
+
+                                        lsi = BiomeList.biomeLegendaryMap.get(biome);
+
+                                    }
+                                    lsi.add(lInfo);
+                                    BiomeList.biomeLegendaryMap.put(biome, lsi);
 
                                 } else {
 
@@ -135,6 +159,60 @@ public class InfoRegistry {
 
                             PokemonSpawnInfo pInfo = new PokemonSpawnInfo(name, biome, time, weather, levelRange, groupSize, spawnChance, spawnLocation, texture, heldItemID, hostile);
                             pInfo.register();
+                            List<PokemonSpawnInfo> psi = new ArrayList<>();
+                            if (BiomeList.biomePokemonMap.containsKey(biome)) {
+
+                                psi = BiomeList.biomePokemonMap.get(biome);
+
+                            }
+                            psi.add(pInfo);
+                            BiomeList.biomePokemonMap.put(biome, psi);
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            // Fishing spawn info
+            if (PokemonConfig.getConfigNode(name, "Fishing").isVirtual()) continue; // pokemon does not spawn naturally from fishing
+            Map<String, Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>>> fishMap = PokemonConfig.getConfigNode(name, "Fishing").getValue(new TypeToken<Map<String, Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>>>>() {});
+            for (Map.Entry<String, Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>>> entry : fishMap.entrySet()) {
+
+                String biome = entry.getKey();
+                Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> m2 = entry.getValue();
+                for (Map.Entry<String, Map<String, Map<String, Map<String, Map<String, String>>>>> e2 : m2.entrySet()) {
+
+                    String location = e2.getKey();
+                    Map<String, Map<String, Map<String, Map<String, String>>>> m3 = e2.getValue();
+                    for (Map.Entry<String, Map<String, Map<String, Map<String, String>>>> e3 : m3.entrySet()) {
+
+                        String rod = e3.getKey();
+                        Map<String, Map<String, Map<String, String>>> m4 = e3.getValue();
+                        for (Map.Entry<String, Map<String, Map<String, String>>> e4 : m4.entrySet()) {
+
+                            String time = e4.getKey();
+                            Map<String, Map<String, String>> m5 = e4.getValue();
+                            for (Map.Entry<String, Map<String, String>> e5 : m5.entrySet()) {
+
+                                String weather = e5.getKey();
+                                Map<String, String> m6 = e5.getValue();
+                                String levelRange = m6.get("level-range");
+                                double spawnChance = Double.parseDouble(m6.get("spawn-chance"));
+                                FishingSpawnInfo fishingSpawnInfo = new FishingSpawnInfo(name, biome, location, rod, time, weather, levelRange, spawnChance);
+                                fishingSpawnInfo.register();
+                                List<FishingSpawnInfo> fsi = new ArrayList<>();
+                                if (BiomeList.biomeFishMap.containsKey(biome)) {
+
+                                    fsi = BiomeList.biomeFishMap.get(biome);
+
+                                }
+                                fsi.add(fishingSpawnInfo);
+                                BiomeList.biomeFishMap.put(biome, fsi);
+
+                            }
 
                         }
 

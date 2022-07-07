@@ -23,7 +23,7 @@ import net.minecraft.nbt.NBTTagString;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class SpawnList {
+public class PokemonSpawnList {
 
     private final EntityPlayerMP player;
     private final Map<Integer, List<PokemonSpawnInfo>> spawns;
@@ -31,7 +31,7 @@ public class SpawnList {
     private int max;
     private final List<Integer> pages;
 
-    public SpawnList (EntityPlayerMP player) {
+    public PokemonSpawnList (EntityPlayerMP player) {
 
         this.player = player;
         this.spawns = new HashMap<>();
@@ -317,52 +317,6 @@ public class SpawnList {
         sprite.setStackDisplayName(FancyText.getFormattedString("&e" + pokemon.getPokemonName()));
         NBTTagList lore = new NBTTagList();
         lore.appendTag(new NBTTagString(FancyText.getFormattedString("&eSpawn Chance:&a " + percent)));
-        lore.appendTag(new NBTTagString(FancyText.getFormattedString("&eSpawn Location:&a " + spawnLocation)));
-        sprite.getOrCreateSubCompound("display").setTag("Lore", lore);
-        return GooeyButton.builder().display(sprite).build();
-
-    }
-
-    private Button getPokemonSprite (String name, LegendarySpawnInfo info) {
-
-        name = name.replace(".conf", "");
-        EntityPixelmon pokemon;
-        if (name.contains("-")) {
-
-            if (name.equalsIgnoreCase("porygon-z")) {
-
-                name = "porygon-z";
-                pokemon = PokemonSpec.from(name).create(player.world);
-
-            } else {
-
-                String[] split = name.split("-");
-                name = split[0];
-                String form = "";
-                for (int f = 1; f < split.length; f++) {
-
-                    form = form + "-" + split[f];
-
-                }
-
-                pokemon = PokemonSpec.from(name).create(player.world);
-                int pokemonForm = FormIndexFromName.getFormNumberFromFormName(name, form);
-                pokemon.setForm(pokemonForm, true);
-
-            }
-
-        } else {
-
-            pokemon = PokemonSpec.from(name).create(player.world);
-
-        }
-
-        ItemStack sprite = ItemPixelmonSprite.getPhoto(pokemon);
-        double spawnChance = info.getSpawnChance();
-        String spawnLocation = info.getSpawnLocation();
-        sprite.setStackDisplayName(FancyText.getFormattedString("&e" + pokemon.getPokemonName()));
-        NBTTagList lore = new NBTTagList();
-        lore.appendTag(new NBTTagString(FancyText.getFormattedString("&eSpawn Chance:&a " + spawnChance)));
         lore.appendTag(new NBTTagString(FancyText.getFormattedString("&eSpawn Location:&a " + spawnLocation)));
         sprite.getOrCreateSubCompound("display").setTag("Lore", lore);
         return GooeyButton.builder().display(sprite).build();

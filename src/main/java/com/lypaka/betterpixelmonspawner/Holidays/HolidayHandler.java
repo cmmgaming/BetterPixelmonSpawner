@@ -16,7 +16,7 @@ import java.util.*;
 
 public class HolidayHandler {
 
-    public static List<Holiday> activeHolidays = null;
+    public static List<Holiday> activeHolidays = new ArrayList<>();
     private static Timer timer = null;
 
     public static void startHourTracker() {
@@ -158,49 +158,81 @@ public class HolidayHandler {
             holidays.add(entry.getKey());
 
         }
-        // I know this is probably dumb, but every other time I've tried getting a random index from a list with a size of 1, it throws IndexOutOfBounds so this prevents any chance of that ever happening
-        if (holidays.size() == 1) {
+        if (holidays.size() > 0) {
 
-            holiday = holidays.get(0);
+            // I know this is probably dumb, but every other time I've tried getting a random index from a list with a size of 1, it throws IndexOutOfBounds so this prevents any chance of that ever happening
+            if (holidays.size() == 1) {
 
-        } else {
+                holiday = holidays.get(0);
 
-            holiday = holidays.get(BetterPixelmonSpawner.random.nextInt(holidays.size()));
+            } else {
 
-        }
-        boolean doMessage = false;
-        if (particleMap.containsKey(holiday)) {
+                System.out.println("size == " + holidays.size());
+                holiday = holidays.get(BetterPixelmonSpawner.random.nextInt(holidays.size()));
 
-            List<String> possibleParticles = particleMap.get(holiday);
-            if (possibleParticles.size() > 0) {
+            }
 
-                if (RandomHelper.getRandomChance(ConfigGetters.particleChance)) {
+            boolean doMessage = false;
+            if (particleMap.containsKey(holiday)) {
 
-                    String randomParticle;
-                    if (possibleParticles.size() == 1) {
+                List<String> possibleParticles = particleMap.get(holiday);
+                if (possibleParticles.size() > 0) {
 
-                        randomParticle = possibleParticles.get(0);
+                    if (RandomHelper.getRandomChance(ConfigGetters.particleChance)) {
 
-                    } else {
+                        String randomParticle;
+                        if (possibleParticles.size() == 1) {
 
-                        randomParticle = possibleParticles.get(BetterPixelmonSpawner.random.nextInt(possibleParticles.size()));
+                            randomParticle = possibleParticles.get(0);
 
-                    }
-                    if (randomParticle.contains(":")) {
+                        } else {
 
-                        String[] split = randomParticle.split(":");
-                        String species = split[0];
-                        randomParticle = split[1];
-                        if (pokemon.getPokemonName().equalsIgnoreCase(species)) {
+                            randomParticle = possibleParticles.get(BetterPixelmonSpawner.random.nextInt(possibleParticles.size()));
+
+                        }
+                        if (randomParticle.contains(":")) {
+
+                            String[] split = randomParticle.split(":");
+                            String species = split[0];
+                            randomParticle = split[1];
+                            if (pokemon.getPokemonName().equalsIgnoreCase(species)) {
+
+                                pokemon.setParticleId(randomParticle);
+                                doMessage = true;
+
+                            }
+
+                        } else {
 
                             pokemon.setParticleId(randomParticle);
                             doMessage = true;
 
                         }
 
-                    } else {
+                    }
 
-                        pokemon.setParticleId(randomParticle);
+                }
+
+            }
+            if (textureMap.containsKey(holiday)) {
+
+                List<String> possibleTextures = textureMap.get(holiday);
+                if (possibleTextures.size() > 0) {
+
+                    if (RandomHelper.getRandomChance(ConfigGetters.textureChance)) {
+
+                        String randomTexture;
+                        if (possibleTextures.size() == 1) {
+
+                            randomTexture = possibleTextures.get(0);
+
+                        } else {
+
+                            randomTexture = possibleTextures.get(BetterPixelmonSpawner.random.nextInt(possibleTextures.size()));
+
+                        }
+
+                        pokemon.setCustomSpecialTexture(randomTexture);
                         doMessage = true;
 
                     }
@@ -208,40 +240,14 @@ public class HolidayHandler {
                 }
 
             }
+            if (doMessage && !ConfigGetters.holidaySpawnMessage.equalsIgnoreCase("")) {
 
-        }
-        if (textureMap.containsKey(holiday)) {
-
-            List<String> possibleTextures = textureMap.get(holiday);
-            if (possibleTextures.size() > 0) {
-
-                if (RandomHelper.getRandomChance(ConfigGetters.textureChance)) {
-
-                    String randomTexture;
-                    if (possibleTextures.size() == 1) {
-
-                        randomTexture = possibleTextures.get(0);
-
-                    } else {
-
-                        randomTexture = possibleTextures.get(BetterPixelmonSpawner.random.nextInt(possibleTextures.size()));
-
-                    }
-
-                    pokemon.setCustomSpecialTexture(randomTexture);
-                    doMessage = true;
-
-                }
+                pokemon.world.getMinecraftServer().getPlayerList().sendMessage(FancyText.getFancyText(ConfigGetters.holidaySpawnMessage
+                        .replace("%holiday%", holiday)
+                        .replace("%pokemon%", pokemon.getPokemonName())
+                ));
 
             }
-
-        }
-        if (doMessage && !ConfigGetters.holidaySpawnMessage.equalsIgnoreCase("")) {
-
-            pokemon.world.getMinecraftServer().getPlayerList().sendMessage(FancyText.getFancyText(ConfigGetters.holidaySpawnMessage
-                    .replace("%holiday%", holiday)
-                    .replace("%pokemon%", pokemon.getPokemonName())
-            ));
 
         }
 

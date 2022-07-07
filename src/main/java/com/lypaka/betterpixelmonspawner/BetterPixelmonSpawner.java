@@ -11,10 +11,7 @@ import com.lypaka.betterpixelmonspawner.Listeners.*;
 import com.lypaka.betterpixelmonspawner.PokeClear.ClearTask;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.InfoRegistry;
-import com.lypaka.betterpixelmonspawner.Spawners.LegendarySpawner;
-import com.lypaka.betterpixelmonspawner.Spawners.MiscSpawner;
-import com.lypaka.betterpixelmonspawner.Spawners.NPCSpawner;
-import com.lypaka.betterpixelmonspawner.Spawners.PokemonSpawner;
+import com.lypaka.betterpixelmonspawner.Spawners.*;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.BossPokemonUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
@@ -115,6 +112,7 @@ public class BetterPixelmonSpawner {
         MinecraftForge.EVENT_BUS.register(new PokemonSpawnListener());
         MinecraftForge.EVENT_BUS.register(new ShinySpawnListener());
         MinecraftForge.EVENT_BUS.register(new HolidayHandler());
+        MinecraftForge.EVENT_BUS.register(new FishSpawner());
 
         // Loads the areas
         AreaRegistry.loadAreas();
