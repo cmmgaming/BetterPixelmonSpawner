@@ -13,20 +13,19 @@ public class PokemonUtils {
         int minimumLevel = pokemon.baseStats.spawnLevel;
         if (spawnLevel < minimumLevel) {
 
-            // Pokemon cannot naturally exist at this level, check for previous evolution forms
-            if (pokemon.baseStats.preEvolutions.length > 0) {
+            do {
 
-                EnumSpecies preEvo = pokemon.baseStats.preEvolutions[pokemon.baseStats.preEvolutions.length - 1];
-                EntityPixelmon newPokemon = PokemonSpec.from(preEvo.getPokemonName()).create(pokemon.world);
-                newPokemon.setForm(pokemon.getForm());
-                return newPokemon;
+                // Pokemon cannot naturally exist at this level, check for previous evolution forms
+                if (pokemon.baseStats.preEvolutions.length > 0) {
 
-            } else {
+                    EnumSpecies preEvo = pokemon.baseStats.preEvolutions[pokemon.baseStats.preEvolutions.length - 1];
+                    EntityPixelmon newPokemon = PokemonSpec.from(preEvo.getPokemonName()).create(pokemon.world);
+                    newPokemon.setForm(pokemon.getForm());
+                    pokemon = newPokemon;
 
-                // Pokemon is a single-stage Pokemon and cannot be de-evolved, return the Pokemon
-                return pokemon;
+                }
 
-            }
+            } while (pokemon.baseStats.preEvolutions.length > 0);
 
         }
 

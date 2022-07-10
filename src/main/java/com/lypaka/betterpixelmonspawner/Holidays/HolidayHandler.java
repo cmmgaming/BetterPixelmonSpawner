@@ -167,7 +167,6 @@ public class HolidayHandler {
 
             } else {
 
-                System.out.println("size == " + holidays.size());
                 holiday = holidays.get(BetterPixelmonSpawner.random.nextInt(holidays.size()));
 
             }

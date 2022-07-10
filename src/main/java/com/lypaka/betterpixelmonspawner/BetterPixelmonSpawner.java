@@ -5,6 +5,7 @@ import com.lypaka.betterpixelmonspawner.Areas.AreaRegistry;
 import com.lypaka.betterpixelmonspawner.Commands.PixelmonSpawnerCommand;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Config.ConfigManager;
+import com.lypaka.betterpixelmonspawner.Config.ConfigUpdater;
 import com.lypaka.betterpixelmonspawner.Config.PokemonConfig;
 import com.lypaka.betterpixelmonspawner.Holidays.HolidayHandler;
 import com.lypaka.betterpixelmonspawner.Listeners.*;
@@ -60,6 +61,7 @@ public class BetterPixelmonSpawner {
 
         dir = event.getModConfigurationDirectory().toPath().resolve(MOD_ID);
         ConfigManager.setup(dir);
+        ConfigUpdater.updateConfig();
         ConfigGetters.load();
         PokemonConfig.setup(dir.resolve("pokemon"));
         loadRegionalLists();
@@ -113,6 +115,7 @@ public class BetterPixelmonSpawner {
         MinecraftForge.EVENT_BUS.register(new ShinySpawnListener());
         MinecraftForge.EVENT_BUS.register(new HolidayHandler());
         MinecraftForge.EVENT_BUS.register(new FishSpawner());
+        MinecraftForge.EVENT_BUS.register(new RespawnListener());
 
         // Loads the areas
         AreaRegistry.loadAreas();

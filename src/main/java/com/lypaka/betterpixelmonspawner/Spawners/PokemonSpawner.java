@@ -316,13 +316,25 @@ public class PokemonSpawner {
                                 int x = safeSpawn.getX();
                                 int y = safeSpawn.getY();
                                 int z = safeSpawn.getZ();
-                                pokemon.setLocationAndAngles(safeSpawn.getX() + 0.5, safeSpawn.getY(), safeSpawn.getZ() + 0.5,0, 0);
+                                pokemon.setLocationAndAngles(safeSpawn.getX() + BetterPixelmonSpawner.random.nextDouble(), safeSpawn.getY(), safeSpawn.getZ() + BetterPixelmonSpawner.random.nextDouble(),0, 0);
                                 int level = 3;
-                                if (PixelmonConfig.spawnLevelsByDistance &&
-                                        (int)((double)level + Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, y, z)) / (double)PixelmonConfig.distancePerLevel + Math.random() * 3.0))
-                                                > PixelmonConfig.maxLevelByDistance) {
+                                if (ConfigGetters.scalePokemonLevelsByDistance) {
 
-                                    level = PixelmonConfig.maxLevelByDistance;
+                                    if ((int)((double)level + Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, y, z)) / (double)ConfigGetters.blocksBeforePokemonIncrease + Math.random() * 3.0)) > ConfigGetters.maxPokemonScaleLevel) {
+
+                                        level = ConfigGetters.maxPokemonScaleLevel;
+
+                                    } else {
+
+                                        int distance = (int) Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, y, z)));
+                                        if (distance > ConfigGetters.blocksBeforePokemonIncrease) {
+
+                                            int mod = (distance / ConfigGetters.blocksBeforePokemonIncrease) * ConfigGetters.pokemonLevelModifier;
+                                            level = mod + level;
+
+                                        }
+
+                                    }
 
                                 } else {
 
@@ -331,6 +343,7 @@ public class PokemonSpawner {
                                 }
                                 pokemon.getLvl().setLevel(level);
                                 pokemon = PokemonUtils.validatePokemon(pokemon, level);
+                                pokemon.setLocationAndAngles(safeSpawn.getX() + 0.5, safeSpawn.getY(), safeSpawn.getZ() + 0.5,0, 0);
                                 pokemon.updateStats();
                                 boolean hostile = false;
                                 if (selectedSpawn.isHostile()) {

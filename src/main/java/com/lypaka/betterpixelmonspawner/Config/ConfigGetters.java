@@ -18,12 +18,15 @@ public class ConfigGetters {
     public static List<String> worldBlacklist;
 
     public static double alphaSpawnChance;
+    public static int blocksBeforePokemonIncrease;
     public static boolean bossesCanBeNormal;
     public static double bossSpawnChance;
     public static Map<String, Double> bossSpawnMap;
     public static boolean generateFiles;
     public static double gmaxChance;
+    public static int pokemonLevelModifier;
     public static boolean marksEnabled;
+    public static int maxPokemonScaleLevel;
     public static int maxPokemon;
     public static String highIVSoundID;
     public static double aggressiveChance;
@@ -31,6 +34,7 @@ public class ConfigGetters {
     public static boolean removeEternatus;
     public static boolean removeLegendariesFromNormalSpawner;
     public static boolean removeMeltan;
+    public static boolean scalePokemonLevelsByDistance;
     public static boolean spawnerEnabled;
     public static int spawnInterval;
     public static int xzRadius;
@@ -49,9 +53,13 @@ public class ConfigGetters {
     public static boolean legendarySpawnsGlowing;
     public static List<String> specialLegendaries;
 
+    public static int blocksBeforeNPCIncrease;
     public static int npcDespawnTimer;
     public static boolean npcSpawnerEnabled;
+    public static int npcLevelModifier;
     public static int maxNPCs;
+    public static int maxNPCScaleLevel;
+    public static boolean scaleNPCLevelsByDistance;
     public static int npcSpawnInterval;
     public static int npcSpawnLocationXZ;
     public static Map<String, Double> npcSpawnMap;
@@ -82,7 +90,6 @@ public class ConfigGetters {
         blacklistedClearPokemon = ConfigManager.getConfigNode(0, "PokeClear", "Pokemon-Blacklist").getList(TypeToken.of(String.class));
         clearWarningInterval = ConfigManager.getConfigNode(0, "PokeClear", "Warning-Interval").getInt();
         clearWarningMessage = ConfigManager.getConfigNode(0, "PokeClear", "Warning-Message").getString();
-        //World-Blacklist
         worldBlacklist = ConfigManager.getConfigNode(0, "World-Blacklist").getList(TypeToken.of(String.class));
 
         particleChance = ConfigManager.getConfigNode(1, "General-Settings", "Particle-Chance").getDouble();
@@ -90,12 +97,15 @@ public class ConfigGetters {
         textureChance = ConfigManager.getConfigNode(1, "General-Settings", "Texture-Chance").getDouble();
 
         alphaSpawnChance = ConfigManager.getConfigNode(2, "Alpha-Spawn-Chance").getDouble();
+        blocksBeforePokemonIncrease = ConfigManager.getConfigNode(2, "Blocks-Before-Level-Increase").getInt();
         bossesCanBeNormal = ConfigManager.getConfigNode(2, "Bosses-Can-Be-Normals").getBoolean();
         bossSpawnChance = ConfigManager.getConfigNode(2, "Boss-Spawn-Chance").getDouble();
         bossSpawnMap = ConfigManager.getConfigNode(2, "Boss-Spawn-Map").getValue(new TypeToken<Map<String, Double>>() {});
         generateFiles = ConfigManager.getConfigNode(2, "Generate-Files").getBoolean();
         gmaxChance = ConfigManager.getConfigNode(2, "GMax-Factor-Chance").getDouble();
+        pokemonLevelModifier = ConfigManager.getConfigNode(2, "Level-Modifier").getInt();
         marksEnabled = ConfigManager.getConfigNode(2, "Marks-Enabled").getBoolean();
+        maxPokemonScaleLevel = ConfigManager.getConfigNode(2, "Max-Scaled-Level").getInt();
         maxPokemon = ConfigManager.getConfigNode(2, "Max-Pokemon-Per-Player").getInt();
         highIVSoundID = ConfigManager.getConfigNode(2, "Play-High-IV-Sound").getString();
         aggressiveChance = ConfigManager.getConfigNode(2, "Pokemon-Aggressive").getDouble();
@@ -103,6 +113,7 @@ public class ConfigGetters {
         removeEternatus = ConfigManager.getConfigNode(2, "Remove-Eternatus-From-Normal-Spawner").getBoolean();
         removeLegendariesFromNormalSpawner = ConfigManager.getConfigNode(2, "Remove-Legendaries-From-Normal-Spawner").getBoolean();
         removeMeltan = ConfigManager.getConfigNode(2, "Remove-Meltan-From-Normal-Spawner").getBoolean();
+        scalePokemonLevelsByDistance = ConfigManager.getConfigNode(2, "Scale-Levels-By-Distance").getBoolean();
         spawnerEnabled = ConfigManager.getConfigNode(2, "Spawner-Enabled").getBoolean();
         spawnInterval = ConfigManager.getConfigNode(2, "Spawn-Interval").getInt();
         xzRadius = ConfigManager.getConfigNode(2, "Spawn-Location-XZ").getInt();
@@ -121,9 +132,13 @@ public class ConfigGetters {
         legendarySpawnsGlowing = ConfigManager.getConfigNode(3, "Spawn-Pokemon-Glowing").getBoolean();
         specialLegendaries = ConfigManager.getConfigNode(3, "Special-Spawns").getList(TypeToken.of(String.class));
 
+        blocksBeforeNPCIncrease = ConfigManager.getConfigNode(4, "Blocks-Before-Level-Increase").getInt();
         npcDespawnTimer = ConfigManager.getConfigNode(4, "Despawn-Timer").getInt();
         npcSpawnerEnabled = ConfigManager.getConfigNode(4, "Enabled").getBoolean();
+        npcLevelModifier = ConfigManager.getConfigNode(4, "Level-Modifier").getInt();
         maxNPCs = ConfigManager.getConfigNode(4, "Max-NPCs").getInt();
+        maxNPCScaleLevel = ConfigManager.getConfigNode(4, "Max-Scaled-Level").getInt();
+        scaleNPCLevelsByDistance = ConfigManager.getConfigNode(4, "Scale-Levels-By-Distance").getBoolean();
         npcSpawnInterval = ConfigManager.getConfigNode(4, "Spawn-Interval").getInt();
         npcSpawnLocationXZ = ConfigManager.getConfigNode(4, "Spawn-Location-XZ").getInt();
         npcSpawnMap = ConfigManager.getConfigNode(4, "Spawn-Map").getValue(new TypeToken<Map<String, Double>>() {});

@@ -168,12 +168,25 @@ public class NPCSpawner {
                                 NPCCounter.increment(npcSpawnEvent.getNPC(), npcSpawnEvent.getPlayer().getUniqueID());
                                 if (npcSpawnEvent.getNPC() instanceof NPCTrainer) {
 
-                                    int level = 3;
-                                    if (PixelmonConfig.spawnLevelsByDistance &&
-                                            (int)((double)level + Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, finalY, z)) / (double)PixelmonConfig.distancePerLevel + Math.random() * 3.0))
-                                                    > PixelmonConfig.maxLevelByDistance) {
+                                    if (ConfigGetters.scaleNPCLevelsByDistance) {
 
-                                        level = PixelmonConfig.maxLevelByDistance;
+                                        int level = 3;
+                                        if ((int)((double)level + Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, finalY, z)) / (double)ConfigGetters.blocksBeforeNPCIncrease + Math.random() * 3.0)) > ConfigGetters.maxNPCScaleLevel) {
+
+                                            level = ConfigGetters.maxNPCScaleLevel;
+
+                                        } else {
+
+                                            int distance = (int) Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, finalY, z)));
+                                            if (distance > ConfigGetters.blocksBeforeNPCIncrease) {
+
+                                                int mod = (distance / ConfigGetters.blocksBeforeNPCIncrease) * ConfigGetters.npcLevelModifier;
+                                                level = mod + level;
+
+                                            }
+
+                                        }
+
                                         NPCTrainer trainer = (NPCTrainer) npcSpawnEvent.getNPC();
                                         trainer.setLevel(level);
 

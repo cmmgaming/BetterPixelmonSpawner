@@ -3346,3 +3346,91 @@ build/sources/main/java/com/lypaka/betterpixelmonspawner/PokemonSpawningInfo/Bio
 build/sources/main/java/com/lypaka/betterpixelmonspawner/PokemonSpawningInfo/InfoRegistry.java
 build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/LegendarySpawner.java
 build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/PokemonSpawner.java
+.gradle/4.10.3/fileHashes/fileHashes.bin
+.gradle/4.10.3/fileHashes/fileHashes.lock
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+build/classes/java/main/com/lypaka/betterpixelmonspawner/Config/ConfigUpdater.class
+build/classes/java/main/com/lypaka/betterpixelmonspawner/Listeners/RespawnListener.class
+build/libs/BetterPixelmonSpawner-1.4.1.jar
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Areas/Area.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/BetterPixelmonSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Config/ConfigGetters.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Config/ConfigUpdater.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Holidays/HolidayHandler.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Listeners/RespawnListener.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/PokeClear/ClearTask.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/PokemonSpawningInfo/BiomeList.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/PokemonSpawningInfo/InfoRegistry.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/LegendarySpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/NPCSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/PokemonSpawner.java
+build/tmp/extractAnnotationsJar/input6163445214864385813.jar
+build/tmp/extractAnnotationsShadowJar/input1210116326905369498.jar
+build/tmp/reobfJar/reobf-default8568982028035300750.srg
+build/tmp/reobfJar/reobf-extraLines7195057078757729365.srg
+build/tmp/reobfShadowJar/reobf-default3157533998965919918.srg
+build/tmp/reobfShadowJar/reobf-extraLines8411027190886013980.srg
+run/logs/2022-07-09-1.log.gz
+run/logs/2022-07-09-2.log.gz
+run/logs/2022-07-09-3.log.gz
+run/logs/2022-07-09-4.log.gz
+run/logs/2022-07-09-5.log.gz
+run/logs/2022-07-09-6.log.gz
+run/logs/2022-07-09-7.log.gz
+run/saves/New World/advancements/2210beb6-4dc2-38a8-8f45-f0cb49bb6846.json
+run/saves/New World/advancements/3e863622-2d77-3b8e-b124-c7923d3d13f8.json
+run/saves/New World/advancements/3f66a67c-db6c-36b7-b762-d7a40c17883b.json
+run/saves/New World/advancements/6554aa36-758b-3cee-a8f7-555b71fa0c55.json
+run/saves/New World/advancements/a40967fe-53e3-3428-b2d4-e5dfaa3ad087.json
+run/saves/New World/advancements/c0f25d98-743c-364e-a2cd-82567612d750.json
+run/saves/New World/advancements/d3d45e58-b5d9-369a-ac43-347ac47e2b17.json
+run/saves/New World/advancements/d9258d3e-83ae-34f1-aa1c-425748be48d3.json
+run/saves/New World/advancements/d96be705-d0ae-31d3-afba-31a637d80f6d.json
+run/saves/New World/advancements/dfdc5dbd-4a0e-3b6a-a815-601a03741434.json
+run/saves/New World/data/gyminfo.dat
+run/saves/New World/data/Village.dat
+run/saves/New World/playerdata/2210beb6-4dc2-38a8-8f45-f0cb49bb6846.dat
+run/saves/New World/playerdata/3e863622-2d77-3b8e-b124-c7923d3d13f8.dat
+run/saves/New World/playerdata/3f66a67c-db6c-36b7-b762-d7a40c17883b.dat
+run/saves/New World/playerdata/6554aa36-758b-3cee-a8f7-555b71fa0c55.dat
+run/saves/New World/playerdata/a40967fe-53e3-3428-b2d4-e5dfaa3ad087.dat
+run/saves/New World/playerdata/c0f25d98-743c-364e-a2cd-82567612d750.dat
+run/saves/New World/playerdata/d3d45e58-b5d9-369a-ac43-347ac47e2b17.dat
+run/saves/New World/playerdata/d9258d3e-83ae-34f1-aa1c-425748be48d3.dat
+run/saves/New World/playerdata/d96be705-d0ae-31d3-afba-31a637d80f6d.dat
+run/saves/New World/playerdata/dfdc5dbd-4a0e-3b6a-a815-601a03741434.dat
+run/saves/New World/pokemon/2210beb6-4dc2-38a8-8f45-f0cb49bb6846.pk
+run/saves/New World/pokemon/3e863622-2d77-3b8e-b124-c7923d3d13f8.pk
+run/saves/New World/pokemon/3f66a67c-db6c-36b7-b762-d7a40c17883b.pk
+run/saves/New World/pokemon/6554aa36-758b-3cee-a8f7-555b71fa0c55.pk
+run/saves/New World/pokemon/a40967fe-53e3-3428-b2d4-e5dfaa3ad087.pk
+run/saves/New World/pokemon/c0f25d98-743c-364e-a2cd-82567612d750.pk
+run/saves/New World/pokemon/d3d45e58-b5d9-369a-ac43-347ac47e2b17.pk
+run/saves/New World/pokemon/d9258d3e-83ae-34f1-aa1c-425748be48d3.pk
+run/saves/New World/pokemon/d96be705-d0ae-31d3-afba-31a637d80f6d.pk
+run/saves/New World/pokemon/dfdc5dbd-4a0e-3b6a-a815-601a03741434.pk
+run/saves/New World/region/r.-1.-2.mca
+run/saves/New World/region/r.0.-2.mca
+run/saves/New World/region/r.0.-3.mca
+run/saves/New World/region/r.1.-2.mca
+run/saves/New World/region/r.1.-3.mca
+run/saves/New World/stats/2210beb6-4dc2-38a8-8f45-f0cb49bb6846.json
+run/saves/New World/stats/3e863622-2d77-3b8e-b124-c7923d3d13f8.json
+run/saves/New World/stats/3f66a67c-db6c-36b7-b762-d7a40c17883b.json
+run/saves/New World/stats/6554aa36-758b-3cee-a8f7-555b71fa0c55.json
+run/saves/New World/stats/a40967fe-53e3-3428-b2d4-e5dfaa3ad087.json
+run/saves/New World/stats/c0f25d98-743c-364e-a2cd-82567612d750.json
+run/saves/New World/stats/d3d45e58-b5d9-369a-ac43-347ac47e2b17.json
+run/saves/New World/stats/d9258d3e-83ae-34f1-aa1c-425748be48d3.json
+run/saves/New World/stats/d96be705-d0ae-31d3-afba-31a637d80f6d.json
+run/saves/New World/stats/dfdc5dbd-4a0e-3b6a-a815-601a03741434.json
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Areas/Area.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/BetterPixelmonSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Config/ConfigGetters.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Holidays/HolidayHandler.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/PokeClear/ClearTask.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/PokemonSpawningInfo/BiomeList.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/PokemonSpawningInfo/InfoRegistry.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/LegendarySpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/NPCSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/PokemonSpawner.java
