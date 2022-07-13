@@ -10,10 +10,12 @@ import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.LegendarySpawnInfo;
 import com.lypaka.betterpixelmonspawner.Utils.FormIndexFromName;
 import com.lypaka.lypakautils.FancyText;
 import com.pixelmongenerations.api.pokemon.PokemonSpec;
+import com.pixelmongenerations.api.spawning.conditions.WorldTime;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 import com.pixelmongenerations.common.item.ItemCustomIcon;
 import com.pixelmongenerations.common.item.ItemPixelmonSprite;
 import com.pixelmongenerations.core.enums.items.EnumCustomIcon;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
@@ -45,6 +47,73 @@ public class LegendarySpawnList {
         String biome = this.player.world.getBiome(this.player.getPosition()).getRegistryName().toString();
         if (BiomeList.biomePokemonMap.containsKey(biome)) {
 
+            int ticks = (int) (this.player.world.getWorldTime() % 24000L);
+            ArrayList<WorldTime> currentTimes = WorldTime.getCurrent(ticks);
+            String weather;
+            if (this.player.world.isRaining()) {
+
+                weather = "rain";
+
+            } else if (this.player.world.isThundering()) {
+
+                weather = "storm";
+
+            } else {
+
+                weather = "clear";
+
+            }
+            String location;
+            if (this.player.getRidingEntity() != null) {
+
+                Entity mount = this.player.getRidingEntity();
+                if (mount.isInWater()) {
+
+                    location = "water";
+
+                } else if (mount.onGround) {
+
+                    if (mount.getPosition().getY() <= 63) {
+
+                        location = "underground";
+
+                    } else {
+
+                        location = "land";
+
+                    }
+
+                } else {
+
+                    location = "air";
+
+                }
+
+            } else {
+
+                if (this.player.isInWater()) {
+
+                    location = "water";
+
+                } else if (this.player.onGround) {
+
+                    if (this.player.getPosition().getY() <= 63) {
+
+                        location = "underground";
+
+                    } else {
+
+                        location = "land";
+
+                    }
+
+                } else {
+
+                    location = "air";
+
+                }
+
+            }
             List<LegendarySpawnInfo> pokemonThatSpawn = BiomeList.biomeLegendaryMap.get(biome);
             List<String> pokemonNames = new ArrayList<>();
             for (LegendarySpawnInfo psi : pokemonThatSpawn) {
@@ -61,10 +130,22 @@ public class LegendarySpawnList {
             List<String> usedNames = new ArrayList<>();
             for (LegendarySpawnInfo pokemonSpawnInfo : pokemonThatSpawn) {
 
-                if (!usedNames.contains(pokemonSpawnInfo.getName())) {
+                if (currentTimes.contains(WorldTime.valueOf(pokemonSpawnInfo.getTime().toUpperCase()))) {
 
-                    usedNames.add(pokemonSpawnInfo.getName());
-                    base.add(pokemonSpawnInfo);
+                    if (pokemonSpawnInfo.getWeather().equalsIgnoreCase(weather)) {
+
+                        if (pokemonSpawnInfo.getSpawnLocation().contains(location)) {
+
+                            if (!usedNames.contains(pokemonSpawnInfo.getName())) {
+
+                                usedNames.add(pokemonSpawnInfo.getName());
+                                base.add(pokemonSpawnInfo);
+
+                            }
+
+                        }
+
+                    }
 
                 }
 

@@ -18,6 +18,9 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
         addSubcommand(new OptCommand());
         addSubcommand(new ReloadCommand());
         addSubcommand(new ListCommand());
+        addSubcommand(new WhenCommand());
+        addSubcommand(new ForceClearCommand());
+        addSubcommand(new DoLegendarySpawnCommand());
 
     }
 
@@ -29,13 +32,18 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
     }
 
     @Override
-    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos) {
+    public List<String> getTabCompletions (MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos) {
 
         List<String> cmds = new ArrayList<>();
         if (args.length <= 1) {
 
             cmds.add("reload");
             cmds.add("opt");
+            cmds.add("when");
+            cmds.add("list");
+            cmds.add("ll");
+            cmds.add("clear");
+            cmds.add("dolegendaryspawn");
 
         } else {
 
@@ -86,7 +94,7 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
     }
 
     @Override
-    public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
+    public boolean checkPermission (MinecraftServer server, ICommandSender sender) {
 
         return true;
 
@@ -119,6 +127,27 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
             case "check":
                 ListCommand listCommand = new ListCommand();
                 listCommand.execute(server, sender, args);
+                break;
+
+            case "when":
+                WhenCommand whenCommand = new WhenCommand();
+                whenCommand.execute(server, sender, args);
+                break;
+
+            case "lastlegend":
+            case "ll":
+                LastLegendCommand llc = new LastLegendCommand();
+                llc.execute(server, sender, args);
+                break;
+
+            case "clear":
+                ForceClearCommand fcc = new ForceClearCommand();
+                fcc.execute(server, sender, args);
+                break;
+
+            case "dolegendaryspawn":
+                DoLegendarySpawnCommand dlspc = new DoLegendarySpawnCommand();
+                dlspc.execute(server, sender, args);
                 break;
 
         }

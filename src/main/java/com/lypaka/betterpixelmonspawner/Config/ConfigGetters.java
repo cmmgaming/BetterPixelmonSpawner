@@ -22,7 +22,6 @@ public class ConfigGetters {
     public static boolean bossesCanBeNormal;
     public static double bossSpawnChance;
     public static Map<String, Double> bossSpawnMap;
-    public static boolean generateFiles;
     public static double gmaxChance;
     public static int pokemonLevelModifier;
     public static boolean marksEnabled;
@@ -82,6 +81,14 @@ public class ConfigGetters {
     public static List<String> npcOptOut;
     public static List<String> pokemonOptOut;
 
+    public static int listGUIRows;
+    public static String listGUITitle;
+    public static Map<String, Map<String, String>> listGUISlotMap;
+    public static int listAmount;
+    public static int nextUpdatedSlot;
+    public static int timeSetting;
+    public static Map<String, Map<String, String>> lastSpawnMap;
+
     public static void load() throws ObjectMappingException {
 
         pokeClearEnabled = ConfigManager.getConfigNode(0, "PokeClear", "Enabled").getBoolean();
@@ -101,7 +108,6 @@ public class ConfigGetters {
         bossesCanBeNormal = ConfigManager.getConfigNode(2, "Bosses-Can-Be-Normals").getBoolean();
         bossSpawnChance = ConfigManager.getConfigNode(2, "Boss-Spawn-Chance").getDouble();
         bossSpawnMap = ConfigManager.getConfigNode(2, "Boss-Spawn-Map").getValue(new TypeToken<Map<String, Double>>() {});
-        generateFiles = ConfigManager.getConfigNode(2, "Generate-Files").getBoolean();
         gmaxChance = ConfigManager.getConfigNode(2, "GMax-Factor-Chance").getDouble();
         pokemonLevelModifier = ConfigManager.getConfigNode(2, "Level-Modifier").getInt();
         marksEnabled = ConfigManager.getConfigNode(2, "Marks-Enabled").getBoolean();
@@ -155,6 +161,14 @@ public class ConfigGetters {
         miscOptOut = new ArrayList<>(ConfigManager.getConfigNode(6, "Misc-Opt-Out").getList(TypeToken.of(String.class)));
         npcOptOut = new ArrayList<>(ConfigManager.getConfigNode(6, "NPC-Opt-Out").getList(TypeToken.of(String.class)));
         pokemonOptOut = new ArrayList<>(ConfigManager.getConfigNode(6, "Pokemon-Opt-Out").getList(TypeToken.of(String.class)));
+
+        listGUIRows = ConfigManager.getConfigNode(8, "GUI-Settings", "Rows").getInt();
+        listGUITitle = ConfigManager.getConfigNode(8, "GUI-Settings", "Title").getString();
+        listGUISlotMap = ConfigManager.getConfigNode(8, "GUI-Slots").getValue(new TypeToken<Map<String, Map<String, String>>>() {});
+        listAmount = ConfigManager.getConfigNode(8, "List-Settings", "Amount").getInt();
+        nextUpdatedSlot = ConfigManager.getConfigNode(8, "List-Settings", "Next-Updated-Slot").getInt();
+        timeSetting = ConfigManager.getConfigNode(8, "List-Settings", "Time-Setting").getInt();
+        lastSpawnMap = ConfigManager.getConfigNode(8, "Spawns").getValue(new TypeToken<Map<String, Map<String, String>>>() {});
 
     }
 

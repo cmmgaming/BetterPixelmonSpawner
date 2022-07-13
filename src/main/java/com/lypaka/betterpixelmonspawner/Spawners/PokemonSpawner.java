@@ -109,7 +109,7 @@ public class PokemonSpawner {
 
                         } else if (mount.onGround) {
 
-                            if (player.getPosition().getY() <= 63) {
+                            if (mount.getPosition().getY() <= 63) {
 
                                 location = "underground";
 
@@ -170,7 +170,7 @@ public class PokemonSpawner {
 
                                                 if (info.getWeather().equalsIgnoreCase(weather)) {
 
-                                                    if (info.getSpawnLocation().equalsIgnoreCase(location)) {
+                                                    if (info.getSpawnLocation().contains(location)) {
 
                                                         if (!usedNames.contains(info.getName())) {
 
@@ -316,7 +316,7 @@ public class PokemonSpawner {
                                 int x = safeSpawn.getX();
                                 int y = safeSpawn.getY();
                                 int z = safeSpawn.getZ();
-                                pokemon.setLocationAndAngles(safeSpawn.getX() + BetterPixelmonSpawner.random.nextDouble(), safeSpawn.getY(), safeSpawn.getZ() + BetterPixelmonSpawner.random.nextDouble(),0, 0);
+                                pokemon.setLocationAndAngles(x + BetterPixelmonSpawner.random.nextDouble(), y, z + BetterPixelmonSpawner.random.nextDouble(),0, 0);
                                 int level = 3;
                                 if (ConfigGetters.scalePokemonLevelsByDistance) {
 
@@ -343,7 +343,7 @@ public class PokemonSpawner {
                                 }
                                 pokemon.getLvl().setLevel(level);
                                 pokemon = PokemonUtils.validatePokemon(pokemon, level);
-                                pokemon.setLocationAndAngles(safeSpawn.getX() + 0.5, safeSpawn.getY(), safeSpawn.getZ() + 0.5,0, 0);
+                                pokemon.setLocationAndAngles(safeSpawn.getX() + BetterPixelmonSpawner.random.nextDouble(), safeSpawn.getY(), safeSpawn.getZ() + BetterPixelmonSpawner.random.nextDouble(),0, 0);
                                 pokemon.updateStats();
                                 boolean hostile = false;
                                 if (selectedSpawn.isHostile()) {

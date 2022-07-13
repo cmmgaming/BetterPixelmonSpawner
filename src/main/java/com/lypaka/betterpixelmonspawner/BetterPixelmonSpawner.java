@@ -116,6 +116,7 @@ public class BetterPixelmonSpawner {
         MinecraftForge.EVENT_BUS.register(new HolidayHandler());
         MinecraftForge.EVENT_BUS.register(new FishSpawner());
         MinecraftForge.EVENT_BUS.register(new RespawnListener());
+        MinecraftForge.EVENT_BUS.register(new CommandListener());
 
         // Loads the areas
         AreaRegistry.loadAreas();

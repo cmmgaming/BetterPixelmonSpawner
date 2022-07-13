@@ -10,6 +10,8 @@ import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.LegendarySpawnInfo;
 import com.lypaka.betterpixelmonspawner.Utils.FancyText;
 import com.lypaka.betterpixelmonspawner.Utils.FormIndexFromName;
+import com.lypaka.betterpixelmonspawner.Utils.LegendaryInfoGetters;
+import com.lypaka.betterpixelmonspawner.Utils.LegendaryListing;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.LegendaryUtils;
 import com.pixelmongenerations.api.pokemon.PokemonSpec;
 import com.pixelmongenerations.api.spawning.conditions.WorldTime;
@@ -22,11 +24,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class LegendarySpawner {
 
     private static Timer legendaryTimer = null;
+    public static LocalDateTime nextSpawnAttempt = null;
 
     public static void startTimer() {
 
@@ -58,6 +62,7 @@ public class LegendarySpawner {
             @Override
             public void run() {
 
+                nextSpawnAttempt = LocalDateTime.now().plusSeconds(ConfigGetters.legendarySpawnInterval);
                 List<EntityPlayerMP> onlinePlayers = new ArrayList<>();
                 for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.playerMap.entrySet()) {
 
@@ -191,7 +196,7 @@ public class LegendarySpawner {
 
                                             if (info.getWeather().equalsIgnoreCase(weather)) {
 
-                                                if (info.getSpawnLocation().equalsIgnoreCase(location)) {
+                                                if (info.getSpawnLocation().contains(location)) {
 
                                                     if (!usedNames.contains(info.getName())) {
 
@@ -327,7 +332,7 @@ public class LegendarySpawner {
                         safeSpawn = new BlockPos(spawnX, player.world.getTopSolidOrLiquidBlock(baseSpawn).getY(), spawnZ);
 
                     }
-                    pokemon.setLocationAndAngles(safeSpawn.getX() + 0.5, safeSpawn.getY(), safeSpawn.getZ() + 0.5,0, 0);
+                    pokemon.setLocationAndAngles(safeSpawn.getX() + BetterPixelmonSpawner.random.nextDouble(), safeSpawn.getY(), safeSpawn.getZ() + BetterPixelmonSpawner.random.nextDouble(),0, 0);
                     boolean hostile = false;
                     if (selectedSpawn.isHostile()) {
 
@@ -352,6 +357,13 @@ public class LegendarySpawner {
                             player.world.spawnEntity(legendarySpawnEvent.getPokemon());
                             LegendaryUtils.handleGlowing(legendarySpawnEvent.getPokemon());
                             LegendaryUtils.handleGracePeriod(legendarySpawnEvent.getPokemon(), legendarySpawnEvent.getPlayer());
+                            LegendaryInfoGetters.setLegendaryName(legendarySpawnEvent.getPokemon().getPokemonName());
+                            LegendaryInfoGetters.setPokemon(legendarySpawnEvent.getPokemon());
+                            LegendaryInfoGetters.setSpawnedPlayer(player);
+                            LegendaryInfoGetters.setSpawnPos(legendarySpawnEvent.getPokemon().getPosition());
+                            LegendaryInfoGetters.setTime(LocalDateTime.now());
+                            LegendaryListing.updateListingConfig(legendarySpawnEvent.getPokemon());
+                            legendarySpawnEvent.getPokemon().addTag("SpawnedLegendary"); // used for the last legend list, so the event listeners know what is a BPS spawned legendary
                             if (!ConfigGetters.legendarySpawnMessage.equalsIgnoreCase("")) {
 
                                 BetterPixelmonSpawner.server.getPlayerList().sendMessage(FancyText.getFancyText(ConfigGetters.legendarySpawnMessage
@@ -374,7 +386,7 @@ public class LegendarySpawner {
 
     }
 
-    private static String getPrettyBiomeName (String biomeID) {
+    public static String getPrettyBiomeName (String biomeID) {
 
         String[] split = biomeID.split(":");
         String name = "";

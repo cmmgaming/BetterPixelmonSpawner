@@ -92,6 +92,18 @@ public class ConfigUpdater {
 
         }
 
+        /** Version 1.5.0 */
+        if (!ConfigManager.getConfigNode(2, "Generate-Files").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(2, "Generate-Files").setValue(null);
+
+        }
+
         if (needsSaving) {
 
             ConfigManager.save();

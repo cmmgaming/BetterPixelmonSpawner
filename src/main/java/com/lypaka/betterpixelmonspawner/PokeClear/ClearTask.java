@@ -18,8 +18,7 @@ public class ClearTask {
 
     private static Timer warningTimer = null;
     private static Timer clearTimer = null;
-    private static final Map<String, World> worlds = WorldMap.worldMap;
-    private static int count = 0;
+    public static int count = 0;
 
     public static void startClearTask() {
 
@@ -60,7 +59,7 @@ public class ClearTask {
 
                 FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-                    for (Map.Entry<String, World> entry : worlds.entrySet()) {
+                    for (Map.Entry<String, World> entry : WorldMap.worldMap.entrySet()) {
 
                         World world = entry.getValue();
                         List<Entity> entityList;
@@ -126,7 +125,7 @@ public class ClearTask {
 
     }
 
-    private static boolean isBlacklisted (EntityPixelmon pokemon) {
+    public static boolean isBlacklisted (EntityPixelmon pokemon) {
 
         boolean blacklisted = false;
         if (pokemon.hasOwner()) {

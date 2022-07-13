@@ -11,6 +11,7 @@ import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.LegendarySpawnInfo;
 import com.lypaka.betterpixelmonspawner.Utils.FormIndexFromName;
 import com.lypaka.lypakautils.FancyText;
 import com.pixelmongenerations.api.pokemon.PokemonSpec;
+import com.pixelmongenerations.api.spawning.conditions.WorldTime;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 import com.pixelmongenerations.common.item.ItemCustomIcon;
 import com.pixelmongenerations.common.item.ItemPixelmonSprite;
@@ -58,14 +59,39 @@ public class FishSpawnList {
 
             }
 
+            String weather;
+            if (this.player.world.isRaining()) {
+
+                weather = "rain";
+
+            } else if (player.world.isThundering()) {
+
+                weather = "storm";
+
+            } else {
+
+                weather = "clear";
+
+            }
+            int ticks = (int) (this.player.world.getWorldTime() % 24000L);
+            ArrayList<WorldTime> currentTimes = WorldTime.getCurrent(ticks);
+
             List<FishingSpawnInfo> base = new ArrayList<>(pokemonNames.size());
             List<String> usedNames = new ArrayList<>();
             for (FishingSpawnInfo pokemonSpawnInfo : pokemonThatSpawn) {
 
-                if (!usedNames.contains(pokemonSpawnInfo.getName())) {
+                if (currentTimes.contains(WorldTime.valueOf(pokemonSpawnInfo.getTime().toUpperCase()))) {
 
-                    usedNames.add(pokemonSpawnInfo.getName());
-                    base.add(pokemonSpawnInfo);
+                    if (pokemonSpawnInfo.getWeather().equalsIgnoreCase(weather)) {
+
+                        if (!usedNames.contains(pokemonSpawnInfo.getName())) {
+
+                            usedNames.add(pokemonSpawnInfo.getName());
+                            base.add(pokemonSpawnInfo);
+
+                        }
+
+                    }
 
                 }
 

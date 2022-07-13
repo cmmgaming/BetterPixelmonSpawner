@@ -64,7 +64,7 @@ public class FishSpawner {
 
                         if (info.getRod().equalsIgnoreCase(rod)) {
 
-                            if (info.getLocation().equalsIgnoreCase(blockID)) {
+                            if (info.getLocation().contains(blockID)) {
 
                                 if (RandomHelper.getRandomChance(info.getSpawnChance())) {
 
