@@ -21,6 +21,8 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
         addSubcommand(new WhenCommand());
         addSubcommand(new ForceClearCommand());
         addSubcommand(new DoLegendarySpawnCommand());
+        addSubcommand(new DebugCommand());
+        addSubcommand(new CheckCountCommand());
 
     }
 
@@ -44,6 +46,8 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
             cmds.add("ll");
             cmds.add("clear");
             cmds.add("dolegendaryspawn");
+            cmds.add("debug");
+            cmds.add("count");
 
         } else {
 
@@ -67,6 +71,26 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
                     return PixelmonSpawnerCommand.getListOfStringsMatchingLastWord(args, modules);
 
                 }
+
+            } else if (arg.equalsIgnoreCase("debug")) {
+
+                if (args.length <= 2) {
+
+                    return PixelmonSpawnerCommand.getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+
+                } else {
+
+                    List<String> modules = new ArrayList<>();
+                    modules.add("pokemon");
+                    return PixelmonSpawnerCommand.getListOfStringsMatchingLastWord(args, modules);
+
+                }
+
+            } else if (arg.equalsIgnoreCase("checkcount") || arg.equalsIgnoreCase("count")) {
+
+                List<String> modules = new ArrayList<>();
+                modules.add("pokemon");
+                return PixelmonSpawnerCommand.getListOfStringsMatchingLastWord(args, modules);
 
             }
 
@@ -148,6 +172,17 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
             case "dolegendaryspawn":
                 DoLegendarySpawnCommand dlspc = new DoLegendarySpawnCommand();
                 dlspc.execute(server, sender, args);
+                break;
+
+            case "debug":
+                DebugCommand debugCommand = new DebugCommand();
+                debugCommand.execute(server, sender, args);
+                break;
+
+            case "checkcount":
+            case "count":
+                CheckCountCommand ccc = new CheckCountCommand();
+                ccc.execute(server, sender, args);
                 break;
 
         }

@@ -6,6 +6,7 @@ import com.lypaka.betterpixelmonspawner.Utils.LegendaryListing;
 import com.pixelmongenerations.api.events.spawning.DespawnEvent;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 import com.pixelmongenerations.core.enums.EnumSpecies;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 
@@ -17,6 +18,7 @@ public class DespawnListener {
     public void onDespawn (DespawnEvent event) {
 
         EntityPixelmon pokemon = event.getPokemon();
+        if (pokemon.battleController != null) return;
         for (String tag : pokemon.getTags()) {
 
             if (tag.contains("SpawnedPlayerUUID:")) {

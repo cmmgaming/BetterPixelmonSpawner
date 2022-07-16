@@ -2,22 +2,18 @@ package com.lypaka.betterpixelmonspawner.Commands;
 
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
+import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
 import com.lypaka.betterpixelmonspawner.PokeClear.ClearTask;
 import com.lypaka.betterpixelmonspawner.Utils.Counters.PokemonCounter;
 import com.lypaka.betterpixelmonspawner.Utils.PermissionHandler;
 import com.lypaka.lypakautils.FancyText;
-import com.lypaka.lypakautils.WorldMap;
-import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -54,60 +50,28 @@ public class ForceClearCommand extends CommandBase {
 
         FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-            for (Map.Entry<String, World> entry : WorldMap.worldMap.entrySet()) {
+            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-                World world = entry.getValue();
-                List<Entity> entityList;
-                if (!world.getMinecraftServer().isDedicatedServer()) {
+                for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.playerMap.entrySet()) {
 
-                    EntityPlayerMP player = world.getMinecraftServer().getPlayerList().getPlayerByUsername(world.getMinecraftServer().getPlayerList().getOnlinePlayerNames()[0]);
-                    entityList = player.world.loadedEntityList;
-
-                } else {
-
-                    entityList = world.loadedEntityList;
-
-                }
-                for (Entity ent : entityList) {
-
-                    if (ent instanceof EntityPixelmon) {
-
-                        EntityPixelmon pokemon = (EntityPixelmon) ent;
-                        if (!ClearTask.isBlacklisted(pokemon)) {
-
-                            // decrements a player's Pokemon counter
-                            for (String tag : pokemon.getTags()) {
-
-                                if (tag.contains("SpawnedPlayerUUID:")) {
-
-                                    String[] split = tag.split(":");
-                                    UUID uuid = UUID.fromString(split[1]);
-                                    PokemonCounter.decrement(uuid);
-                                    break;
-
-                                }
-
-                            }
-                            ClearTask.count++;
-                            pokemon.setDead();
-
-                        }
-
-                    }
+                    PokemonCounter.checkForDespawnPokemon(entry.getKey());
 
                 }
 
-            }
+                String msg = ConfigGetters.pokeClearMessage.replace("%number%", String.valueOf(ClearTask.count));
+                if (ClearTask.count == 1 && msg.contains("have")) {
 
-            String msg = "&e" + ClearTask.count + " Pokemon have been forcefully cleared.";
-            if (ClearTask.count == 1 && msg.contains("have")) {
+                    msg = msg.replace("have", "has");
 
-                msg = msg.replace("have", "has");
+                }
 
-            }
+                BetterPixelmonSpawner.server.getPlayerList().sendMessage(com.lypaka.betterpixelmonspawner.Utils.FancyText.getFancyText(msg
+                        .replace("%number%", String.valueOf(ClearTask.count))
+                ));
 
-            BetterPixelmonSpawner.server.getPlayerList().sendMessage(com.lypaka.betterpixelmonspawner.Utils.FancyText.getFancyText(msg));
-            ClearTask.count = 0;
+                ClearTask.count = 0;
+
+            });
 
         });
 

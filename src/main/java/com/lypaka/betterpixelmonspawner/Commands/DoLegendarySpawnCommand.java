@@ -73,27 +73,19 @@ public class DoLegendarySpawnCommand extends CommandBase {
 
             if (!ConfigGetters.legendaryOptOut.contains(entry.getValue().getUniqueID().toString())) {
 
-                if (!Area.isInArea(entry.getValue())) {
+                if (Area.getAreaFromLocation(entry.getValue()) != null) {
 
-                    onlinePlayers.add(entry.getValue());
-
-                } else {
-
-                    if (Area.getAreaFromLocation(entry.getValue()) != null) {
-
-                        Area area = Area.getAreaFromLocation(entry.getValue());
-                        List<String> entities = area.getEntities();
-                        if (!entities.contains("legendaries")) {
-
-                            onlinePlayers.add(entry.getValue());
-
-                        }
-
-                    } else {
+                    Area area = Area.getAreaFromLocation(entry.getValue());
+                    List<String> entities = area.getEntities();
+                    if (!entities.contains("legendaries")) {
 
                         onlinePlayers.add(entry.getValue());
 
                     }
+
+                } else {
+
+                    onlinePlayers.add(entry.getValue());
 
                 }
 

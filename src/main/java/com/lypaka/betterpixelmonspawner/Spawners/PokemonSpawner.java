@@ -5,6 +5,7 @@ import com.lypaka.betterpixelmonspawner.API.Spawning.*;
 import com.lypaka.betterpixelmonspawner.Areas.Area;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
+import com.lypaka.betterpixelmonspawner.DebugSystem.PlayerDebug;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.PokemonSpawnInfo;
@@ -58,26 +59,19 @@ public class PokemonSpawner {
 
                     List<String> usedNames = new ArrayList<>();
                     EntityPlayerMP player = playerEntry.getValue();
-                    if (Area.isInArea(player)) {
+                    PlayerDebug.printPokemonDebugInformation(player);
+                    if (Area.getAreaFromLocation(player) != null) {
 
-                        continue;
-
-                    } else {
-
-                        if (Area.getAreaFromLocation(player) != null) {
-
-                            Area area = Area.getAreaFromLocation(player);
-                            List<String> entities = area.getEntities();
-                            if (entities.contains("pokemon")) continue;
-
-                        }
+                        Area area = Area.getAreaFromLocation(player);
+                        List<String> entities = area.getEntities();
+                        if (entities.contains("pokemon")) continue;
 
                     }
-                    if (ConfigGetters.pokemonOptOut.contains(player.getUniqueID())) continue;
+                    if (ConfigGetters.pokemonOptOut.contains(player.getUniqueID().toString())) continue;
                     if (RepelHandler.hasRepel(player.getUniqueID())) continue;
-                    if (PokemonCounter.getCount(player.getUniqueID()) > ConfigGetters.maxPokemon) {
+                    if (PokemonCounter.getCount(player.getUniqueID()) >= ConfigGetters.maxPokemon) {
 
-                        if (ConfigGetters.maxPokemon > 0) continue;
+                        if (ConfigGetters.maxPokemon != 0) continue;
 
                     }
                     String worldName = player.world.getWorldInfo().getWorldName();
@@ -397,6 +391,7 @@ public class PokemonSpawner {
                                                         PokemonCounter.increment(bossSpawnEvent.getPokemon(), player.getUniqueID());
                                                         // Sets this tag for the PokeClear to be able to know what a Boss is, in the event of a "normal" Boss
                                                         bossSpawnEvent.getPokemon().addTag("PixelmonDefaultBoss");
+                                                        PokemonCounter.addPokemon(bossSpawnEvent.getPokemon(), player.getUniqueID());
 
                                                     });
                                                     continue;
@@ -427,6 +422,7 @@ public class PokemonSpawner {
 
                                                     player.world.spawnEntity(totemSpawnEvent.getPokemon());
                                                     PokemonCounter.increment(totemSpawnEvent.getPokemon(), player.getUniqueID());
+                                                    PokemonCounter.addPokemon(totemSpawnEvent.getPokemon(), player.getUniqueID());
 
                                                 });
                                                 continue;
@@ -454,6 +450,7 @@ public class PokemonSpawner {
 
                                                     player.world.spawnEntity(alphaSpawnEvent.getPokemon());
                                                     PokemonCounter.increment(alphaSpawnEvent.getPokemon(), player.getUniqueID());
+                                                    PokemonCounter.addPokemon(alphaSpawnEvent.getPokemon(), player.getUniqueID());
 
                                                 });
                                                 continue;
@@ -496,6 +493,7 @@ public class PokemonSpawner {
                                             shinySpawnEvent.getPokemon().setShiny(true);
                                             player.world.spawnEntity(shinySpawnEvent.getPokemon());
                                             PokemonCounter.increment(shinySpawnEvent.getPokemon(), player.getUniqueID());
+                                            PokemonCounter.addPokemon(shinySpawnEvent.getPokemon(), player.getUniqueID());
 
                                         });
 
@@ -512,6 +510,7 @@ public class PokemonSpawner {
                                             pokemonSpawnEvent.getPokemon().setGmaxFactor(finalGmax);
                                             player.world.spawnEntity(pokemonSpawnEvent.getPokemon());
                                             PokemonCounter.increment(pokemonSpawnEvent.getPokemon(), player.getUniqueID());
+                                            PokemonCounter.addPokemon(pokemonSpawnEvent.getPokemon(), player.getUniqueID());
 
                                         });
 

@@ -42,11 +42,4 @@ public class JoinListener {
 
     }
 
-    @SubscribeEvent
-    public void onLeave (PlayerEvent.PlayerLoggedOutEvent event) {
-
-        playerMap.entrySet().removeIf(entry -> entry.getKey().toString().equalsIgnoreCase(event.player.getUniqueID().toString()));
-
-    }
-
 }

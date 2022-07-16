@@ -45,7 +45,6 @@ public class NPCSpawner {
                     for (Map.Entry<UUID, EntityPlayerMP> playerEntry : JoinListener.playerMap.entrySet()) {
 
                         EntityPlayerMP player = playerEntry.getValue();
-                        if (Area.isInArea(player)) continue;
                         if (ConfigGetters.npcOptOut.contains(player.getUniqueID().toString())) continue;
                         if (NPCCounter.getCount(player.getUniqueID()) > ConfigGetters.maxNPCs) {
 

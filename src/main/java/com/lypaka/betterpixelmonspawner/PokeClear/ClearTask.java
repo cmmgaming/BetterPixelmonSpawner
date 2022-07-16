@@ -2,6 +2,7 @@ package com.lypaka.betterpixelmonspawner.PokeClear;
 
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
+import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
 import com.lypaka.betterpixelmonspawner.Utils.FancyText;
 import com.lypaka.betterpixelmonspawner.Utils.Counters.PokemonCounter;
 import com.lypaka.lypakautils.WorldMap;
@@ -56,48 +57,9 @@ public class ClearTask {
 
                         FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-                            for (Map.Entry<String, World> entry : WorldMap.worldMap.entrySet()) {
+                            for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.playerMap.entrySet()) {
 
-                                World world = entry.getValue();
-                                List<Entity> entityList;
-                                if (!world.getMinecraftServer().isDedicatedServer()) {
-
-                                    EntityPlayerMP player = world.getMinecraftServer().getPlayerList().getPlayerByUsername(world.getMinecraftServer().getPlayerList().getOnlinePlayerNames()[0]);
-                                    entityList = player.world.loadedEntityList;
-
-                                } else {
-
-                                    entityList = world.loadedEntityList;
-
-                                }
-                                for (Entity ent : entityList) {
-
-                                    if (ent instanceof EntityPixelmon) {
-
-                                        EntityPixelmon pokemon = (EntityPixelmon) ent;
-                                        if (!isBlacklisted(pokemon)) {
-
-                                            // decrements a player's Pokemon counter
-                                            for (String tag : pokemon.getTags()) {
-
-                                                if (tag.contains("SpawnedPlayerUUID:")) {
-
-                                                    String[] split = tag.split(":");
-                                                    UUID uuid = UUID.fromString(split[1]);
-                                                    PokemonCounter.decrement(uuid);
-                                                    break;
-
-                                                }
-
-                                            }
-                                            count++;
-                                            pokemon.setDead();
-
-                                        }
-
-                                    }
-
-                                }
+                                PokemonCounter.checkForDespawnPokemon(entry.getKey());
 
                             }
 

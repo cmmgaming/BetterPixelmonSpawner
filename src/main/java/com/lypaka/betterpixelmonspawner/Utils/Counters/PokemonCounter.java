@@ -1,15 +1,15 @@
 package com.lypaka.betterpixelmonspawner.Utils.Counters;
 
-import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
+import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
+import com.lypaka.betterpixelmonspawner.PokeClear.ClearTask;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class PokemonCounter {
 
     public static Map<UUID, Integer> pokemonCountMap = new HashMap<>();
+    public static Map<UUID, List<EntityPixelmon>> pokemonMap = new HashMap<>();
 
     public static int getCount (UUID uuid) {
 
@@ -26,7 +26,6 @@ public class PokemonCounter {
 
     public static void increment (EntityPixelmon pokemon, UUID uuid) {
 
-        if (ConfigGetters.maxPokemon <= 0) return;
         int count = getCount(uuid);
         int updated = count + 1;
         pokemonCountMap.put(uuid, updated);
@@ -36,10 +35,92 @@ public class PokemonCounter {
 
     public static void decrement (UUID uuid) {
 
-        if (ConfigGetters.maxPokemon <= 0) return;
         int count = getCount(uuid);
         int updated = Math.max(0, count - 1);
         pokemonCountMap.put(uuid, updated);
+
+    }
+
+    public static void addPokemon (EntityPixelmon pokemon, UUID uuid) {
+
+        List<EntityPixelmon> pokeList = new ArrayList<>();
+        if (pokemonMap.containsKey(uuid)) {
+
+            pokeList = pokemonMap.get(uuid);
+
+        }
+        pokeList.add(pokemon);
+        pokemonMap.put(uuid, pokeList);
+
+    }
+
+    public static void removePokemon (EntityPixelmon pokemon, UUID uuid) {
+
+        List<EntityPixelmon> pokeList = new ArrayList<>();
+        if (pokemonMap.containsKey(uuid)) {
+
+            pokeList = pokemonMap.get(uuid);
+
+        } else {
+
+            BetterPixelmonSpawner.logger.error("Tried to remove a Pokemon from a player it was not spawned for!");
+            BetterPixelmonSpawner.logger.error("Report this message to Lypaka!");
+            return;
+
+        }
+        pokeList.removeIf(entry -> {
+
+            if (entry.getUniqueID().toString().equalsIgnoreCase(pokemon.getUniqueID().toString())) {
+
+                decrement(uuid);
+                return true;
+
+            }
+
+            return false;
+
+        });
+        pokemonMap.put(uuid, pokeList);
+
+    }
+
+    public static void checkForDespawnPokemon (UUID uuid) {
+
+        if (!pokemonMap.containsKey(uuid)) return;
+        List<EntityPixelmon> pokemonList = pokemonMap.get(uuid);
+        pokemonList.removeIf(pokemon -> {
+
+            if (pokemon.isDead) {
+
+                decrement(uuid);
+                ClearTask.count++;
+                return true;
+
+            } else if (pokemon.battleController == null) {
+
+                if (!ClearTask.isBlacklisted(pokemon)) {
+
+                    for (String tag : pokemon.getTags()) {
+
+                        if (tag.contains("SpawnedPlayerUUID:")) {
+
+                            decrement(uuid);
+                            pokemon.setDead();
+                            ClearTask.count++;
+                            return true;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            return false;
+
+        });
+        pokemonMap.put(uuid, pokemonList);
 
     }
 

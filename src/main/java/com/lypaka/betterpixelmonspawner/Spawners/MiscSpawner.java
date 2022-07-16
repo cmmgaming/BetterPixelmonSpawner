@@ -44,7 +44,6 @@ public class MiscSpawner {
                     for (Map.Entry<UUID, EntityPlayerMP> playerEntry : JoinListener.playerMap.entrySet()) {
 
                         EntityPlayerMP player = playerEntry.getValue();
-                        if (Area.isInArea(player)) continue;
                         if (ConfigGetters.miscOptOut.contains(player.getUniqueID().toString())) continue;
                         if (MiscCounter.getCount(player.getUniqueID()) > ConfigGetters.maxMiscEntities) {
 
