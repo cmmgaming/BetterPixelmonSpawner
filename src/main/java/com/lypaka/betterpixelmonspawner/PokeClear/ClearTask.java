@@ -38,90 +38,91 @@ public class ClearTask {
         if (!ConfigGetters.pokeClearEnabled) return;
 
         warningTimer = new Timer();
+        clearTimer = new Timer();
         long msgInterval = ConfigGetters.clearWarningInterval * 1000L;
+        long clearInterval = ConfigGetters.pokeClearInterval * 1000L;
+        long interval = clearInterval - msgInterval;
+        long actualFuckingInterval = clearInterval + interval;
         warningTimer.schedule(new TimerTask() {
 
             @Override
             public void run() {
 
                 BetterPixelmonSpawner.server.getPlayerList().sendMessage(FancyText.getFancyText(ConfigGetters.clearWarningMessage));
+                clearTimer.schedule(new TimerTask() {
 
-            }
+                    @Override
+                    public void run() {
 
-        }, msgInterval, msgInterval);
+                        FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-        clearTimer = new Timer();
-        long interval = ConfigGetters.pokeClearInterval * 1000L;
-        clearTimer.schedule(new TimerTask() {
+                            for (Map.Entry<String, World> entry : WorldMap.worldMap.entrySet()) {
 
-            @Override
-            public void run() {
+                                World world = entry.getValue();
+                                List<Entity> entityList;
+                                if (!world.getMinecraftServer().isDedicatedServer()) {
 
-                FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
+                                    EntityPlayerMP player = world.getMinecraftServer().getPlayerList().getPlayerByUsername(world.getMinecraftServer().getPlayerList().getOnlinePlayerNames()[0]);
+                                    entityList = player.world.loadedEntityList;
 
-                    for (Map.Entry<String, World> entry : WorldMap.worldMap.entrySet()) {
+                                } else {
 
-                        World world = entry.getValue();
-                        List<Entity> entityList;
-                        if (!world.getMinecraftServer().isDedicatedServer()) {
+                                    entityList = world.loadedEntityList;
 
-                            EntityPlayerMP player = world.getMinecraftServer().getPlayerList().getPlayerByUsername(world.getMinecraftServer().getPlayerList().getOnlinePlayerNames()[0]);
-                            entityList = player.world.loadedEntityList;
+                                }
+                                for (Entity ent : entityList) {
 
-                        } else {
+                                    if (ent instanceof EntityPixelmon) {
 
-                            entityList = world.loadedEntityList;
+                                        EntityPixelmon pokemon = (EntityPixelmon) ent;
+                                        if (!isBlacklisted(pokemon)) {
 
-                        }
-                        for (Entity ent : entityList) {
+                                            // decrements a player's Pokemon counter
+                                            for (String tag : pokemon.getTags()) {
 
-                            if (ent instanceof EntityPixelmon) {
+                                                if (tag.contains("SpawnedPlayerUUID:")) {
 
-                                EntityPixelmon pokemon = (EntityPixelmon) ent;
-                                if (!isBlacklisted(pokemon)) {
+                                                    String[] split = tag.split(":");
+                                                    UUID uuid = UUID.fromString(split[1]);
+                                                    PokemonCounter.decrement(uuid);
+                                                    break;
 
-                                    // decrements a player's Pokemon counter
-                                    for (String tag : pokemon.getTags()) {
+                                                }
 
-                                        if (tag.contains("SpawnedPlayerUUID:")) {
-
-                                            String[] split = tag.split(":");
-                                            UUID uuid = UUID.fromString(split[1]);
-                                            PokemonCounter.decrement(uuid);
-                                            break;
+                                            }
+                                            count++;
+                                            pokemon.setDead();
 
                                         }
 
                                     }
-                                    count++;
-                                    pokemon.setDead();
 
                                 }
 
                             }
 
-                        }
+                            String msg = ConfigGetters.pokeClearMessage.replace("%number%", String.valueOf(count));
+                            if (count == 1 && msg.contains("have")) {
+
+                                msg = msg.replace("have", "has");
+
+                            }
+
+                            BetterPixelmonSpawner.server.getPlayerList().sendMessage(FancyText.getFancyText(msg
+                                    .replace("%number%", String.valueOf(count))
+                            ));
+
+                            count = 0;
+
+                        });
 
                     }
 
-                    String msg = ConfigGetters.pokeClearMessage.replace("%number%", String.valueOf(count));
-                    if (count == 1 && msg.contains("have")) {
-
-                        msg = msg.replace("have", "has");
-
-                    }
-
-                    BetterPixelmonSpawner.server.getPlayerList().sendMessage(FancyText.getFancyText(msg
-                            .replace("%number%", String.valueOf(count))
-                    ));
-
-                    count = 0;
-
-                });
+                }, interval);
 
             }
 
-        }, interval, interval);
+        }, 0, actualFuckingInterval);
 
     }
 

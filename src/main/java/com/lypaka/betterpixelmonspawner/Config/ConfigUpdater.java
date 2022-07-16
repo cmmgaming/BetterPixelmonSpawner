@@ -104,6 +104,23 @@ public class ConfigUpdater {
 
         }
 
+        /** Version 1.5.1 */
+        if (ConfigManager.getConfigNode(5, "Broadcasts").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(5, "Broadcasts").setComment("Sets broadcast messages to go off when a misc entity is spawned");
+            ConfigManager.getConfigNode(5, "Broadcasts", "pixelmon:zygarde_cell").setValue("&dA Zygarde Cell has spawned in a %biome% biome!");
+            ConfigManager.getConfigNode(5, "Broadcasts", "pixelmon:dynamax_energy").setValue("&dA Dynamax Beam has spawned in a %biome% biome!");
+            ConfigManager.getConfigNode(5, "Broadcasts", "pixelmon:wishing_star").setValue("&dA Wishing Star has spawned in a %biome% biome!");
+            ConfigManager.getConfigNode(5, "Broadcasts", "pixelmon:space_time_distortion").setValue("&dA Space Time Distortion has spawned in a %biome% biome!");
+            ConfigManager.getConfigNode(5, "Broadcasts", "pixelmon:mysterious_ring").setValue("&dA Mysterious Ring has spawned in a %biome% biome!");
+
+        }
+
         if (needsSaving) {
 
             ConfigManager.save();

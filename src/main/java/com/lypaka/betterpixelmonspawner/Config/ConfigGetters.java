@@ -64,6 +64,7 @@ public class ConfigGetters {
     public static Map<String, Double> npcSpawnMap;
     public static boolean unsafeSpawnLocations;
 
+    public static Map<String, String> miscBroadcastMap;
     public static int miscDespawnTimer;
     public static boolean miscSpawnerEnabled;
     public static int maxMiscEntities;
@@ -150,10 +151,12 @@ public class ConfigGetters {
         npcSpawnMap = ConfigManager.getConfigNode(4, "Spawn-Map").getValue(new TypeToken<Map<String, Double>>() {});
         unsafeSpawnLocations = ConfigManager.getConfigNode(4, "Unsafe-Spawn-Locations").getBoolean();
 
+        miscBroadcastMap = ConfigManager.getConfigNode(5, "Broadcasts").getValue(new TypeToken<Map<String, String>>() {});
         miscDespawnTimer = ConfigManager.getConfigNode(5, "Despawn-Timer").getInt();
         miscSpawnerEnabled = ConfigManager.getConfigNode(5, "Enabled").getBoolean();
         maxMiscEntities = ConfigManager.getConfigNode(5, "Max-Entities").getInt();
         miscEntityInterval = ConfigManager.getConfigNode(5, "Spawn-Interval").getInt();
+        miscRadiusXZ = ConfigManager.getConfigNode(5, "Spawn-Location-XZ").getInt();
         miscEntitySpawnMap = ConfigManager.getConfigNode(5, "Spawn-Map").getValue(new TypeToken<Map<String, Double>>() {});
         unsafeMiscSpawnLocations = ConfigManager.getConfigNode(5, "Unsafe-Spawn-Locations").getBoolean();
 

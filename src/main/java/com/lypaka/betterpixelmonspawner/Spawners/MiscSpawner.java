@@ -5,11 +5,13 @@ import com.lypaka.betterpixelmonspawner.Areas.Area;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
+import com.lypaka.betterpixelmonspawner.Utils.FancyText;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.EntityUtils;
 import com.lypaka.betterpixelmonspawner.Utils.Counters.MiscCounter;
 import com.pixelmongenerations.core.util.helper.RandomHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -140,12 +142,27 @@ public class MiscSpawner {
 
                         }
                         entity.setLocationAndAngles(spawn.getX() + 0.5, spawn.getY(), spawn.getZ() + 0.5, 0, 0);
-                        MiscSpawnEvent miscSpawnEvent = new MiscSpawnEvent(entity, player);
+                        entity.setEntityBoundingBox(new AxisAlignedBB(entity.getPosition()));
+                        MiscSpawnEvent miscSpawnEvent = new MiscSpawnEvent(entity, player, selectedID);
                         MinecraftForge.EVENT_BUS.post(miscSpawnEvent);
                         if (!miscSpawnEvent.isCanceled()) {
 
                             FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
+                                if (ConfigGetters.miscBroadcastMap.containsKey(miscSpawnEvent.getSelectedEntityID())) {
+
+                                    String message = ConfigGetters.miscBroadcastMap.get(miscSpawnEvent.getSelectedEntityID());
+                                    if (!message.equalsIgnoreCase("")) {
+
+                                        String biome = miscSpawnEvent.getEntity().world.getBiome(miscSpawnEvent.getEntity().getPosition()).getRegistryName().toString();
+                                        FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(FancyText.getFancyText(message
+                                                .replace("%biome%", biome)
+                                                .replace("%player%", miscSpawnEvent.getPlayer().getName())
+                                        ));
+
+                                    }
+
+                                }
                                 player.world.spawnEntity(miscSpawnEvent.getEntity());
                                 MiscCounter.increment(miscSpawnEvent.getEntity(), miscSpawnEvent.getPlayer().getUniqueID());
                                 EntityUtils.handleDespawning(miscSpawnEvent.getEntity());

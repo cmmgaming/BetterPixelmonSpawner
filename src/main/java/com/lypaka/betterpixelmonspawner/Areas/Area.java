@@ -87,19 +87,22 @@ public class Area {
 
     public static boolean isInArea (EntityPlayerMP player) {
 
+        if (BetterPixelmonSpawner.areas.size() == 0) return false;
         try {
 
             int x = player.getPosition().getX();
             int y = player.getPosition().getY();
             int z = player.getPosition().getZ();
-            int playerDim = WorldDimGetter.getDimID(player.world);
+            int playerDim = WorldDimGetter.getDimID(player.world, player);
+
+            if (playerDim == -99999) return false;
 
             for (Area area : BetterPixelmonSpawner.areas) {
 
                 if (x >= area.getMinX() && x <= area.getMaxX() &&
                         y >= area.getMinY() && y <= area.getMaxY() &&
                         z >= area.getMinZ() && z <= area.getMaxZ() &&
-                        WorldDimGetter.getDimID(area.getWorld()) == playerDim) {
+                        WorldDimGetter.getDimID(area.getWorld(), player) == playerDim) {
 
                     return true;
 
@@ -129,20 +132,23 @@ public class Area {
 
     public static Area getAreaFromLocation (EntityPlayerMP player) {
 
+        if (BetterPixelmonSpawner.areas.size() == 0) return null;
         Area area = null;
         try {
 
             int x = player.getPosition().getX();
             int y = player.getPosition().getY();
             int z = player.getPosition().getZ();
-            int playerDim = WorldDimGetter.getDimID(player.world);
+            int playerDim = WorldDimGetter.getDimID(player.world, player);
+
+            if (playerDim == -99999) return null;
 
             for (Area a : BetterPixelmonSpawner.areas) {
 
                 if (x >= area.getMinX() && x <= area.getMaxX() &&
                         y >= area.getMinY() && y <= area.getMaxY() &&
                         z >= area.getMinZ() && z <= area.getMaxZ() &&
-                        WorldDimGetter.getDimID(area.getWorld()) == playerDim) {
+                        WorldDimGetter.getDimID(area.getWorld(), player) == playerDim) {
 
                     area = a;
                     break;
