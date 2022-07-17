@@ -13,12 +13,18 @@ import java.util.UUID;
 public class JoinListener {
 
     public static Map<UUID, EntityPlayerMP> playerMap = new HashMap<>();
+    public static Map<UUID, EntityPlayerMP> pokemonMap = new HashMap<>();
 
     @SubscribeEvent
     public void onJoin (PlayerEvent.PlayerLoggedInEvent event) {
 
         EntityPlayerMP player = (EntityPlayerMP) event.player;
         playerMap.put(player.getUniqueID(), player);
+        if (!pokemonMap.containsKey(player.getUniqueID())) {
+
+            pokemonMap.put(player.getUniqueID(), player);
+
+        }
         if (ConfigGetters.pokemonOptOut.contains(player.getUniqueID().toString())) {
 
             player.sendMessage(FancyText.getFancyText("&eJust a reminder, you're currently opted out of Pokemon spawns!"));
@@ -39,6 +45,13 @@ public class JoinListener {
             player.sendMessage(FancyText.getFancyText("&eJust a reminder, you're currently opted out of legendary spawns!"));
 
         }
+
+    }
+
+    @SubscribeEvent
+    public void onLeave (PlayerEvent.PlayerLoggedOutEvent event) {
+
+        playerMap.entrySet().removeIf(entry -> entry.getKey().toString().equals(event.player.getUniqueID().toString()));
 
     }
 

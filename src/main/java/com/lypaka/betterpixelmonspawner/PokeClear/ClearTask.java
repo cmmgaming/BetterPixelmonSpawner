@@ -57,7 +57,7 @@ public class ClearTask {
 
                         FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-                            for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.playerMap.entrySet()) {
+                            for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.pokemonMap.entrySet()) {
 
                                 PokemonCounter.checkForDespawnPokemon(entry.getKey());
 
