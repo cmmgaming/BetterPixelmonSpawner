@@ -359,7 +359,7 @@ public class LegendarySpawner {
                             if (!ConfigGetters.legendarySpawnMessage.equalsIgnoreCase("")) {
 
                                 BetterPixelmonSpawner.server.getPlayerList().sendMessage(FancyText.getFancyText(ConfigGetters.legendarySpawnMessage
-                                        .replace("%biome%", getPrettyBiomeName(biomeID))
+                                        .replace("%biome%", getPrettyBiomeName(legendarySpawnEvent.getPokemon().world.getBiome(legendarySpawnEvent.getPokemon().getPosition()).getRegistryName().toString()))
                                         .replace("%pokemon%", legendarySpawnEvent.getPokemon().getPokemonName())
                                         .replace("%player%", legendarySpawnEvent.getPlayer().getName())
                                 ));

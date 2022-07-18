@@ -76,6 +76,12 @@ public class ClearTask {
 
                             count = 0;
 
+                            for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.playerMap.entrySet()) {
+
+                                JoinListener.pokemonMap.entrySet().removeIf(e2 -> entry.getKey().toString().equalsIgnoreCase(e2.getKey().toString()));
+
+                            }
+
                         });
 
                     }
