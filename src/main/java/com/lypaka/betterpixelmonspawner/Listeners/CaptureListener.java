@@ -132,6 +132,8 @@ public class CaptureListener {
 
         });
 
+        pokemon.getTags().removeIf(tag -> tag.contains("SpawnedPlayerUUID:"));
+
     }
 
 }

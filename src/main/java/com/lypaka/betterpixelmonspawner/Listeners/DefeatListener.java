@@ -4,11 +4,21 @@ import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Utils.Counters.PokemonCounter;
 import com.lypaka.betterpixelmonspawner.Utils.LegendaryListing;
 import com.pixelmongenerations.api.events.BeatWildPixelmonEvent;
+import com.pixelmongenerations.common.entity.npcs.registry.DropItemRegistry;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
+import com.pixelmongenerations.common.entity.pixelmon.drops.DroppedItem;
+import com.pixelmongenerations.common.entity.pixelmon.drops.EnumDropHandler;
+import com.pixelmongenerations.core.Pixelmon;
 import com.pixelmongenerations.core.enums.EnumSpecies;
+import com.pixelmongenerations.core.network.ChatHandler;
+import com.pixelmongenerations.core.network.packetHandlers.itemDrops.ItemDropMode;
+import com.pixelmongenerations.core.network.packetHandlers.itemDrops.ItemDropPacket;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class DefeatListener {
@@ -48,6 +58,12 @@ public class DefeatListener {
                 }
 
             });
+
+        }
+
+        if (!pokemon.getTags().stream().anyMatch(s -> s.contains("BossPokemon:Tier-"))) {
+
+            EnumDropHandler.dropFrom(pokemon, event.getPlayer());
 
         }
 

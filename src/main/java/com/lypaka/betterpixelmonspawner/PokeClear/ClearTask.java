@@ -60,6 +60,11 @@ public class ClearTask {
                             for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.pokemonMap.entrySet()) {
 
                                 PokemonCounter.checkForDespawnPokemon(entry.getKey());
+                                if (!JoinListener.playerMap.containsKey(entry.getKey())) {
+
+                                    JoinListener.pokemonMap.entrySet().removeIf(e2 -> e2.getKey().toString().equalsIgnoreCase(entry.getKey().toString()));
+
+                                }
 
                             }
 
@@ -75,12 +80,6 @@ public class ClearTask {
                             ));
 
                             count = 0;
-
-                            for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.playerMap.entrySet()) {
-
-                                JoinListener.pokemonMap.entrySet().removeIf(e2 -> entry.getKey().toString().equalsIgnoreCase(e2.getKey().toString()));
-
-                            }
 
                         });
 

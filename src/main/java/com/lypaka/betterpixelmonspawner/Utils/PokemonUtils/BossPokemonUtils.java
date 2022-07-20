@@ -18,6 +18,7 @@ public class BossPokemonUtils {
 
     public static void loadBossList() {
 
+        possibleBosses = new ArrayList<>();
         for (EnumSpecies species : EnumSpecies.values()) {
 
             if (EnumSpecies.legendaries.contains(species.getPokemonName()) || EnumSpecies.ultrabeasts.contains(species.getPokemonName())) {
