@@ -12,8 +12,23 @@ import java.util.Map;
 
 public class InfoRegistry {
 
+    public static ArrayList<PokemonSpawnInfo> landList = new ArrayList<>();
+    public static ArrayList<PokemonSpawnInfo> waterList = new ArrayList<>();
+    public static ArrayList<PokemonSpawnInfo> airList = new ArrayList<>();
+    public static ArrayList<PokemonSpawnInfo> undergroundList = new ArrayList<>();
+    public static ArrayList<LegendarySpawnInfo> legendaryList = new ArrayList<>();
+    public static ArrayList<FishingSpawnInfo> waterFishList = new ArrayList<>();
+    public static ArrayList<FishingSpawnInfo> lavaFishList = new ArrayList<>();
+
     public static void loadPokemonSpawnData() throws ObjectMappingException {
 
+        landList = new ArrayList<>();
+        waterList = new ArrayList<>();
+        airList = new ArrayList<>();
+        undergroundList = new ArrayList<>();
+        legendaryList = new ArrayList<>();
+        waterFishList = new ArrayList<>();
+        lavaFishList = new ArrayList<>();
         for (String name : PokemonConfig.fileNames) {
 
             // I could just use the name variable here but I'm too afraid it would fuck something else up by changing it now
@@ -143,6 +158,26 @@ public class InfoRegistry {
                                     }
                                     PokemonSpawnInfo pInfo = new PokemonSpawnInfo(name, biome, time, weather, levelRange, groupSize, spawnChance, spawnLocation, texture, heldItemID, hostile);
                                     pInfo.register();
+                                    if (spawnLocation.contains("land")) {
+
+                                        landList.add(pInfo);
+
+                                    }
+                                    if (spawnLocation.contains("water")) {
+
+                                        waterList.add(pInfo);
+
+                                    }
+                                    if (spawnLocation.contains("air")) {
+
+                                        airList.add(pInfo);
+
+                                    }
+                                    if (spawnLocation.contains("underground")) {
+
+                                        undergroundList.add(pInfo);
+
+                                    }
                                     psi.add(pInfo);
                                     BiomeList.biomePokemonMap.put(biome, psi);
 
@@ -159,6 +194,26 @@ public class InfoRegistry {
 
                             PokemonSpawnInfo pInfo = new PokemonSpawnInfo(name, biome, time, weather, levelRange, groupSize, spawnChance, spawnLocation, texture, heldItemID, hostile);
                             pInfo.register();
+                            if (spawnLocation.contains("land")) {
+
+                                landList.add(pInfo);
+
+                            }
+                            if (spawnLocation.contains("water")) {
+
+                                waterList.add(pInfo);
+
+                            }
+                            if (spawnLocation.contains("air")) {
+
+                                airList.add(pInfo);
+
+                            }
+                            if (spawnLocation.contains("underground")) {
+
+                                undergroundList.add(pInfo);
+
+                            }
                             List<PokemonSpawnInfo> psi = new ArrayList<>();
                             if (BiomeList.biomePokemonMap.containsKey(biome)) {
 

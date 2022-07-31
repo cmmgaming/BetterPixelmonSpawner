@@ -27,14 +27,16 @@ import java.util.*;
 public class LegendarySpawnList {
 
     private final EntityPlayerMP player;
+    private final String biome;
     private final Map<Integer, List<LegendarySpawnInfo>> spawns;
     private int min;
     private int max;
     private final List<Integer> pages;
 
-    public LegendarySpawnList (EntityPlayerMP player) {
+    public LegendarySpawnList (EntityPlayerMP player, String biome) {
 
         this.player = player;
+        this.biome = biome;
         this.spawns = new HashMap<>();
         this.min = 0;
         this.max = 53;
@@ -44,8 +46,7 @@ public class LegendarySpawnList {
 
     public void build() {
 
-        String biome = this.player.world.getBiome(this.player.getPosition()).getRegistryName().toString();
-        if (BiomeList.biomePokemonMap.containsKey(biome)) {
+        if (BiomeList.biomePokemonMap.containsKey(this.biome)) {
 
             int ticks = (int) (this.player.world.getWorldTime() % 24000L);
             ArrayList<WorldTime> currentTimes = WorldTime.getCurrent(ticks);
@@ -114,32 +115,36 @@ public class LegendarySpawnList {
                 }
 
             }
-            List<LegendarySpawnInfo> pokemonThatSpawn = BiomeList.biomeLegendaryMap.get(biome);
-            List<String> pokemonNames = new ArrayList<>();
-            for (LegendarySpawnInfo psi : pokemonThatSpawn) {
+            if (BiomeList.biomeLegendaryMap.containsKey(this.biome)) {
 
-                if (!pokemonNames.contains(psi.getName())) {
+                List<LegendarySpawnInfo> pokemonThatSpawn = BiomeList.biomeLegendaryMap.get(this.biome);
+                List<String> pokemonNames = new ArrayList<>();
+                for (LegendarySpawnInfo psi : pokemonThatSpawn) {
 
-                    pokemonNames.add(psi.getName());
+                    if (!pokemonNames.contains(psi.getName())) {
+
+                        pokemonNames.add(psi.getName());
+
+                    }
 
                 }
 
-            }
+                List<LegendarySpawnInfo> base = new ArrayList<>(pokemonNames.size());
+                List<String> usedNames = new ArrayList<>();
+                for (LegendarySpawnInfo pokemonSpawnInfo : pokemonThatSpawn) {
 
-            List<LegendarySpawnInfo> base = new ArrayList<>(pokemonNames.size());
-            List<String> usedNames = new ArrayList<>();
-            for (LegendarySpawnInfo pokemonSpawnInfo : pokemonThatSpawn) {
+                    if (currentTimes.contains(WorldTime.valueOf(pokemonSpawnInfo.getTime().toUpperCase()))) {
 
-                if (currentTimes.contains(WorldTime.valueOf(pokemonSpawnInfo.getTime().toUpperCase()))) {
+                        if (pokemonSpawnInfo.getWeather().equalsIgnoreCase(weather)) {
 
-                    if (pokemonSpawnInfo.getWeather().equalsIgnoreCase(weather)) {
+                            if (pokemonSpawnInfo.getSpawnLocation().contains(location)) {
 
-                        if (pokemonSpawnInfo.getSpawnLocation().contains(location)) {
+                                if (!usedNames.contains(pokemonSpawnInfo.getName())) {
 
-                            if (!usedNames.contains(pokemonSpawnInfo.getName())) {
+                                    usedNames.add(pokemonSpawnInfo.getName());
+                                    base.add(pokemonSpawnInfo);
 
-                                usedNames.add(pokemonSpawnInfo.getName());
-                                base.add(pokemonSpawnInfo);
+                                }
 
                             }
 
@@ -149,51 +154,51 @@ public class LegendarySpawnList {
 
                 }
 
-            }
+                List<LegendarySpawnInfo> pokemonToDisplay = arrangePokemon(base);
+                int spawnAmount = pokemonNames.size(); // we use this list because of the different PokemonSpawnInfo objects for each Pokemon
+                int pages = 1;
+                if (spawnAmount > 54) {
 
-            List<LegendarySpawnInfo> pokemonToDisplay = arrangePokemon(base);
-            int spawnAmount = pokemonNames.size(); // we use this list because of the different PokemonSpawnInfo objects for each Pokemon
-            int pages = 1;
-            if (spawnAmount > 54) {
+                    int dividedInt = spawnAmount / 54;
+                    double dividedDouble = (double) spawnAmount / 54;
+                    double dummyDouble = dividedInt + 0.0;
+                    if (dividedDouble > dummyDouble) {
 
-                int dividedInt = spawnAmount / 54;
-                double dividedDouble = (double) spawnAmount / 54;
-                double dummyDouble = dividedInt + 0.0;
-                if (dividedDouble > dummyDouble) {
-
-                    pages = dividedInt + 1;
-
-                }
-
-            }
-
-            for (int i = 1; i <= pages; i++) {
-
-                this.pages.add(i);
-
-            }
-
-            for (int i = 1; i <= pages; i++) {
-
-                setInts(i);
-                List<LegendarySpawnInfo> pokemonToPutInMap = new ArrayList<>(pokemonToDisplay.size());
-                for (int j = this.min; j < this.max; j++) {
-
-                    try {
-
-                        LegendarySpawnInfo spawnInfo = pokemonToDisplay.get(j);
-                        pokemonToPutInMap.add(spawnInfo);
-
-                    } catch (IndexOutOfBoundsException er) {
-
-                        break;
+                        pages = dividedInt + 1;
 
                     }
 
                 }
 
-                List<LegendarySpawnInfo> arrangedList = arrangePokemon(pokemonToPutInMap);
-                this.spawns.put(i, arrangedList);
+                for (int i = 1; i <= pages; i++) {
+
+                    this.pages.add(i);
+
+                }
+
+                for (int i = 1; i <= pages; i++) {
+
+                    setInts(i);
+                    List<LegendarySpawnInfo> pokemonToPutInMap = new ArrayList<>(pokemonToDisplay.size());
+                    for (int j = this.min; j < this.max; j++) {
+
+                        try {
+
+                            LegendarySpawnInfo spawnInfo = pokemonToDisplay.get(j);
+                            pokemonToPutInMap.add(spawnInfo);
+
+                        } catch (IndexOutOfBoundsException er) {
+
+                            break;
+
+                        }
+
+                    }
+
+                    List<LegendarySpawnInfo> arrangedList = arrangePokemon(pokemonToPutInMap);
+                    this.spawns.put(i, arrangedList);
+
+                }
 
             }
 

@@ -1,4 +1,4 @@
-package com.lypaka.betterpixelmonspawner.Areas;
+package com.lypaka.betterpixelmonspawner.DeadZones;
 
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.lypakautils.WorldDimGetter;
@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class Area {
+public class DeadZone {
 
     private final List<String> entities;
     private final int maxX;
@@ -18,7 +18,7 @@ public class Area {
     private final int minZ;
     private final World world;
 
-    public Area (List<String> entities, int maxX, int maxY, int maxZ, int minX, int minY, int minZ, World world) {
+    public DeadZone(List<String> entities, int maxX, int maxY, int maxZ, int minX, int minY, int minZ, World world) {
 
         this.entities = entities;
         this.maxX = maxX;
@@ -33,7 +33,7 @@ public class Area {
 
     public void create() {
 
-        BetterPixelmonSpawner.areas.add(this);
+        BetterPixelmonSpawner.deadZones.add(this);
 
     }
 
@@ -87,7 +87,7 @@ public class Area {
 
     public static boolean isInArea (EntityPlayerMP player) {
 
-        if (BetterPixelmonSpawner.areas.size() == 0) return false;
+        if (BetterPixelmonSpawner.deadZones.size() == 0) return false;
         try {
 
             int x = player.getPosition().getX();
@@ -97,12 +97,12 @@ public class Area {
 
             if (playerDim == -99999) return false;
 
-            for (Area area : BetterPixelmonSpawner.areas) {
+            for (DeadZone deadZone : BetterPixelmonSpawner.deadZones) {
 
-                if (x >= area.getMinX() && x <= area.getMaxX() &&
-                        y >= area.getMinY() && y <= area.getMaxY() &&
-                        z >= area.getMinZ() && z <= area.getMaxZ() &&
-                        WorldDimGetter.getDimID(area.getWorld(), player) == playerDim) {
+                if (x >= deadZone.getMinX() && x <= deadZone.getMaxX() &&
+                        y >= deadZone.getMinY() && y <= deadZone.getMaxY() &&
+                        z >= deadZone.getMinZ() && z <= deadZone.getMaxZ() &&
+                        WorldDimGetter.getDimID(deadZone.getWorld(), player) == playerDim) {
 
                     return true;
 
@@ -130,10 +130,10 @@ public class Area {
 
     }
 
-    public static Area getAreaFromLocation (EntityPlayerMP player) {
+    public static DeadZone getAreaFromLocation (EntityPlayerMP player) {
 
-        if (BetterPixelmonSpawner.areas.size() == 0) return null;
-        Area area = null;
+        if (BetterPixelmonSpawner.deadZones.size() == 0) return null;
+        DeadZone deadZone = null;
         try {
 
             int x = player.getPosition().getX();
@@ -143,14 +143,14 @@ public class Area {
 
             if (playerDim == -99999) return null;
 
-            for (Area a : BetterPixelmonSpawner.areas) {
+            for (DeadZone a : BetterPixelmonSpawner.deadZones) {
 
-                if (x >= area.getMinX() && x <= area.getMaxX() &&
-                        y >= area.getMinY() && y <= area.getMaxY() &&
-                        z >= area.getMinZ() && z <= area.getMaxZ() &&
-                        WorldDimGetter.getDimID(area.getWorld(), player) == playerDim) {
+                if (x >= deadZone.getMinX() && x <= deadZone.getMaxX() &&
+                        y >= deadZone.getMinY() && y <= deadZone.getMaxY() &&
+                        z >= deadZone.getMinZ() && z <= deadZone.getMaxZ() &&
+                        WorldDimGetter.getDimID(deadZone.getWorld(), player) == playerDim) {
 
-                    area = a;
+                    deadZone = a;
                     break;
 
                 }
@@ -167,7 +167,7 @@ public class Area {
 
         }
 
-        return area;
+        return deadZone;
 
     }
 

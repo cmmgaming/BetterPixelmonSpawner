@@ -1,7 +1,7 @@
 package com.lypaka.betterpixelmonspawner;
 
-import com.lypaka.betterpixelmonspawner.Areas.Area;
-import com.lypaka.betterpixelmonspawner.Areas.AreaRegistry;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZone;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZoneRegistry;
 import com.lypaka.betterpixelmonspawner.Commands.PixelmonSpawnerCommand;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Config.ConfigManager;
@@ -10,7 +10,6 @@ import com.lypaka.betterpixelmonspawner.Config.PokemonConfig;
 import com.lypaka.betterpixelmonspawner.Holidays.HolidayHandler;
 import com.lypaka.betterpixelmonspawner.Listeners.*;
 import com.lypaka.betterpixelmonspawner.PokeClear.ClearTask;
-import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.InfoRegistry;
 import com.lypaka.betterpixelmonspawner.Spawners.*;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.BossPokemonUtils;
@@ -31,7 +30,6 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 @Mod(
@@ -54,7 +52,7 @@ public class BetterPixelmonSpawner {
     public static Random random = new Random();
     public static LocalDate currentDay = LocalDate.now();
     public static MinecraftServer server;
-    public static List<Area> areas = new ArrayList<>();
+    public static List<DeadZone> deadZones = new ArrayList<>();
 
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event) throws ObjectMappingException {
@@ -119,7 +117,7 @@ public class BetterPixelmonSpawner {
         MinecraftForge.EVENT_BUS.register(new CommandListener());
 
         // Loads the areas
-        AreaRegistry.loadAreas();
+        DeadZoneRegistry.loadAreas();
 
     }
 
@@ -130,6 +128,7 @@ public class BetterPixelmonSpawner {
         ConfigManager.getConfigNode(6, "Misc-Opt-Out").setValue(ConfigGetters.miscOptOut);
         ConfigManager.getConfigNode(6, "NPC-Opt-Out").setValue(ConfigGetters.npcOptOut);
         ConfigManager.getConfigNode(6, "Pokemon-Opt-Out").setValue(ConfigGetters.pokemonOptOut);
+        ConfigManager.getConfigNode(6, "Spawner-Filter").setValue(ConfigGetters.locationMap);
         ConfigManager.save();
 
     }

@@ -1,7 +1,7 @@
 package com.lypaka.betterpixelmonspawner.Spawners;
 
 import com.lypaka.betterpixelmonspawner.API.Spawning.MiscSpawnEvent;
-import com.lypaka.betterpixelmonspawner.Areas.Area;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZone;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
@@ -122,10 +122,10 @@ public class MiscSpawner {
 
                         }
                         if (selectedID == null) continue;
-                        if (Area.getAreaFromLocation(player) != null) {
+                        if (DeadZone.getAreaFromLocation(player) != null) {
 
-                            Area area = Area.getAreaFromLocation(player);
-                            List<String> entities = area.getEntities();
+                            DeadZone deadZone = DeadZone.getAreaFromLocation(player);
+                            List<String> entities = deadZone.getEntities();
                             if (entities.contains(selectedID)) {
 
                                 continue;

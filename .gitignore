@@ -3904,3 +3904,159 @@ run/saves/New World/advancements/2b83ebdc-0604-37b1-94a0-4298b1021b84.json
 run/saves/New World/playerdata/2b83ebdc-0604-37b1-94a0-4298b1021b84.dat
 run/saves/New World/pokemon/2b83ebdc-0604-37b1-94a0-4298b1021b84.pk
 run/saves/New World/stats/2b83ebdc-0604-37b1-94a0-4298b1021b84.json
+.gradle/4.10.3/fileHashes/fileHashes.bin
+.gradle/4.10.3/fileHashes/fileHashes.lock
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+build/classes/java/main/com/lypaka/betterpixelmonspawner/API/Spawning/HolidaySpawnEvent.class
+build/classes/java/main/com/lypaka/betterpixelmonspawner/Commands/LocationCommand.class
+build/classes/java/main/com/lypaka/betterpixelmonspawner/Commands/WhereCommand.class
+build/classes/java/main/com/lypaka/betterpixelmonspawner/Config/ConfigGetters$7.class
+build/classes/java/main/com/lypaka/betterpixelmonspawner/DeadZones/DeadZone.class
+build/classes/java/main/com/lypaka/betterpixelmonspawner/DeadZones/DeadZoneRegistry$1.class
+build/classes/java/main/com/lypaka/betterpixelmonspawner/DeadZones/DeadZoneRegistry.class
+build/classes/java/main/com/lypaka/betterpixelmonspawner/GUIs/WhereMenu.class
+build/libs/BetterPixelmonSpawner-1.5.5.jar
+build/resources/main/assets/betterpixelmonspawner/deadZones.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-aerodactyl.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon10.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon11.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon12.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon13.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon14.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon15.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon16.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon17.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon18.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon19.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon20.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon21.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon22.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon23.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon24.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon25.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon26.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon27.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon28.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon29.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon30.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon31.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon32.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon33.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon34.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon35.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon36.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon37.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon38.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon39.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon40.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon41.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon42.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon43.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon44.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon45.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon46.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon47.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon48.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon49.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon5.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon50.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon51.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon52.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon53.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon54.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon6.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon7.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon8.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-fakemon9.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-ghost.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-kabutops.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-redblue.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno-yellow.conf
+build/resources/main/assets/betterpixelmonspawner/pokemon/missingno.conf
+build/sources/main/java/com/lypaka/betterpixelmonspawner/API/Spawning/HolidaySpawnEvent.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/API/Spawning/MiscSpawnEvent.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Areas/Area.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Areas/AreaRegistry.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/BetterPixelmonSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Commands/LocationCommand.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Commands/PixelmonSpawnerCommand.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Commands/ReloadCommand.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Commands/WhereCommand.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Config/ConfigGetters.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Config/ConfigManager.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Config/PokemonConfig.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/DeadZones/DeadZone.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/DeadZones/DeadZoneRegistry.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/GUIs/WhereMenu.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Holidays/HolidayHandler.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Listeners/BattleListener.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Listeners/CaptureListener.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Listeners/DefeatListener.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Listeners/DespawnListener.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Listeners/JoinListener.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/PokeClear/ClearTask.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/PokemonSpawningInfo/BiomeList.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/PokemonSpawningInfo/InfoRegistry.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/PokemonSpawningInfo/PokemonInfo.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/LegendarySpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/MiscSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/NPCSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/PokemonSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Utils/SpawnerUtils.java
+build/tmp/extractAnnotationsJar/input1295420882439367542.jar
+build/tmp/extractAnnotationsShadowJar/input8332826781531947627.jar
+build/tmp/reobfJar/reobf-default812680604842692980.srg
+build/tmp/reobfJar/reobf-extraLines1767575750081448263.srg
+build/tmp/reobfShadowJar/reobf-default3528016676591915197.srg
+build/tmp/reobfShadowJar/reobf-extraLines52169282757780539.srg
+run/config/betterpixelmonspawner/deadZones.conf
+run/crash-reports/crash-2022-07-28_19.13.47-server.txt
+run/crash-reports/crash-2022-07-28_19.17.36-server.txt
+run/logs/2022-07-28-1.log.gz
+run/logs/2022-07-28-2.log.gz
+run/logs/2022-07-28-3.log.gz
+run/logs/2022-07-28-4.log.gz
+run/logs/2022-07-28-5.log.gz
+run/logs/2022-07-28-6.log.gz
+run/logs/2022-07-28-7.log.gz
+run/logs/2022-07-29-1.log.gz
+run/logs/2022-07-29-2.log.gz
+run/logs/2022-07-30-1.log.gz
+run/logs/2022-07-30-2.log.gz
+run/logs/2022-07-30-3.log.gz
+run/saves/New World/advancements/453f7d61-95c2-3540-9f32-1609f539a60e.json
+run/saves/New World/advancements/5bd62aa7-8886-32aa-953e-97bdbc2a6931.json
+run/saves/New World/advancements/93bfa0b6-cc14-3c0c-8efa-0bcc48245274.json
+run/saves/New World/advancements/e8d9e895-aa3b-3a25-8dde-f1e015a97510.json
+run/saves/New World/advancements/fe736038-102e-365b-a97e-eabc472944ec.json
+run/saves/New World/data/Stronghold.dat
+run/saves/New World/data/Temple.dat
+run/saves/New World/DIM1/data/EndCity.dat
+run/saves/New World/DIM1/region/r.-1.-1.mca
+run/saves/New World/DIM1/region/r.-1.0.mca
+run/saves/New World/DIM1/region/r.-4.-1.mca
+run/saves/New World/DIM1/region/r.-4.-2.mca
+run/saves/New World/DIM1/region/r.0.-1.mca
+run/saves/New World/DIM1/region/r.0.0.mca
+run/saves/New World/playerdata/453f7d61-95c2-3540-9f32-1609f539a60e.dat
+run/saves/New World/playerdata/5bd62aa7-8886-32aa-953e-97bdbc2a6931.dat
+run/saves/New World/playerdata/93bfa0b6-cc14-3c0c-8efa-0bcc48245274.dat
+run/saves/New World/playerdata/e8d9e895-aa3b-3a25-8dde-f1e015a97510.dat
+run/saves/New World/playerdata/fe736038-102e-365b-a97e-eabc472944ec.dat
+run/saves/New World/pokemon/453f7d61-95c2-3540-9f32-1609f539a60e.pk
+run/saves/New World/pokemon/5bd62aa7-8886-32aa-953e-97bdbc2a6931.pk
+run/saves/New World/pokemon/93bfa0b6-cc14-3c0c-8efa-0bcc48245274.pk
+run/saves/New World/pokemon/e8d9e895-aa3b-3a25-8dde-f1e015a97510.pk
+run/saves/New World/pokemon/fe736038-102e-365b-a97e-eabc472944ec.pk
+run/saves/New World/region/r.-4.-1.mca
+run/saves/New World/region/r.-4.-2.mca
+run/saves/New World/stats/453f7d61-95c2-3540-9f32-1609f539a60e.json
+run/saves/New World/stats/5bd62aa7-8886-32aa-953e-97bdbc2a6931.json
+run/saves/New World/stats/93bfa0b6-cc14-3c0c-8efa-0bcc48245274.json
+run/saves/New World/stats/e8d9e895-aa3b-3a25-8dde-f1e015a97510.json
+run/saves/New World/stats/fe736038-102e-365b-a97e-eabc472944ec.json
+run/screenshots/2022-07-29_22.57.34.png
+run/screenshots/2022-07-30_01.46.20.png
+.gradle/4.10.3/fileHashes/fileHashes.bin
+.gradle/4.10.3/fileHashes/fileHashes.lock
+.gradle/buildOutputCleanup/buildOutputCleanup.lock

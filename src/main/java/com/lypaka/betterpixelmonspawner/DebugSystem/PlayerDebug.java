@@ -1,7 +1,6 @@
 package com.lypaka.betterpixelmonspawner.DebugSystem;
 
-import com.lypaka.betterpixelmonspawner.API.Spawning.PokemonSpawnEvent;
-import com.lypaka.betterpixelmonspawner.Areas.Area;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZone;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Utils.Counters.PokemonCounter;
@@ -21,10 +20,10 @@ public class PlayerDebug {
         if (!trackedPlayers.contains(player.getUniqueID())) return;
         boolean spawnHappens = true;
         BetterPixelmonSpawner.logger.info("DEBUG: Printing information for " + player.getName() + "'s Pokemon spawn attempt!");
-        if (Area.getAreaFromLocation(player) != null) {
+        if (DeadZone.getAreaFromLocation(player) != null) {
 
-            Area area = Area.getAreaFromLocation(player);
-            List<String> entities = area.getEntities();
+            DeadZone deadZone = DeadZone.getAreaFromLocation(player);
+            List<String> entities = deadZone.getEntities();
             if (entities.contains("pokemon")) {
 
                 BetterPixelmonSpawner.logger.info("DEBUG: " + player.getName() + " is in an Area that does not allow Pokemon spawns!");

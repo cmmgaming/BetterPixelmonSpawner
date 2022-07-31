@@ -28,14 +28,16 @@ import java.util.*;
 public class PokemonSpawnList {
 
     private final EntityPlayerMP player;
+    private final String biome;
     private final Map<Integer, List<PokemonSpawnInfo>> spawns;
     private int min;
     private int max;
     private final List<Integer> pages;
 
-    public PokemonSpawnList (EntityPlayerMP player) {
+    public PokemonSpawnList (EntityPlayerMP player, String biome) {
 
         this.player = player;
+        this.biome = biome;
         this.spawns = new HashMap<>();
         this.min = 0;
         this.max = 53;
@@ -45,8 +47,7 @@ public class PokemonSpawnList {
 
     public void build() {
 
-        String biome = this.player.world.getBiome(this.player.getPosition()).getRegistryName().toString();
-        if (BiomeList.biomePokemonMap.containsKey(biome)) {
+        if (BiomeList.biomePokemonMap.containsKey(this.biome)) {
 
             int ticks = (int) (this.player.world.getWorldTime() % 24000L);
             ArrayList<WorldTime> currentTimes = WorldTime.getCurrent(ticks);
@@ -115,7 +116,7 @@ public class PokemonSpawnList {
                 }
 
             }
-            List<PokemonSpawnInfo> pokemonThatSpawn = BiomeList.biomePokemonMap.get(biome);
+            List<PokemonSpawnInfo> pokemonThatSpawn = BiomeList.biomePokemonMap.get(this.biome);
             List<String> pokemonNames = new ArrayList<>();
             for (PokemonSpawnInfo psi : pokemonThatSpawn) {
 

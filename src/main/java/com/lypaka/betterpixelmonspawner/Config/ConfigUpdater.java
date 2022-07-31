@@ -1,5 +1,8 @@
 package com.lypaka.betterpixelmonspawner.Config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ConfigUpdater {
 
     public static void updateConfig() {
@@ -118,6 +121,32 @@ public class ConfigUpdater {
             ConfigManager.getConfigNode(5, "Broadcasts", "pixelmon:wishing_star").setValue("&dA Wishing Star has spawned in a %biome% biome!");
             ConfigManager.getConfigNode(5, "Broadcasts", "pixelmon:space_time_distortion").setValue("&dA Space Time Distortion has spawned in a %biome% biome!");
             ConfigManager.getConfigNode(5, "Broadcasts", "pixelmon:mysterious_ring").setValue("&dA Mysterious Ring has spawned in a %biome% biome!");
+
+        }
+
+        /** Version 1.5.5 */
+        if (ConfigManager.getConfigNode(3, "Spawn-Interval-Max").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(3, "Spawn-Interval").setValue(null);
+            ConfigManager.getConfigNode(3, "Spawn-Interval-Max").setValue(3600);
+            ConfigManager.getConfigNode(3, "Spawn-Interval-Min").setValue(1800);
+
+        }
+
+        if (ConfigManager.getConfigNode(6, "Spawner-Filter").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            Map<String, String> uuidMap = new HashMap<>();
+            ConfigManager.getConfigNode(6, "Spawner-Filter").setValue(uuidMap);
 
         }
 

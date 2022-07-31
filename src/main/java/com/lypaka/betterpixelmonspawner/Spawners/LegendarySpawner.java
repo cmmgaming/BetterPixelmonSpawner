@@ -2,21 +2,20 @@ package com.lypaka.betterpixelmonspawner.Spawners;
 
 import com.lypaka.betterpixelmonspawner.API.HostileEvent;
 import com.lypaka.betterpixelmonspawner.API.Spawning.LegendarySpawnEvent;
-import com.lypaka.betterpixelmonspawner.Areas.Area;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZone;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.LegendarySpawnInfo;
-import com.lypaka.betterpixelmonspawner.Utils.FancyText;
-import com.lypaka.betterpixelmonspawner.Utils.FormIndexFromName;
-import com.lypaka.betterpixelmonspawner.Utils.LegendaryInfoGetters;
-import com.lypaka.betterpixelmonspawner.Utils.LegendaryListing;
+import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.PokemonSpawnInfo;
+import com.lypaka.betterpixelmonspawner.Utils.*;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.LegendaryUtils;
 import com.pixelmongenerations.api.pokemon.PokemonSpec;
 import com.pixelmongenerations.api.spawning.conditions.WorldTime;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 import com.pixelmongenerations.core.util.helper.RandomHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,6 +30,8 @@ public class LegendarySpawner {
 
     private static Timer legendaryTimer = null;
     public static LocalDateTime nextSpawnAttempt = null;
+    private static long interval;
+    private static int rand;
 
     public static void startTimer() {
 
@@ -55,23 +56,27 @@ public class LegendarySpawner {
 
         }
 
-        long interval = ConfigGetters.legendarySpawnInterval * 1000L;
+        rand = RandomHelper.getRandomNumberBetween(ConfigGetters.legendarySpawnIntervalMin, ConfigGetters.legendarySpawnIntervalMax);
+        interval = rand * 1000L;
+        nextSpawnAttempt = LocalDateTime.now().plusSeconds(rand);
         legendaryTimer = new Timer();
         legendaryTimer.schedule(new TimerTask() {
 
             @Override
             public void run() {
 
-                nextSpawnAttempt = LocalDateTime.now().plusSeconds(ConfigGetters.legendarySpawnInterval);
+                rand = RandomHelper.getRandomNumberBetween(ConfigGetters.legendarySpawnIntervalMin, ConfigGetters.legendarySpawnIntervalMax);
+                interval = rand * 1000L;
+                nextSpawnAttempt = LocalDateTime.now().plusSeconds(rand);
                 List<EntityPlayerMP> onlinePlayers = new ArrayList<>();
                 for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.playerMap.entrySet()) {
 
                     if (!ConfigGetters.legendaryOptOut.contains(entry.getValue().getUniqueID().toString())) {
 
-                        if (Area.getAreaFromLocation(entry.getValue()) != null) {
+                        if (DeadZone.getAreaFromLocation(entry.getValue()) != null) {
 
-                            Area area = Area.getAreaFromLocation(entry.getValue());
-                            List<String> entities = area.getEntities();
+                            DeadZone deadZone = DeadZone.getAreaFromLocation(entry.getValue());
+                            List<String> entities = deadZone.getEntities();
                             if (!entities.contains("legendaries")) {
 
                                 onlinePlayers.add(entry.getValue());
@@ -103,29 +108,67 @@ public class LegendarySpawner {
                 if (ConfigGetters.worldBlacklist.contains(worldName)) return;
                 String biomeID = player.world.getBiome(player.getPosition()).getRegistryName().toString();
                 if (!BiomeList.biomesToPokemon.containsKey(biomeID)) return;
+                if (!BiomeList.biomeLegendaryMap.containsKey(biomeID)) return;
 
                 List<LegendarySpawnInfo> possibleSpawns = new ArrayList<>();
                 List<String> usedNames = new ArrayList<>();
                 String location;
-                if (player.isInWater()) {
+                if (!ConfigGetters.locationMap.containsKey(player.getUniqueID().toString())) {
 
-                    location = "water";
+                    if (player.getRidingEntity() != null) {
 
-                } else if (player.onGround) {
+                        Entity mount = player.getRidingEntity();
+                        if (mount.isInWater()) {
 
-                    if (player.getPosition().getY() <= 63) {
+                            location = "water";
 
-                        location = "underground";
+                        } else if (mount.onGround) {
+
+                            if (mount.getPosition().getY() <= 63) {
+
+                                location = "underground";
+
+                            } else {
+
+                                location = "land";
+
+                            }
+
+                        } else {
+
+                            location = "air";
+
+                        }
 
                     } else {
 
-                        location = "land";
+                        if (player.isInWater()) {
+
+                            location = "water";
+
+                        } else if (player.onGround) {
+
+                            if (player.getPosition().getY() <= 63) {
+
+                                location = "underground";
+
+                            } else {
+
+                                location = "land";
+
+                            }
+
+                        } else {
+
+                            location = "air";
+
+                        }
 
                     }
 
-                }  else {
+                } else {
 
-                    location = "air";
+                    location = ConfigGetters.locationMap.get(player.getUniqueID().toString());
 
                 }
                 FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
@@ -224,14 +267,60 @@ public class LegendarySpawner {
 
                     }
 
-                    LegendarySpawnInfo selectedSpawn;
-                    if (possibleSpawns.size() == 1) {
+                    Map<LegendarySpawnInfo, Double> spawnChanceMap = new HashMap<>();
+                    List<Double> spawnChances = new ArrayList<>(possibleSpawns.size());
+                    int spawnIndex = 0;
+                    for (LegendarySpawnInfo info : possibleSpawns) {
 
-                        selectedSpawn = possibleSpawns.get(0);
+                        spawnChanceMap.put(info, info.getSpawnChance());
+                        spawnChances.add(spawnIndex, info.getSpawnChance());
+                        spawnIndex++;
 
-                    } else {
+                    }
+                    Collections.sort(spawnChances);
+                    int spawnAmount = possibleSpawns.size();
+                    LegendarySpawnInfo selectedSpawn = null;
+                    List<LegendarySpawnInfo> names = new ArrayList<>();
+                    for (int i = 0; i < spawnAmount; i++) {
 
-                        selectedSpawn = possibleSpawns.get(BetterPixelmonSpawner.random.nextInt(possibleSpawns.size()));
+                        if (RandomHelper.getRandomChance(spawnChances.get(i))) {
+
+                            for (Map.Entry<LegendarySpawnInfo, Double> entry : spawnChanceMap.entrySet()) {
+
+                                if (entry.getValue() == spawnChances.get(i)) {
+
+                                    if (!names.contains(entry.getKey())) {
+
+                                        names.add(entry.getKey());
+
+                                    }
+
+                                }
+
+                                if (names.size() == 0) continue;
+
+                                if (names.size() > 1) {
+
+                                    selectedSpawn = RandomHelper.getRandomElementFromList(names);
+                                    break;
+
+                                } else if (names.size() == 1) {
+
+                                    selectedSpawn = names.get(0);
+                                    break;
+
+                                }
+
+                            }
+
+                            if (selectedSpawn != null) break;
+
+                        }
+
+                    }
+                    if (selectedSpawn == null) {
+
+                        selectedSpawn = RandomHelper.getRandomElementFromList(possibleSpawns);
 
                     }
 

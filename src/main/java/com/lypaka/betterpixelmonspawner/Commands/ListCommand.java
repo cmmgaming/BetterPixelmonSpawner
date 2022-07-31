@@ -1,6 +1,7 @@
 package com.lypaka.betterpixelmonspawner.Commands;
 
 import com.lypaka.betterpixelmonspawner.GUIs.MainSpawnMenu;
+import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.Utils.FancyText;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -21,7 +22,7 @@ public class ListCommand extends CommandBase {
     @Override
     public String getUsage (ICommandSender sender) {
 
-        return "/bps list";
+        return "/bps list [biome]";
 
     }
 
@@ -38,7 +39,21 @@ public class ListCommand extends CommandBase {
         if (sender instanceof EntityPlayerMP) {
 
             EntityPlayerMP player = (EntityPlayerMP) sender;
-            MainSpawnMenu.open(player);
+            String biome = player.world.getBiome(player.getPosition()).getRegistryName().toString();
+            if (args.length == 2) {
+
+                biome = args[1];
+
+            }
+            if (BiomeList.biomesToPokemon.containsKey(biome)) {
+
+                MainSpawnMenu.open(player, biome);
+
+            } else {
+
+                player.sendMessage(FancyText.getFancyText("&eEither invalid biome ID (like \"minecraft:ocean\" for example) or no Pokemon spawn in that biome!"));
+
+            }
 
         }
 

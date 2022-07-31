@@ -1,7 +1,7 @@
 package com.lypaka.betterpixelmonspawner.Spawners;
 
 import com.lypaka.betterpixelmonspawner.API.Spawning.FishSpawnEvent;
-import com.lypaka.betterpixelmonspawner.Areas.Area;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZone;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.FishingSpawnInfo;
 import com.lypaka.betterpixelmonspawner.Utils.FormIndexFromName;
@@ -36,10 +36,10 @@ public class FishSpawner {
             String rod = event.getRodType().name();
             rod = "pixelmon:" + rod.replace("Rod", "").toLowerCase() + "_rod";
             if (!BiomeList.biomeFishMap.containsKey(biome)) return;
-            if (Area.getAreaFromLocation(player) != null) {
+            if (DeadZone.getAreaFromLocation(player) != null) {
 
-                Area area = Area.getAreaFromLocation(player);
-                List<String> entities = area.getEntities();
+                DeadZone deadZone = DeadZone.getAreaFromLocation(player);
+                List<String> entities = deadZone.getEntities();
                 if (entities.contains("fishing")) {
 
                     return;

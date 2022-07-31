@@ -2,10 +2,12 @@ package com.lypaka.betterpixelmonspawner.Spawners;
 
 import com.lypaka.betterpixelmonspawner.API.HostileEvent;
 import com.lypaka.betterpixelmonspawner.API.Spawning.*;
-import com.lypaka.betterpixelmonspawner.Areas.Area;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZone;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.DebugSystem.PlayerDebug;
+import com.lypaka.betterpixelmonspawner.Holidays.Holiday;
+import com.lypaka.betterpixelmonspawner.Holidays.HolidayHandler;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.PokemonSpawnInfo;
@@ -28,7 +30,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
@@ -61,10 +62,10 @@ public class PokemonSpawner {
                     List<String> usedNames = new ArrayList<>();
                     EntityPlayerMP player = playerEntry.getValue();
                     PlayerDebug.printPokemonDebugInformation(player);
-                    if (Area.getAreaFromLocation(player) != null) {
+                    if (DeadZone.getAreaFromLocation(player) != null) {
 
-                        Area area = Area.getAreaFromLocation(player);
-                        List<String> entities = area.getEntities();
+                        DeadZone deadZone = DeadZone.getAreaFromLocation(player);
+                        List<String> entities = deadZone.getEntities();
                         if (entities.contains("pokemon")) continue;
 
                     }
@@ -95,55 +96,63 @@ public class PokemonSpawner {
 
                     }
                     String location;
-                    if (player.getRidingEntity() != null) {
+                    if (!ConfigGetters.locationMap.containsKey(player.getUniqueID().toString())) {
 
-                        Entity mount = player.getRidingEntity();
-                        if (mount.isInWater()) {
+                        if (player.getRidingEntity() != null) {
 
-                            location = "water";
+                            Entity mount = player.getRidingEntity();
+                            if (mount.isInWater()) {
 
-                        } else if (mount.onGround) {
+                                location = "water";
 
-                            if (mount.getPosition().getY() <= 63) {
+                            } else if (mount.onGround) {
 
-                                location = "underground";
+                                if (mount.getPosition().getY() <= 63) {
+
+                                    location = "underground";
+
+                                } else {
+
+                                    location = "land";
+
+                                }
 
                             } else {
 
-                                location = "land";
+                                location = "air";
 
                             }
 
                         } else {
 
-                            location = "air";
+                            if (player.isInWater()) {
+
+                                location = "water";
+
+                            } else if (player.onGround) {
+
+                                if (player.getPosition().getY() <= 63) {
+
+                                    location = "underground";
+
+                                } else {
+
+                                    location = "land";
+
+                                }
+
+                            } else {
+
+                                location = "air";
+
+                            }
 
                         }
-
+                        
                     } else {
-
-                        if (player.isInWater()) {
-
-                            location = "water";
-
-                        } else if (player.onGround) {
-
-                            if (player.getPosition().getY() <= 63) {
-
-                                location = "underground";
-
-                            } else {
-
-                                location = "land";
-
-                            }
-
-                        } else {
-
-                            location = "air";
-
-                        }
-
+                        
+                        location = ConfigGetters.locationMap.get(player.getUniqueID().toString());
+                        
                     }
                     FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
@@ -194,7 +203,62 @@ public class PokemonSpawner {
 
                             if (possibleSpawns.size() == 0) return;
 
-                            PokemonSpawnInfo selectedSpawn = possibleSpawns.get(BetterPixelmonSpawner.random.nextInt(possibleSpawns.size()));
+                            Map<PokemonSpawnInfo, Double> spawnChanceMap = new HashMap<>();
+                            List<Double> spawnChances = new ArrayList<>(possibleSpawns.size());
+                            int spawnIndex = 0;
+                            for (PokemonSpawnInfo info : possibleSpawns) {
+
+                                spawnChanceMap.put(info, info.getSpawnChance());
+                                spawnChances.add(spawnIndex, info.getSpawnChance());
+                                spawnIndex++;
+
+                            }
+                            Collections.sort(spawnChances);
+                            int spawnAmount = possibleSpawns.size();
+                            PokemonSpawnInfo selectedSpawn = null;
+                            List<PokemonSpawnInfo> names = new ArrayList<>();
+                            for (int i = 0; i < spawnAmount; i++) {
+
+                                if (RandomHelper.getRandomChance(spawnChances.get(i))) {
+
+                                    for (Map.Entry<PokemonSpawnInfo, Double> entry : spawnChanceMap.entrySet()) {
+
+                                        if (entry.getValue() == spawnChances.get(i)) {
+
+                                            if (!names.contains(entry.getKey())) {
+
+                                                names.add(entry.getKey());
+
+                                            }
+
+                                        }
+
+                                        if (names.size() == 0) continue;
+
+                                        if (names.size() > 1) {
+
+                                            selectedSpawn = RandomHelper.getRandomElementFromList(names);
+                                            break;
+
+                                        } else if (names.size() == 1) {
+
+                                            selectedSpawn = names.get(0);
+                                            break;
+
+                                        }
+
+                                    }
+
+                                    if (selectedSpawn != null) break;
+
+                                }
+
+                            }
+                            if (selectedSpawn == null) {
+
+                                selectedSpawn = RandomHelper.getRandomElementFromList(possibleSpawns);
+
+                            }
                             String[] levelRange = selectedSpawn.getLevelRange().split("-");
                             int max = Integer.parseInt(levelRange[0]);
                             int min = Integer.parseInt(levelRange[1]);
@@ -237,7 +301,6 @@ public class PokemonSpawner {
                                     pokemon = PokemonSpec.from(pokemonName).create(player.world);
 
                                 }
-
 
                                 if (selectedSpawn.getHeldItemID() != null) {
 
@@ -341,6 +404,7 @@ public class PokemonSpawner {
                                 pokemon.setLocationAndAngles(safeSpawn.getX() + BetterPixelmonSpawner.random.nextDouble(), safeSpawn.getY(), safeSpawn.getZ() + BetterPixelmonSpawner.random.nextDouble(),0, 0);
                                 pokemon.updateStats();
                                 boolean hostile = false;
+
                                 if (selectedSpawn.isHostile()) {
 
                                     hostile = true;
@@ -372,35 +436,213 @@ public class PokemonSpawner {
                                     }
 
                                 }
-                                if (checkBoss) {
+                                float shinyChance = PixelmonConfig.shinyRate;
+                                if (PixelmonConfig.enableCatchCombos) {
 
-                                    if (BossPokemonUtils.isPossibleBoss(pokemon.getPokemonName())) {
+                                    if (PixelmonConfig.enableCatchComboShinyLock && PixelmonMethods.isCatchComboSpecies(player, pokemon.getSpecies())) {
 
-                                        if (BossPokemonUtils.spawnBoss()) {
+                                        shinyChance = PixelmonMethods.getCatchComboChance(player);
 
-                                            if (RandomHelper.getRandomChance(ConfigGetters.bossSpawnChance)) {
+                                    } else if (!PixelmonConfig.enableCatchComboShinyLock) {
 
-                                                BossSpawnEvent bossSpawnEvent = new BossSpawnEvent(pokemon, player, selectedSpawn);
-                                                MinecraftForge.EVENT_BUS.post(bossSpawnEvent);
-                                                if (!bossSpawnEvent.isCanceled()) {
+                                        shinyChance = PixelmonMethods.getCatchComboChance(player);
 
-                                                    pokemon.setBoss(BossPokemonUtils.getBossMode());
-                                                    pokeModified = true;
-                                                    FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
+                                    }
 
-                                                        player.world.spawnEntity(bossSpawnEvent.getPokemon());
-                                                        PokemonCounter.increment(bossSpawnEvent.getPokemon(), player.getUniqueID());
-                                                        // Sets this tag for the PokeClear to be able to know what a Boss is, in the event of a "normal" Boss
-                                                        bossSpawnEvent.getPokemon().addTag("PixelmonDefaultBoss");
-                                                        PokemonCounter.addPokemon(bossSpawnEvent.getPokemon(), player.getUniqueID());
+                                } else if (PixelmonMethods.isWearingShinyCharm(player)) {
 
-                                                    });
-                                                    continue;
+                                    shinyChance = PixelmonConfig.shinyCharmRate;
+
+                                }
+                                boolean shiny = RandomHelper.getRandomNumberBetween(1, shinyChance) == 1;
+                                if (shiny) {
+
+                                    pokemon.setShiny(true);
+
+                                }
+                                if (!pokeModified) {
+
+                                    if (HolidayHandler.activeHolidays != null && !HolidayHandler.activeHolidays.isEmpty()) {
+
+                                        Map<String, List<String>> particleMap = new HashMap<>();
+                                        Map<String, List<String>> textureMap = new HashMap<>();
+                                        for (Holiday h : HolidayHandler.activeHolidays) {
+
+                                            List<String> particles = new ArrayList<>();
+                                            List<String> textures = new ArrayList<>();
+                                            if (h.getPokemon().contains(pokemon.getPokemonName()) || h.getPokemon().contains("shiny") && pokemon.isShiny()) {
+
+                                                if (particleMap.containsKey(h.getName())) {
+
+                                                    particles = particleMap.get(h.getName());
+
+                                                }
+
+                                                if (textureMap.containsKey(h.getName())) {
+
+                                                    textures = textureMap.get(h.getName());
+
+                                                }
+
+                                                particles.addAll(h.getParticles());
+                                                particleMap.put(h.getName(), particles);
+                                                textures.addAll(h.getSpecialTextures());
+                                                textureMap.put(h.getName(), textures);
+
+                                            }
+
+                                        }
+
+                                        String holiday;
+                                        List<String> holidays = new ArrayList<>();
+                                        for (Map.Entry<String, List<String>> entry : particleMap.entrySet()) {
+
+                                            holidays.add(entry.getKey());
+
+                                        }
+
+                                        if (holidays.size() > 0) {
+
+                                            // I know this is probably dumb, but every other time I've tried getting a random index from a list with a size of 1, it throws IndexOutOfBounds so this prevents any chance of that ever happening
+                                            if (holidays.size() == 1) {
+
+                                                holiday = holidays.get(0);
+
+                                            } else {
+
+                                                holiday = holidays.get(BetterPixelmonSpawner.random.nextInt(holidays.size()));
+
+                                            }
+
+                                            boolean doMessage = false;
+                                            if (particleMap.containsKey(holiday)) {
+
+                                                List<String> possibleParticles = particleMap.get(holiday);
+                                                if (possibleParticles.size() > 0) {
+
+                                                    if (RandomHelper.getRandomChance(ConfigGetters.particleChance)) {
+
+                                                        String randomParticle;
+                                                        if (possibleParticles.size() == 1) {
+
+                                                            randomParticle = possibleParticles.get(0);
+
+                                                        } else {
+
+                                                            randomParticle = possibleParticles.get(BetterPixelmonSpawner.random.nextInt(possibleParticles.size()));
+
+                                                        }
+                                                        if (randomParticle.contains(":")) {
+
+                                                            String[] split = randomParticle.split(":");
+                                                            String species = split[0];
+                                                            randomParticle = split[1];
+                                                            if (pokemon.getPokemonName().equalsIgnoreCase(species)) {
+
+                                                                pokemon.setParticleId(randomParticle);
+                                                                doMessage = true;
+
+                                                            }
+
+                                                        } else {
+
+                                                            pokemon.setParticleId(randomParticle);
+                                                            doMessage = true;
+
+                                                        }
+
+                                                    }
 
                                                 }
 
                                             }
+                                            if (textureMap.containsKey(holiday)) {
 
+                                                List<String> possibleTextures = textureMap.get(holiday);
+                                                if (possibleTextures.size() > 0) {
+
+                                                    if (RandomHelper.getRandomChance(ConfigGetters.textureChance)) {
+
+                                                        String randomTexture;
+                                                        if (possibleTextures.size() == 1) {
+
+                                                            randomTexture = possibleTextures.get(0);
+
+                                                        } else {
+
+                                                            randomTexture = possibleTextures.get(BetterPixelmonSpawner.random.nextInt(possibleTextures.size()));
+
+                                                        }
+
+                                                        pokemon.setCustomSpecialTexture(randomTexture);
+                                                        doMessage = true;
+
+                                                    }
+
+                                                }
+
+                                            }
+                                            HolidaySpawnEvent holidaySpawnEvent = new HolidaySpawnEvent(holiday, pokemon, player);
+                                            MinecraftForge.EVENT_BUS.post(holidaySpawnEvent);
+                                            if (!holidaySpawnEvent.isCanceled()) {
+
+                                                FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
+
+                                                    holidaySpawnEvent.getPlayer().world.spawnEntity(holidaySpawnEvent.getPokemon());
+                                                    PokemonCounter.increment(holidaySpawnEvent.getPokemon(), player.getUniqueID());
+                                                    PokemonCounter.addPokemon(holidaySpawnEvent.getPokemon(), player.getUniqueID());
+
+                                                });
+                                                if (doMessage && !ConfigGetters.holidaySpawnMessage.equalsIgnoreCase("")) {
+
+                                                    pokemon.world.getMinecraftServer().getPlayerList().sendMessage(FancyText.getFancyText(ConfigGetters.holidaySpawnMessage
+                                                            .replace("%holiday%", holiday)
+                                                            .replace("%pokemon%", pokemon.getPokemonName())
+                                                    ));
+
+                                                }
+                                                pokeModified = true;
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+                                if (!pokeModified) {
+
+                                    if (checkBoss) {
+
+                                        if (BossPokemonUtils.isPossibleBoss(pokemon.getPokemonName())) {
+
+                                            if (BossPokemonUtils.spawnBoss()) {
+
+                                                if (RandomHelper.getRandomChance(ConfigGetters.bossSpawnChance)) {
+
+                                                    BossSpawnEvent bossSpawnEvent = new BossSpawnEvent(pokemon, player, selectedSpawn);
+                                                    MinecraftForge.EVENT_BUS.post(bossSpawnEvent);
+                                                    if (!bossSpawnEvent.isCanceled()) {
+
+                                                        pokemon.setBoss(BossPokemonUtils.getBossMode());
+                                                        pokeModified = true;
+                                                        FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
+
+                                                            player.world.spawnEntity(bossSpawnEvent.getPokemon());
+                                                            PokemonCounter.increment(bossSpawnEvent.getPokemon(), player.getUniqueID());
+                                                            // Sets this tag for the PokeClear to be able to know what a Boss is, in the event of a "normal" Boss
+                                                            bossSpawnEvent.getPokemon().addTag("PixelmonDefaultBoss");
+                                                            PokemonCounter.addPokemon(bossSpawnEvent.getPokemon(), player.getUniqueID());
+
+                                                        });
+                                                        continue;
+
+                                                    }
+
+                                                }
+
+
+                                            }
 
                                         }
 
@@ -463,25 +705,6 @@ public class PokemonSpawner {
                                     }
 
                                 }
-                                float shinyChance = PixelmonConfig.shinyRate;
-                                if (PixelmonConfig.enableCatchCombos) {
-
-                                    if (PixelmonConfig.enableCatchComboShinyLock && PixelmonMethods.isCatchComboSpecies(player, pokemon.getSpecies())) {
-
-                                        shinyChance = PixelmonMethods.getCatchComboChance(player);
-
-                                    } else if (!PixelmonConfig.enableCatchComboShinyLock) {
-
-                                        shinyChance = PixelmonMethods.getCatchComboChance(player);
-
-                                    }
-
-                                } else if (PixelmonMethods.isWearingShinyCharm(player)) {
-
-                                    shinyChance = PixelmonConfig.shinyCharmRate;
-
-                                }
-                                boolean shiny = RandomHelper.getRandomNumberBetween(1, shinyChance) == 1;
                                 if (shiny) {
 
                                     ShinySpawnEvent shinySpawnEvent = new ShinySpawnEvent(pokemon, player, selectedSpawn);

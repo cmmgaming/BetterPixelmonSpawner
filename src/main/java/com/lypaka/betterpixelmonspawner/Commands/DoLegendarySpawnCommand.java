@@ -2,7 +2,7 @@ package com.lypaka.betterpixelmonspawner.Commands;
 
 import com.lypaka.betterpixelmonspawner.API.HostileEvent;
 import com.lypaka.betterpixelmonspawner.API.Spawning.LegendarySpawnEvent;
-import com.lypaka.betterpixelmonspawner.Areas.Area;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZone;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
@@ -67,16 +67,15 @@ public class DoLegendarySpawnCommand extends CommandBase {
 
         }
 
-        LegendarySpawner.nextSpawnAttempt = LocalDateTime.now().plusSeconds(ConfigGetters.legendarySpawnInterval);
         List<EntityPlayerMP> onlinePlayers = new ArrayList<>();
         for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.playerMap.entrySet()) {
 
             if (!ConfigGetters.legendaryOptOut.contains(entry.getValue().getUniqueID().toString())) {
 
-                if (Area.getAreaFromLocation(entry.getValue()) != null) {
+                if (DeadZone.getAreaFromLocation(entry.getValue()) != null) {
 
-                    Area area = Area.getAreaFromLocation(entry.getValue());
-                    List<String> entities = area.getEntities();
+                    DeadZone deadZone = DeadZone.getAreaFromLocation(entry.getValue());
+                    List<String> entities = deadZone.getEntities();
                     if (!entities.contains("legendaries")) {
 
                         onlinePlayers.add(entry.getValue());

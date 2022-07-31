@@ -47,7 +47,8 @@ public class ConfigGetters {
     public static int legendarySpawnLocationXZ;
     public static int legendarySpawnLocationY;
     public static int legendaryGracePeriod;
-    public static int legendarySpawnInterval;
+    public static int legendarySpawnIntervalMax;
+    public static int legendarySpawnIntervalMin;
     public static String legendarySpawnMessage;
     public static boolean legendarySpawnsGlowing;
     public static List<String> specialLegendaries;
@@ -81,6 +82,7 @@ public class ConfigGetters {
     public static List<String> miscOptOut;
     public static List<String> npcOptOut;
     public static List<String> pokemonOptOut;
+    public static Map<String, String> locationMap;
 
     public static int listGUIRows;
     public static String listGUITitle;
@@ -132,7 +134,8 @@ public class ConfigGetters {
         legendarySpawnChance = ConfigManager.getConfigNode(3, "Spawn-Chance").getDouble();
         legendarySpawnFilterEnabled = ConfigManager.getConfigNode(3, "Spawn-Filter-Enabled").getBoolean();
         legendaryGracePeriod = ConfigManager.getConfigNode(3, "Spawn-Grace-Period").getInt();
-        legendarySpawnInterval = ConfigManager.getConfigNode(3, "Spawn-Interval").getInt();
+        legendarySpawnIntervalMax = ConfigManager.getConfigNode(3, "Spawn-Interval-Max").getInt();
+        legendarySpawnIntervalMin = ConfigManager.getConfigNode(3, "Spawn-Interval-Min").getInt();
         legendarySpawnLocationXZ = ConfigManager.getConfigNode(3, "Spawn-Location-XZ").getInt();
         legendarySpawnLocationY = ConfigManager.getConfigNode(3, "Spawn-Location-Y").getInt();
         legendarySpawnMessage = ConfigManager.getConfigNode(3, "Spawn-Message").getString();
@@ -164,6 +167,7 @@ public class ConfigGetters {
         miscOptOut = new ArrayList<>(ConfigManager.getConfigNode(6, "Misc-Opt-Out").getList(TypeToken.of(String.class)));
         npcOptOut = new ArrayList<>(ConfigManager.getConfigNode(6, "NPC-Opt-Out").getList(TypeToken.of(String.class)));
         pokemonOptOut = new ArrayList<>(ConfigManager.getConfigNode(6, "Pokemon-Opt-Out").getList(TypeToken.of(String.class)));
+        locationMap = ConfigManager.getConfigNode(6, "Spawner-Filter").getValue(new TypeToken<Map<String, String>>() {});
 
         listGUIRows = ConfigManager.getConfigNode(8, "GUI-Settings", "Rows").getInt();
         listGUITitle = ConfigManager.getConfigNode(8, "GUI-Settings", "Title").getString();

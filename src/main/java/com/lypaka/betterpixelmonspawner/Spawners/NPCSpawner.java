@@ -1,7 +1,7 @@
 package com.lypaka.betterpixelmonspawner.Spawners;
 
 import com.lypaka.betterpixelmonspawner.API.Spawning.NPCSpawnEvent;
-import com.lypaka.betterpixelmonspawner.Areas.Area;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZone;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
@@ -9,7 +9,6 @@ import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.EntityUtils;
 import com.lypaka.betterpixelmonspawner.Utils.Counters.NPCCounter;
 import com.pixelmongenerations.common.entity.npcs.EntityNPC;
 import com.pixelmongenerations.common.entity.npcs.NPCTrainer;
-import com.pixelmongenerations.core.config.PixelmonConfig;
 import com.pixelmongenerations.core.util.helper.RandomHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -136,10 +135,10 @@ public class NPCSpawner {
                         }
 
                         if (selectedID == null) continue;
-                        if (Area.getAreaFromLocation(player) != null) {
+                        if (DeadZone.getAreaFromLocation(player) != null) {
 
-                            Area area = Area.getAreaFromLocation(player);
-                            List<String> entities = area.getEntities();
+                            DeadZone deadZone = DeadZone.getAreaFromLocation(player);
+                            List<String> entities = deadZone.getEntities();
                             if (entities.contains(selectedID)) {
 
                                 continue;

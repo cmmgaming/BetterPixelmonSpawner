@@ -1,6 +1,8 @@
 package com.lypaka.betterpixelmonspawner.Commands;
 
+import com.lypaka.betterpixelmonspawner.Config.PokemonConfig;
 import com.lypaka.betterpixelmonspawner.Utils.FancyText;
+import com.pixelmongenerations.core.enums.EnumSpecies;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -23,6 +25,8 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
         addSubcommand(new DoLegendarySpawnCommand());
         addSubcommand(new DebugCommand());
         addSubcommand(new CheckCountCommand());
+        addSubcommand(new WhereCommand());
+        addSubcommand(new LocationCommand());
 
     }
 
@@ -48,6 +52,8 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
             cmds.add("dolegendaryspawn");
             cmds.add("debug");
             cmds.add("count");
+            cmds.add("where");
+            cmds.add("loc");
 
         } else {
 
@@ -90,6 +96,31 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
 
                 List<String> modules = new ArrayList<>();
                 modules.add("pokemon");
+                return PixelmonSpawnerCommand.getListOfStringsMatchingLastWord(args, modules);
+
+            } else if (arg.equalsIgnoreCase("reload")) {
+
+                List<String> modules = new ArrayList<>();
+                modules.add("all");
+                modules.add("tasks");
+                modules.add("deadzones");
+                modules.add("holidays");
+                modules.add("pokemon");
+                modules.add("settings");
+                return PixelmonSpawnerCommand.getListOfStringsMatchingLastWord(args, modules);
+
+            } else if (arg.equalsIgnoreCase("where")) {
+
+                return PixelmonSpawnerCommand.getListOfStringsMatchingLastWord(args, PokemonConfig.fileNames);
+
+            } else if (arg.equalsIgnoreCase("loc") || arg.equalsIgnoreCase("location")) {
+
+                List<String> modules = new ArrayList<>();
+                modules.add("air");
+                modules.add("water");
+                modules.add("land");
+                modules.add("underground");
+                modules.add("clear");
                 return PixelmonSpawnerCommand.getListOfStringsMatchingLastWord(args, modules);
 
             }
@@ -183,6 +214,17 @@ public class PixelmonSpawnerCommand extends CommandTreeBase {
             case "count":
                 CheckCountCommand ccc = new CheckCountCommand();
                 ccc.execute(server, sender, args);
+                break;
+
+            case "where":
+                WhereCommand whereCommand = new WhereCommand();
+                whereCommand.execute(server, sender, args);
+                break;
+
+            case "loc":
+            case "location":
+                LocationCommand locationCommand = new LocationCommand();
+                locationCommand.execute(server, sender, args);
                 break;
 
         }

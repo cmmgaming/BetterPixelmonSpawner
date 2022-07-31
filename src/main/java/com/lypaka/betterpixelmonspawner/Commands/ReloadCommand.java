@@ -1,6 +1,6 @@
 package com.lypaka.betterpixelmonspawner.Commands;
 
-import com.lypaka.betterpixelmonspawner.Areas.AreaRegistry;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZoneRegistry;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Config.ConfigManager;
@@ -35,7 +35,7 @@ public class ReloadCommand extends CommandBase {
     @Override
     public String getUsage (ICommandSender sender) {
 
-        return "/pspawner reload";
+        return "/pspawner reload [module]";
 
     }
 
@@ -54,42 +54,91 @@ public class ReloadCommand extends CommandBase {
 
         }
 
+        String module = "all";
+        if (args.length == 2) {
+
+            module = args[1];
+
+        }
+
         try {
 
             sender.sendMessage(FancyText.getFancyText("&eStarting reloading of BPS spawner, please wait..."));
             ConfigManager.load();
-            PokemonConfig.load();
             ConfigGetters.load();
-            BetterPixelmonSpawner.logger.info("Registering Pokemon spawns...");
-            InfoRegistry.loadPokemonSpawnData();
-            BetterPixelmonSpawner.logger.info("Registering Boss Pokemon spawns...");
-            if (Loader.isModLoaded("betterbosses")) {
+            if (module.equalsIgnoreCase("pokemon")) {
 
-                if (!com.lypaka.betterbosses.Config.ConfigGetters.disableDefaultBosses) {
+                PokemonConfig.load();
+                BetterPixelmonSpawner.logger.info("Registering Pokemon spawns...");
+                InfoRegistry.loadPokemonSpawnData();
+                BetterPixelmonSpawner.logger.info("Registering Boss Pokemon spawns...");
+                if (Loader.isModLoaded("betterbosses")) {
+
+                    if (!com.lypaka.betterbosses.Config.ConfigGetters.disableDefaultBosses) {
+
+                        BossPokemonUtils.loadBossList();
+
+                    }
+
+                } else {
 
                     BossPokemonUtils.loadBossList();
 
                 }
 
-            } else {
+            } else if (module.equalsIgnoreCase("holiday") || module.equalsIgnoreCase("holidays")) {
 
-                BossPokemonUtils.loadBossList();
+                // Loads holidays from config, not worth having config getters for it since it only loads on startup unless reload command is ran
+                HolidayHandler.loadHolidays();
+
+            } else if (module.equalsIgnoreCase("deadzones") || module.equalsIgnoreCase("deadzone")) {
+
+                // Loads the dead zones
+                DeadZoneRegistry.loadAreas();
+
+            } else if (module.equalsIgnoreCase("spawners") || module.equalsIgnoreCase("tasks")) {
+
+                BetterPixelmonSpawner.logger.info("Starting spawners...");
+                PokemonSpawner.startTimer();
+                LegendarySpawner.startTimer();
+                NPCSpawner.startTimer();
+                MiscSpawner.startTimer();
+                ClearTask.startClearTask();
+
+            } else if (module.equalsIgnoreCase("all")) {
+
+                PokemonConfig.load();
+                BetterPixelmonSpawner.logger.info("Registering Pokemon spawns...");
+                InfoRegistry.loadPokemonSpawnData();
+                BetterPixelmonSpawner.logger.info("Registering Boss Pokemon spawns...");
+                if (Loader.isModLoaded("betterbosses")) {
+
+                    if (!com.lypaka.betterbosses.Config.ConfigGetters.disableDefaultBosses) {
+
+                        BossPokemonUtils.loadBossList();
+
+                    }
+
+                } else {
+
+                    BossPokemonUtils.loadBossList();
+
+                }
+
+                // Loads holidays from config, not worth having config getters for it since it only loads on startup unless reload command is ran
+                HolidayHandler.loadHolidays();
+
+                // Loads the dead zones
+                DeadZoneRegistry.loadAreas();
+
+                BetterPixelmonSpawner.logger.info("Starting spawners...");
+                PokemonSpawner.startTimer();
+                LegendarySpawner.startTimer();
+                NPCSpawner.startTimer();
+                MiscSpawner.startTimer();
+                ClearTask.startClearTask();
 
             }
-
-            // Loads holidays from config, not worth having config getters for it since it only loads on startup unless reload command is ran
-            HolidayHandler.loadHolidays();
-
-            // Loads the areas
-            AreaRegistry.loadAreas();
-
-            BetterPixelmonSpawner.logger.info("Starting spawners...");
-            PokemonSpawner.startTimer();
-            LegendarySpawner.startTimer();
-            NPCSpawner.startTimer();
-            MiscSpawner.startTimer();
-
-            ClearTask.startClearTask();
 
         } catch (ObjectMappingException e) {
 

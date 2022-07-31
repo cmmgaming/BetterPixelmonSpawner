@@ -1,4 +1,4 @@
-package com.lypaka.betterpixelmonspawner.Areas;
+package com.lypaka.betterpixelmonspawner.DeadZones;
 
 import com.google.common.reflect.TypeToken;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class AreaRegistry {
+public class DeadZoneRegistry {
 
     public static void loadAreas() throws ObjectMappingException {
 
-        BetterPixelmonSpawner.areas = new ArrayList<>(); // clears for reload command
+        BetterPixelmonSpawner.deadZones = new ArrayList<>(); // clears for reload command
         Map<String, Map<String, String>> areas = ConfigManager.getConfigNode(7, "Areas").getValue(new TypeToken<Map<String, Map<String, String>>>() {});
         for (Map.Entry<String, Map<String, String>> entry : areas.entrySet()) {
 
@@ -48,8 +48,8 @@ public class AreaRegistry {
 
             if (w != null) {
 
-                Area area = new Area(entities, maxX, maxY, maxZ, minX, minY, minZ, w);
-                area.create();
+                DeadZone deadZone = new DeadZone(entities, maxX, maxY, maxZ, minX, minY, minZ, w);
+                deadZone.create();
                 BetterPixelmonSpawner.logger.info("Successfully registered area: " + name + "!");
 
             } else {

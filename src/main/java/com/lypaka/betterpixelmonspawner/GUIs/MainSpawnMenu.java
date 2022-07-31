@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class MainSpawnMenu {
 
-    public static void open (EntityPlayerMP player) {
+    public static void open (EntityPlayerMP player, String biome) {
 
         ChestTemplate template = ChestTemplate.builder(3).build();
         GooeyPage page = GooeyPage.builder()
@@ -31,15 +31,15 @@ public class MainSpawnMenu {
 
             if (i == 11) {
 
-                page.getTemplate().getSlot(i).setButton(getPokemonButton(player));
+                page.getTemplate().getSlot(i).setButton(getPokemonButton(player, biome));
 
             } else if (i == 13) {
 
-                page.getTemplate().getSlot(i).setButton(getFishButton(player));
+                page.getTemplate().getSlot(i).setButton(getFishButton(player, biome));
 
             } else if (i == 15) {
 
-                page.getTemplate().getSlot(i).setButton(getLegendaryButton(player));
+                page.getTemplate().getSlot(i).setButton(getLegendaryButton(player, biome));
 
             } else {
 
@@ -62,7 +62,7 @@ public class MainSpawnMenu {
 
     }
 
-    private static Button getPokemonButton (EntityPlayerMP player) {
+    private static Button getPokemonButton (EntityPlayerMP player, String biome) {
 
         EntityPixelmon pixelmon = PokemonSpec.from("Bulbasaur").create(FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld());
         ItemStack bulbasaur = ItemPixelmonSprite.getPhoto(pixelmon);
@@ -71,7 +71,7 @@ public class MainSpawnMenu {
                 .display(bulbasaur)
                 .onClick(() -> {
 
-                    PokemonSpawnList list = new PokemonSpawnList(player);
+                    PokemonSpawnList list = new PokemonSpawnList(player, biome);
                     list.build();
                     list.open(1);
 
@@ -80,7 +80,7 @@ public class MainSpawnMenu {
 
     }
 
-    private static Button getFishButton (EntityPlayerMP player) {
+    private static Button getFishButton (EntityPlayerMP player, String biome) {
 
         EntityPixelmon pixelmon = PokemonSpec.from("Magikarp").create(FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld());
         ItemStack magikarp = ItemPixelmonSprite.getPhoto(pixelmon);
@@ -89,7 +89,7 @@ public class MainSpawnMenu {
                 .display(magikarp)
                 .onClick(() -> {
 
-                    FishSpawnList list = new FishSpawnList(player);
+                    FishSpawnList list = new FishSpawnList(player, biome);
                     list.build();
                     list.open(1);
 
@@ -98,7 +98,7 @@ public class MainSpawnMenu {
 
     }
 
-    private static Button getLegendaryButton (EntityPlayerMP player) {
+    private static Button getLegendaryButton (EntityPlayerMP player, String biome) {
 
         EntityPixelmon pixelmon = PokemonSpec.from("Mew").create(FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld());
         ItemStack mew = ItemPixelmonSprite.getPhoto(pixelmon);
@@ -107,7 +107,7 @@ public class MainSpawnMenu {
                 .display(mew)
                 .onClick(() -> {
 
-                    LegendarySpawnList list = new LegendarySpawnList(player);
+                    LegendarySpawnList list = new LegendarySpawnList(player, biome);
                     list.build();
                     list.open(1);
 
