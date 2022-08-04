@@ -57,16 +57,18 @@ public class ClearTask {
 
                         FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-                            for (Map.Entry<UUID, EntityPlayerMP> entry : JoinListener.pokemonMap.entrySet()) {
+                            JoinListener.pokemonMap.entrySet().removeIf(entry -> {
 
                                 PokemonCounter.checkForDespawnPokemon(entry.getKey());
                                 if (!JoinListener.playerMap.containsKey(entry.getKey())) {
 
-                                    JoinListener.pokemonMap.entrySet().removeIf(e2 -> e2.getKey().toString().equalsIgnoreCase(entry.getKey().toString()));
+                                    return true;
 
                                 }
 
-                            }
+                                return false;
+
+                            });
 
                             String msg = ConfigGetters.pokeClearMessage.replace("%number%", String.valueOf(count));
                             if (count == 1 && msg.contains("have")) {
