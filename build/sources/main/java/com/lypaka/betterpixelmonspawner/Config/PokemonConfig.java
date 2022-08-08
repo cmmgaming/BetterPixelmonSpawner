@@ -51,72 +51,11 @@ public class PokemonConfig {
 
         try {
 
-            String location = "assets/betterpixelmonspawner/pokemon";
-            if (ConfigGetters.generateFiles) {
+            if (dir.toFile().listFiles().length == 0) {
 
-                if (dir.toFile().listFiles().length == 0) {
+                String location = "assets/betterpixelmonspawner/pokemon";
 
-                    // directory is empty, load defaults from assets
-                    FileSystem fileSystem = FileSystems.newFileSystem(BetterPixelmonSpawner.class.getClassLoader().getResource(location).toURI(), new HashMap<>());
-                    Files.walk(fileSystem.getPath(location)).map(Path::getFileName).map(Path::toString).filter(fileName -> fileName.endsWith(".conf")).forEach(fileName -> {
-
-                        Path generatedFile = dir.resolve(fileName);
-                        fileNames.add(fileName);
-                        try {
-
-                            Files.copy(BetterPixelmonSpawner.class.getClassLoader().getResourceAsStream(location + "/" + fileName), dir.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-
-                        } catch (IOException e) {
-
-                            BetterPixelmonSpawner.logger.error("BetterPixelmonSpawner could not copy file! " + fileName);
-                            e.printStackTrace();
-
-                        }
-                        HoconConfigurationLoader configurationLoader = HoconConfigurationLoader.builder()
-                                .setPath(generatedFile)
-                                .build();
-                        configLoaders.put(fileName, configurationLoader);
-                        try {
-
-                            configNodes.put(fileName, configurationLoader.load());
-
-                        } catch (IOException e) {
-
-                            e.printStackTrace();
-
-                        }
-
-                    });
-
-                    fileSystem.close();
-
-                } else {
-
-                    for (File file : dir.toFile().listFiles()) {
-
-                        try {
-
-                            fileNames.add(file.getName());
-                            String fileName = file.getName().replace(".conf", "");
-                            HoconConfigurationLoader configurationLoader = HoconConfigurationLoader.builder()
-                                    .setPath(file.toPath())
-                                    .build();
-                            configLoaders.put(fileName, configurationLoader);
-                            configNodes.put(fileName, configurationLoader.load());
-
-                        } catch (IOException e) {
-
-                            BetterPixelmonSpawner.logger.error("BetterPixelmonSpawner could not load configuration! " + file.getName());
-                            e.printStackTrace();
-
-                        }
-
-                    }
-
-                }
-
-            } else {
-
+                // directory is empty, load defaults from assets
                 FileSystem fileSystem = FileSystems.newFileSystem(BetterPixelmonSpawner.class.getClassLoader().getResource(location).toURI(), new HashMap<>());
                 Files.walk(fileSystem.getPath(location)).map(Path::getFileName).map(Path::toString).filter(fileName -> fileName.endsWith(".conf")).forEach(fileName -> {
 
@@ -149,6 +88,29 @@ public class PokemonConfig {
                 });
 
                 fileSystem.close();
+
+            } else {
+
+                for (File file : dir.toFile().listFiles()) {
+
+                    try {
+
+                        Path generatedFile = dir.resolve(file.getName());
+                        fileNames.add(file.getName());
+                        HoconConfigurationLoader configurationLoader = HoconConfigurationLoader.builder()
+                                .setPath(generatedFile)
+                                .build();
+                        configLoaders.put(file.getName(), configurationLoader);
+                        configNodes.put(file.getName(), configurationLoader.load());
+
+                    } catch (IOException e) {
+
+                        BetterPixelmonSpawner.logger.error("BetterPixelmonSpawner could not load configuration! " + file.getName());
+                        e.printStackTrace();
+
+                    }
+
+                }
 
             }
 

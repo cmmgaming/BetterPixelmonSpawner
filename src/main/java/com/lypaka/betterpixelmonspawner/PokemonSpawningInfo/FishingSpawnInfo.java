@@ -15,9 +15,10 @@ public class FishingSpawnInfo {
     private final String weather;
     private final String levelRange;
     private final double spawnChance;
+    private final String heldItem;
     public static Map<String, List<FishingSpawnInfo>> infoMap = new HashMap<>();
 
-    public FishingSpawnInfo (String name, String biome, String location, String rod, String time, String weather, String levelRange, double spawnChance) {
+    public FishingSpawnInfo (String name, String biome, String location, String rod, String time, String weather, String levelRange, double spawnChance, String heldItem) {
 
         this.name = name;
         this.biome = biome;
@@ -27,6 +28,7 @@ public class FishingSpawnInfo {
         this.weather = weather;
         this.levelRange = levelRange;
         this.spawnChance = spawnChance;
+        this.heldItem = heldItem;
 
     }
 
@@ -89,6 +91,12 @@ public class FishingSpawnInfo {
     public double getSpawnChance() {
 
         return this.spawnChance;
+
+    }
+
+    public String getHeldItemID() {
+
+        return this.heldItem;
 
     }
 

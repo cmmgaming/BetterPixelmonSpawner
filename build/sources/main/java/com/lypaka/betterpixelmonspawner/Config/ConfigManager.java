@@ -20,7 +20,9 @@ import java.util.ArrayList;
  * @since 9/25/2019 - Version 1.0.0
  */
 public class ConfigManager {
-    private static String[] FILE_NAMES = new String[]{"generalSettings.conf", "holidays.conf", "pokemonSpawner.conf", "legendarySpawner.conf", "npcSpawner.conf", "miscSpawner.conf", "storage.conf", "areas.conf"};
+    private static String[] FILE_NAMES = new String[]{"generalSettings.conf", "holidays.conf", "pokemonSpawner.conf",
+            "legendarySpawner.conf", "npcSpawner.conf", "miscSpawner.conf", "storage.conf", "deadZones.conf",
+            "last-spawn-list.conf", "heldItems.conf"};
     private static Path dir;
     private static Path[] config = new Path[FILE_NAMES.length];
     private static ArrayList<ConfigurationLoader<CommentedConfigurationNode>> configLoad = new ArrayList<ConfigurationLoader<CommentedConfigurationNode>>(FILE_NAMES.length);

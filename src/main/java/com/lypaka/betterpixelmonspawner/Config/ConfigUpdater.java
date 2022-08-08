@@ -150,6 +150,133 @@ public class ConfigUpdater {
 
         }
 
+        /** Version 1.6.0 */
+        if (ConfigManager.getConfigNode(2, "Held-Items").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(2, "Held-Items").setComment("If true, will enable the Held Item module which tries to put set held items on Pokemon from the heldItems.conf file");
+            ConfigManager.getConfigNode(2, "Held-Items").setValue(true);
+
+        }
+        if (ConfigManager.getConfigNode(2, "External-Abilities").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(2, "External-Abilities").setComment("If true, will enable the External Abilities module. For more information, see here: https://bulbapedia.bulbagarden.net/wiki/Category:Abilities_that_affect_appearance_of_wild_Pok%C3%A9mon");
+            ConfigManager.getConfigNode(2, "External-Abilities").setValue(true);
+
+        }
+        if (ConfigManager.getConfigNode(2, "Ignore-Creative").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(2, "Ignore-Creative").setComment("If true, will ignore (not spawn on) players in creative mode");
+            ConfigManager.getConfigNode(2, "Ignore-Creative").setValue(false);
+
+        }
+        if (ConfigManager.getConfigNode(2, "Ignore-Spectator").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(2, "Ignore-Spectator").setComment("If true, will ignore (not spawn on) players in spectator mode");
+            ConfigManager.getConfigNode(2, "Ignore-Spectator").setValue(false);
+
+        }
+
+        if (ConfigManager.getConfigNode(3, "Ignore-Creative").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(3, "Ignore-Creative").setComment("If true, will ignore (not spawn on) players in creative mode");
+            ConfigManager.getConfigNode(3, "Ignore-Creative").setValue(false);
+
+        }
+        if (ConfigManager.getConfigNode(3, "Ignore-Spectator").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(3, "Ignore-Spectator").setComment("If true, will ignore (not spawn on) players in spectator mode");
+            ConfigManager.getConfigNode(3, "Ignore-Spectator").setValue(false);
+
+        }
+
+        if (ConfigManager.getConfigNode(4, "Ignore-Creative").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(4, "Ignore-Creative").setComment("If true, will ignore (not spawn on) players in creative mode");
+            ConfigManager.getConfigNode(4, "Ignore-Creative").setValue(false);
+
+        }
+        if (ConfigManager.getConfigNode(4, "Ignore-Spectator").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(4, "Ignore-Spectator").setComment("If true, will ignore (not spawn on) players in spectator mode");
+            ConfigManager.getConfigNode(4, "Ignore-Spectator").setValue(false);
+
+        }
+
+        if (ConfigManager.getConfigNode(5, "Ignore-Creative").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(5, "Ignore-Creative").setComment("If true, will ignore (not spawn on) players in creative mode");
+            ConfigManager.getConfigNode(5, "Ignore-Creative").setValue(false);
+
+        }
+        if (ConfigManager.getConfigNode(5, "Ignore-Spectator").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(5, "Ignore-Spectator").setComment("If true, will ignore (not spawn on) players in spectator mode");
+            ConfigManager.getConfigNode(5, "Ignore-Spectator").setValue(false);
+
+        }
+
+        if (ConfigManager.getConfigNode(2, "Enable-Group-Size").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(2, "Enable-Group-Size").setComment("If false, will disable the group size system, meaning only 1 Pokemon will spawn from a spawn attempt instead of like 2 or 3, ignoring the group-size setting in the Pokemon's .conf file");
+            ConfigManager.getConfigNode(2, "Enable-Group-Size").setValue(true);
+
+        }
+
         if (needsSaving) {
 
             ConfigManager.save();

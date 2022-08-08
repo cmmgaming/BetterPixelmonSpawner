@@ -13,11 +13,13 @@ public class MiscSpawnEvent extends Event {
 
     private final EntityLivingBase entity;
     private final EntityPlayerMP player;
+    private final String selectedEntityID;
 
-    public MiscSpawnEvent (EntityLivingBase entity, EntityPlayerMP player) {
+    public MiscSpawnEvent (EntityLivingBase entity, EntityPlayerMP player, String selectedEntityID) {
 
         this.entity = entity;
         this.player = player;
+        this.selectedEntityID = selectedEntityID;
 
     }
 
@@ -30,6 +32,12 @@ public class MiscSpawnEvent extends Event {
     public EntityPlayerMP getPlayer() {
 
         return this.player;
+
+    }
+
+    public String getSelectedEntityID() {
+
+        return this.selectedEntityID;
 
     }
 

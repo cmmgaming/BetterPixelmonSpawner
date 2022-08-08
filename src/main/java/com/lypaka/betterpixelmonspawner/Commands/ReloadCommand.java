@@ -12,6 +12,7 @@ import com.lypaka.betterpixelmonspawner.Spawners.LegendarySpawner;
 import com.lypaka.betterpixelmonspawner.Spawners.MiscSpawner;
 import com.lypaka.betterpixelmonspawner.Spawners.NPCSpawner;
 import com.lypaka.betterpixelmonspawner.Spawners.PokemonSpawner;
+import com.lypaka.betterpixelmonspawner.Utils.HeldItemUtils;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.BossPokemonUtils;
 import com.lypaka.betterpixelmonspawner.Utils.FancyText;
 import com.lypaka.betterpixelmonspawner.Utils.PermissionHandler;
@@ -105,6 +106,11 @@ public class ReloadCommand extends CommandBase {
                 MiscSpawner.startTimer();
                 ClearTask.startClearTask();
 
+            } else if (module.equalsIgnoreCase("helditems")) {
+
+                // Loads in the held item registry for all Pokemon that have held item data
+                HeldItemUtils.load();
+
             } else if (module.equalsIgnoreCase("all")) {
 
                 PokemonConfig.load();
@@ -127,6 +133,9 @@ public class ReloadCommand extends CommandBase {
 
                 // Loads holidays from config, not worth having config getters for it since it only loads on startup unless reload command is ran
                 HolidayHandler.loadHolidays();
+
+                // Loads in the held item registry for all Pokemon that have held item data
+                HeldItemUtils.load();
 
                 // Loads the dead zones
                 DeadZoneRegistry.loadAreas();

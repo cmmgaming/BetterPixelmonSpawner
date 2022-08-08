@@ -9,6 +9,7 @@ import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.LegendarySpawnInfo;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.PokemonSpawnInfo;
 import com.lypaka.betterpixelmonspawner.Utils.FormIndexFromName;
+import com.lypaka.betterpixelmonspawner.Utils.HeldItemUtils;
 import com.lypaka.lypakautils.FancyText;
 import com.pixelmongenerations.api.pokemon.PokemonSpec;
 import com.pixelmongenerations.api.spawning.conditions.WorldTime;
@@ -351,6 +352,7 @@ public class PokemonSpawnList {
     private Button getPokemonSprite (String name, PokemonSpawnInfo info) {
 
         name = name.replace(".conf", "");
+        String fileName = name;
         EntityPixelmon pokemon;
         if (name.contains("-")) {
 
@@ -400,6 +402,36 @@ public class PokemonSpawnList {
         NBTTagList lore = new NBTTagList();
         lore.appendTag(new NBTTagString(FancyText.getFormattedString("&eSpawn Chance:&a " + percent)));
         lore.appendTag(new NBTTagString(FancyText.getFormattedString("&eSpawn Location:&a " + spawnLocation)));
+        if (HeldItemUtils.heldItemMap.containsKey(name)) {
+
+            Map<String, List<String>> possibleItems = null;
+            for (Map.Entry<String, Map<String, List<String>>> entry : HeldItemUtils.heldItemMap.entrySet()) {
+
+                if (entry.getKey().equalsIgnoreCase(fileName)) {
+
+                    possibleItems = entry.getValue();
+                    break;
+
+                }
+
+            }
+            if (possibleItems != null) {
+
+                lore.appendTag(new NBTTagString(FancyText.getFormattedString("&eHeld Items:")));
+                for (Map.Entry<String, List<String>> entry : possibleItems.entrySet()) {
+
+                    lore.appendTag(new NBTTagString(FancyText.getFormattedString("&a" + entry.getKey() + ":")));
+                    for (String s : entry.getValue()) {
+
+                        lore.appendTag(new NBTTagString(FancyText.getFormattedString("&e" + s)));
+
+                    }
+
+                }
+
+            }
+
+        }
         sprite.getOrCreateSubCompound("display").setTag("Lore", lore);
         return GooeyButton.builder().display(sprite).build();
 

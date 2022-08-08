@@ -12,6 +12,7 @@ import com.lypaka.betterpixelmonspawner.Listeners.*;
 import com.lypaka.betterpixelmonspawner.PokeClear.ClearTask;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.InfoRegistry;
 import com.lypaka.betterpixelmonspawner.Spawners.*;
+import com.lypaka.betterpixelmonspawner.Utils.HeldItemUtils;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.BossPokemonUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
@@ -43,7 +44,7 @@ public class BetterPixelmonSpawner {
 
     public static final String MOD_ID = "betterpixelmonspawner";
     public static final String MOD_NAME = "BetterPixelmonSpawner";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.6.0";
     public static Logger logger = LogManager.getLogger("Better Pixelmon Spawner");
     public static Path dir;
     public static List<String> alolans = new ArrayList<>();
@@ -90,6 +91,9 @@ public class BetterPixelmonSpawner {
         // Loads holidays from config, not worth having config getters for it since it only loads on startup unless reload command is ran
         HolidayHandler.loadHolidays();
 
+        // Loads in the held item registry for all Pokemon that have held item data
+        HeldItemUtils.load();
+
     }
 
     @Mod.EventHandler
@@ -111,7 +115,6 @@ public class BetterPixelmonSpawner {
         MinecraftForge.EVENT_BUS.register(new JoinListener());
         MinecraftForge.EVENT_BUS.register(new PokemonSpawnListener());
         MinecraftForge.EVENT_BUS.register(new ShinySpawnListener());
-        MinecraftForge.EVENT_BUS.register(new HolidayHandler());
         MinecraftForge.EVENT_BUS.register(new FishSpawner());
         MinecraftForge.EVENT_BUS.register(new RespawnListener());
         MinecraftForge.EVENT_BUS.register(new CommandListener());

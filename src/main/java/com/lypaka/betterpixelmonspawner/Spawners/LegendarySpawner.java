@@ -10,10 +10,14 @@ import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.LegendarySpawnInfo;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.PokemonSpawnInfo;
 import com.lypaka.betterpixelmonspawner.Utils.*;
+import com.lypaka.betterpixelmonspawner.ExternalAbilities.*;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.LegendaryUtils;
+import com.lypaka.lypakautils.WorldDimGetter;
 import com.pixelmongenerations.api.pokemon.PokemonSpec;
 import com.pixelmongenerations.api.spawning.conditions.WorldTime;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
+import com.pixelmongenerations.core.storage.PixelmonStorage;
+import com.pixelmongenerations.core.storage.PlayerStorage;
 import com.pixelmongenerations.core.util.helper.RandomHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -58,7 +62,6 @@ public class LegendarySpawner {
 
         rand = RandomHelper.getRandomNumberBetween(ConfigGetters.legendarySpawnIntervalMin, ConfigGetters.legendarySpawnIntervalMax);
         interval = rand * 1000L;
-        nextSpawnAttempt = LocalDateTime.now().plusSeconds(rand);
         legendaryTimer = new Timer();
         legendaryTimer.schedule(new TimerTask() {
 
@@ -73,6 +76,8 @@ public class LegendarySpawner {
 
                     if (!ConfigGetters.legendaryOptOut.contains(entry.getValue().getUniqueID().toString())) {
 
+                        if (entry.getValue().isCreative() && ConfigGetters.ignoreCreativeLegendary) continue;
+                        if (entry.getValue().isSpectator() && ConfigGetters.ignoreSpectatorLegendary) continue;
                         if (DeadZone.getAreaFromLocation(entry.getValue()) != null) {
 
                             DeadZone deadZone = DeadZone.getAreaFromLocation(entry.getValue());
@@ -113,6 +118,19 @@ public class LegendarySpawner {
                 List<LegendarySpawnInfo> possibleSpawns = new ArrayList<>();
                 List<String> usedNames = new ArrayList<>();
                 String location;
+                PlayerStorage party = PixelmonStorage.pokeBallManager.getPlayerStorageFromUUID(player.getUniqueID()).get();
+                EntityPixelmon firstPartyPokemon = null;
+                for (int i = 0; i < 6; i++) {
+
+                    EntityPixelmon p = party.getPokemon(party.getIDFromPosition(i), player.world);
+                    if (p != null) {
+
+                        firstPartyPokemon = p;
+                        break;
+
+                    }
+
+                }
                 if (!ConfigGetters.locationMap.containsKey(player.getUniqueID().toString())) {
 
                     if (player.getRidingEntity() != null) {
@@ -171,6 +189,7 @@ public class LegendarySpawner {
                     location = ConfigGetters.locationMap.get(player.getUniqueID().toString());
 
                 }
+                EntityPixelmon finalFirstPartyPokemon = firstPartyPokemon;
                 FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
                     if (!ConfigGetters.legendarySpawnFilterEnabled) {
@@ -267,13 +286,31 @@ public class LegendarySpawner {
 
                     }
 
-                    Map<LegendarySpawnInfo, Double> spawnChanceMap = new HashMap<>();
+                    Map<Double, UUID> spawnChanceMap = new HashMap<>();
+                    Map<UUID, LegendarySpawnInfo> pokemonSpawnInfoMap = new HashMap<>();
                     List<Double> spawnChances = new ArrayList<>(possibleSpawns.size());
                     int spawnIndex = 0;
+                    double spawnChanceModifier = 1.0;
+                    if (finalFirstPartyPokemon != null) {
+
+                        if (ArenaTrap.applies(finalFirstPartyPokemon) || Illuminate.applies(finalFirstPartyPokemon) || NoGuard.applies(finalFirstPartyPokemon)) {
+
+                            spawnChanceModifier = 2.0;
+
+                        } else if (Infiltrator.applies(finalFirstPartyPokemon) || QuickFeet.applies(finalFirstPartyPokemon) || Stench.applies(finalFirstPartyPokemon) || WhiteSmoke.applies(finalFirstPartyPokemon)) {
+
+                            spawnChanceModifier = 0.5;
+
+                        }
+
+                    }
                     for (LegendarySpawnInfo info : possibleSpawns) {
 
-                        spawnChanceMap.put(info, info.getSpawnChance());
-                        spawnChances.add(spawnIndex, info.getSpawnChance());
+                        UUID randUUID = UUID.randomUUID();
+                        double spawnChance = info.getSpawnChance() * spawnChanceModifier;
+                        spawnChanceMap.put(spawnChance, randUUID);
+                        pokemonSpawnInfoMap.put(randUUID, info);
+                        spawnChances.add(spawnIndex, spawnChance);
                         spawnIndex++;
 
                     }
@@ -283,47 +320,51 @@ public class LegendarySpawner {
                     List<LegendarySpawnInfo> names = new ArrayList<>();
                     for (int i = 0; i < spawnAmount; i++) {
 
-                        if (RandomHelper.getRandomChance(spawnChances.get(i))) {
+                        double spawnChance = spawnChances.get(i);
+                        UUID uuid = spawnChanceMap.get(spawnChance);
+                        LegendarySpawnInfo info = pokemonSpawnInfoMap.get(uuid);
+                        if (RandomHelper.getRandomChance(spawnChance)) {
 
-                            for (Map.Entry<LegendarySpawnInfo, Double> entry : spawnChanceMap.entrySet()) {
+                            if (!names.contains(info)) {
 
-                                if (entry.getValue() == spawnChances.get(i)) {
-
-                                    if (!names.contains(entry.getKey())) {
-
-                                        names.add(entry.getKey());
-
-                                    }
-
-                                }
-
-                                if (names.size() == 0) continue;
-
-                                if (names.size() > 1) {
-
-                                    selectedSpawn = RandomHelper.getRandomElementFromList(names);
-                                    break;
-
-                                } else if (names.size() == 1) {
-
-                                    selectedSpawn = names.get(0);
-                                    break;
-
-                                }
+                                names.add(info);
 
                             }
-
-                            if (selectedSpawn != null) break;
 
                         }
 
                     }
-                    if (selectedSpawn == null) {
+                    if (names.size() > 1) {
 
-                        selectedSpawn = RandomHelper.getRandomElementFromList(possibleSpawns);
+                        selectedSpawn = RandomHelper.getRandomElementFromList(names);
+
+                    } else if (names.size() == 1) {
+
+                        selectedSpawn = names.get(0);
 
                     }
+                    if (FlashFire.applies(finalFirstPartyPokemon)) {
 
+                        selectedSpawn = FlashFire.tryFlashFireOnLegendary(selectedSpawn, possibleSpawns, player);
+
+                    } else if (Harvest.applies(finalFirstPartyPokemon)) {
+
+                        selectedSpawn = Harvest.tryHarvestOnLegendary(selectedSpawn, possibleSpawns, player);
+
+                    } else if (LightningRod.applies(finalFirstPartyPokemon) || Static.applies(finalFirstPartyPokemon)) {
+
+                        selectedSpawn = LightningRod.tryLightningRodOnLegendary(selectedSpawn, possibleSpawns, player);
+
+                    } else if (MagnetPull.applies(finalFirstPartyPokemon)) {
+
+                        selectedSpawn = MagnetPull.tryMagnetPullOnLegendary(selectedSpawn, possibleSpawns, player);
+
+                    } else if (StormDrain.applies(finalFirstPartyPokemon)) {
+
+                        selectedSpawn = StormDrain.tryStormDrainOnLegendary(selectedSpawn, possibleSpawns, player);
+
+                    }
+                    if (selectedSpawn == null) return;
                     String[] levelRange = selectedSpawn.getLevelRange().split("-");
                     int max = Integer.parseInt(levelRange[0]);
                     int min = Integer.parseInt(levelRange[1]);
@@ -360,12 +401,31 @@ public class LegendarySpawner {
 
                     }
                     int level = RandomHelper.getRandomNumberBetween(min, max);
+                    if (Hustle.applies(finalFirstPartyPokemon) || Pressure.applies(finalFirstPartyPokemon) || VitalSpirit.applies(finalFirstPartyPokemon)) {
+
+                        level = Hustle.tryApplyHustle(level, selectedSpawn);
+
+                    }
                     pokemon.getLvl().setLevel(level);
+                    if (Intimidate.applies(finalFirstPartyPokemon) || KeenEye.applies(finalFirstPartyPokemon)) {
+
+                        pokemon = Intimidate.tryIntimidate(pokemon, finalFirstPartyPokemon);
+                        if (pokemon == null) return;
+
+                    }
                     pokemon.updateStats();
 
                     if (selectedSpawn.getHeldItemID() != null) {
 
                         pokemon.heldItem = new ItemStack(Item.getByNameOrId(selectedSpawn.getHeldItemID()));
+
+                    } else {
+
+                        if (ConfigGetters.heldItemsEnabled) {
+
+                            HeldItemUtils.tryApplyHeldItem(pokemonName, pokemon, finalFirstPartyPokemon);
+
+                        }
 
                     }
 
@@ -410,7 +470,33 @@ public class LegendarySpawner {
 
                         spawnY = player.getPosition().getY();
                         BlockPos baseSpawn = new BlockPos(spawnX, spawnY, spawnZ);
-                        safeSpawn = new BlockPos(spawnX, player.world.getTopSolidOrLiquidBlock(baseSpawn).getY(), spawnZ);
+                        if (!location.equalsIgnoreCase("underground")) {
+
+                            if (WorldDimGetter.getDimID(player.world, player) == -1) {
+
+                                safeSpawn = baseSpawn;
+
+                            } else {
+
+                                safeSpawn = new BlockPos(spawnX, player.world.getTopSolidOrLiquidBlock(baseSpawn).getY(), spawnZ);
+
+                            }
+
+                        } else {
+
+                            safeSpawn = baseSpawn; // not the safest thing to do as Pokemon could spawn in blocks underground, but there's not a lot of space down there anyway
+
+                        }
+
+                    }
+                    if (CuteCharm.applies(finalFirstPartyPokemon)) {
+
+                        CuteCharm.tryApplyCuteCharmEffect(pokemon, finalFirstPartyPokemon);
+
+                    }
+                    if (Synchronize.applies(finalFirstPartyPokemon)) {
+
+                        Synchronize.applySynchronize(pokemon, finalFirstPartyPokemon);
 
                     }
                     pokemon.setLocationAndAngles(safeSpawn.getX() + BetterPixelmonSpawner.random.nextDouble(), safeSpawn.getY(), safeSpawn.getZ() + BetterPixelmonSpawner.random.nextDouble(),0, 0);

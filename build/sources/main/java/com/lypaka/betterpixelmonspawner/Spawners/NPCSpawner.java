@@ -1,15 +1,15 @@
 package com.lypaka.betterpixelmonspawner.Spawners;
 
 import com.lypaka.betterpixelmonspawner.API.Spawning.NPCSpawnEvent;
-import com.lypaka.betterpixelmonspawner.Areas.Area;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZone;
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
+import com.lypaka.betterpixelmonspawner.DebugSystem.NPCDebug;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.EntityUtils;
 import com.lypaka.betterpixelmonspawner.Utils.Counters.NPCCounter;
 import com.pixelmongenerations.common.entity.npcs.EntityNPC;
 import com.pixelmongenerations.common.entity.npcs.NPCTrainer;
-import com.pixelmongenerations.core.config.PixelmonConfig;
 import com.pixelmongenerations.core.util.helper.RandomHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -22,6 +22,7 @@ import java.util.*;
 public class NPCSpawner {
 
     private static Timer timer;
+    public static boolean debugEnabled = false;
 
     public static void startTimer() {
 
@@ -45,7 +46,7 @@ public class NPCSpawner {
                     for (Map.Entry<UUID, EntityPlayerMP> playerEntry : JoinListener.playerMap.entrySet()) {
 
                         EntityPlayerMP player = playerEntry.getValue();
-                        if (Area.isInArea(player)) continue;
+                        NPCDebug.printPlayerDebugInformation(player);
                         if (ConfigGetters.npcOptOut.contains(player.getUniqueID().toString())) continue;
                         if (NPCCounter.getCount(player.getUniqueID()) > ConfigGetters.maxNPCs) {
 
@@ -56,6 +57,8 @@ public class NPCSpawner {
                             }
 
                         }
+                        if (player.isCreative() && ConfigGetters.ignoreCreativeNPC) continue;
+                        if (player.isSpectator() && ConfigGetters.ignoreSpectatorNPC) continue;
                         String worldName = player.world.getWorldInfo().getWorldName();
                         if (ConfigGetters.worldBlacklist.contains(worldName)) continue;
                         if (ConfigGetters.unsafeSpawnLocations) {
@@ -123,9 +126,19 @@ public class NPCSpawner {
                         String selectedID = null;
                         for (Map.Entry<String, Double> entry : ConfigGetters.npcSpawnMap.entrySet()) {
 
+                            if (debugEnabled) {
+
+                                BetterPixelmonSpawner.logger.info("NPC DEBUG: Pinging " + entry.getKey() + " / " + entry.getValue());
+
+                            }
                             if (Double.compare(entry.getValue(), rng) <= 0) {
 
                                 selectedID = entry.getKey();
+                                if (debugEnabled) {
+
+                                    BetterPixelmonSpawner.logger.info("NPC DEBUG: " + selectedID + " was chosen for spawn");
+
+                                }
                                 break;
 
                             } else {
@@ -137,10 +150,10 @@ public class NPCSpawner {
                         }
 
                         if (selectedID == null) continue;
-                        if (Area.getAreaFromLocation(player) != null) {
+                        if (DeadZone.getAreaFromLocation(player) != null) {
 
-                            Area area = Area.getAreaFromLocation(player);
-                            List<String> entities = area.getEntities();
+                            DeadZone deadZone = DeadZone.getAreaFromLocation(player);
+                            List<String> entities = deadZone.getEntities();
                             if (entities.contains(selectedID)) {
 
                                 continue;
@@ -168,12 +181,25 @@ public class NPCSpawner {
                                 NPCCounter.increment(npcSpawnEvent.getNPC(), npcSpawnEvent.getPlayer().getUniqueID());
                                 if (npcSpawnEvent.getNPC() instanceof NPCTrainer) {
 
-                                    int level = 3;
-                                    if (PixelmonConfig.spawnLevelsByDistance &&
-                                            (int)((double)level + Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, finalY, z)) / (double)PixelmonConfig.distancePerLevel + Math.random() * 3.0))
-                                                    > PixelmonConfig.maxLevelByDistance) {
+                                    if (ConfigGetters.scaleNPCLevelsByDistance) {
 
-                                        level = PixelmonConfig.maxLevelByDistance;
+                                        int level = 3;
+                                        if ((int)((double)level + Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, finalY, z)) / (double)ConfigGetters.blocksBeforeNPCIncrease + Math.random() * 3.0)) > ConfigGetters.maxNPCScaleLevel) {
+
+                                            level = ConfigGetters.maxNPCScaleLevel;
+
+                                        } else {
+
+                                            int distance = (int) Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, finalY, z)));
+                                            if (distance > ConfigGetters.blocksBeforeNPCIncrease) {
+
+                                                int mod = (distance / ConfigGetters.blocksBeforeNPCIncrease) * ConfigGetters.npcLevelModifier;
+                                                level = mod + level;
+
+                                            }
+
+                                        }
+
                                         NPCTrainer trainer = (NPCTrainer) npcSpawnEvent.getNPC();
                                         trainer.setLevel(level);
 

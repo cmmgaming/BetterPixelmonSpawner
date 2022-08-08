@@ -21,6 +21,7 @@ import java.util.*;
 public class MiscSpawner {
 
     private static Timer timer;
+    public static boolean debugEnabled = false;
 
     public static void startTimer() {
 
@@ -54,6 +55,8 @@ public class MiscSpawner {
                             }
 
                         }
+                        if (player.isCreative() && ConfigGetters.ignoreCreativeMisc) continue;
+                        if (player.isSpectator() && ConfigGetters.ignoreSpectatorMisc) continue;
                         String worldName = player.world.getWorldInfo().getWorldName();
                         if (ConfigGetters.worldBlacklist.contains(worldName)) continue;
                         if (ConfigGetters.unsafeMiscSpawnLocations) {

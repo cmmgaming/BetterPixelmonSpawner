@@ -2,26 +2,24 @@ package com.lypaka.betterpixelmonspawner.PokeClear;
 
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
+import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
 import com.lypaka.betterpixelmonspawner.Utils.FancyText;
 import com.lypaka.betterpixelmonspawner.Utils.Counters.PokemonCounter;
 import com.lypaka.lypakautils.WorldMap;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 import com.pixelmongenerations.core.enums.EnumSpecies;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
+import java.util.*;
 
 public class ClearTask {
 
     private static Timer warningTimer = null;
     private static Timer clearTimer = null;
-    private static final Map<String, World> worlds = WorldMap.worldMap;
-    private static int count = 0;
+    public static int count = 0;
 
     public static void startClearTask() {
 
@@ -41,83 +39,63 @@ public class ClearTask {
         if (!ConfigGetters.pokeClearEnabled) return;
 
         warningTimer = new Timer();
+        clearTimer = new Timer();
         long msgInterval = ConfigGetters.clearWarningInterval * 1000L;
+        long clearInterval = ConfigGetters.pokeClearInterval * 1000L;
+        long interval = clearInterval - msgInterval;
+        long actualFuckingInterval = clearInterval + interval;
         warningTimer.schedule(new TimerTask() {
 
             @Override
             public void run() {
 
                 BetterPixelmonSpawner.server.getPlayerList().sendMessage(FancyText.getFancyText(ConfigGetters.clearWarningMessage));
+                clearTimer.schedule(new TimerTask() {
 
-            }
+                    @Override
+                    public void run() {
 
-        }, msgInterval, msgInterval);
+                        FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-        clearTimer = new Timer();
-        long interval = ConfigGetters.pokeClearInterval * 1000L;
-        clearTimer.schedule(new TimerTask() {
+                            JoinListener.pokemonMap.entrySet().removeIf(entry -> {
 
-            @Override
-            public void run() {
+                                PokemonCounter.checkForDespawnPokemon(entry.getKey());
+                                if (!JoinListener.playerMap.containsKey(entry.getKey())) {
 
-                FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
-
-                    for (Map.Entry<String, World> entry : worlds.entrySet()) {
-
-                        World world = entry.getValue();
-                        for (Entity ent : world.loadedEntityList) {
-
-                            if (ent instanceof EntityPixelmon) {
-
-                                EntityPixelmon pokemon = (EntityPixelmon) ent;
-                                if (!isBlacklisted(pokemon)) {
-
-                                    // decrements a player's Pokemon counter
-                                    for (String tag : pokemon.getTags()) {
-
-                                        if (tag.contains("SpawnedPlayerUUID:")) {
-
-                                            String[] split = tag.split(":");
-                                            UUID uuid = UUID.fromString(split[1]);
-                                            PokemonCounter.decrement(uuid);
-                                            break;
-
-                                        }
-
-                                    }
-                                    count++;
-                                    pokemon.setDead();
+                                    return true;
 
                                 }
 
+                                return false;
+
+                            });
+
+                            String msg = ConfigGetters.pokeClearMessage.replace("%number%", String.valueOf(count));
+                            if (count == 1 && msg.contains("have")) {
+
+                                msg = msg.replace("have", "has");
+
                             }
 
-                        }
+                            BetterPixelmonSpawner.server.getPlayerList().sendMessage(FancyText.getFancyText(msg
+                                    .replace("%number%", String.valueOf(count))
+                            ));
+
+                            count = 0;
+
+                        });
 
                     }
 
-                    String msg = ConfigGetters.pokeClearMessage.replace("%number%", String.valueOf(count));
-                    if (count == 1 && msg.contains("have")) {
-
-                        msg = msg.replace("have", "has");
-
-                    }
-
-                    BetterPixelmonSpawner.server.getPlayerList().sendMessage(FancyText.getFancyText(msg
-                            .replace("%number%", String.valueOf(count))
-                    ));
-
-                    count = 0;
-
-                });
+                }, interval);
 
             }
 
-        }, interval, interval);
+        }, 0, actualFuckingInterval);
 
     }
 
-    private static boolean isBlacklisted (EntityPixelmon pokemon) {
+    public static boolean isBlacklisted (EntityPixelmon pokemon) {
 
         boolean blacklisted = false;
         if (pokemon.hasOwner()) {

@@ -1,0 +1,249 @@
+{
+  "biomesoplenty:recipes/transportation/boat_ethereal": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_mahogany": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_cherry": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/dark_oak_boat": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_jacaranda": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_umbran": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "minecraft:story/enter_the_nether": {
+    "criteria": {
+      "entered_nether": "2022-08-08 01:38:33 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/stonebrick": {
+    "criteria": {
+      "has_stone": "2022-08-08 02:02:40 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:biomesoplenty/all_biomes": {
+    "criteria": {
+      "corrupted_sands": "2022-08-08 01:38:33 -0500",
+      "fungi_forest": "2022-08-08 01:56:35 -0500",
+      "undergarden": "2022-08-08 01:56:30 -0500"
+    },
+    "done": false
+  },
+  "pixelmon:recipes/decoration/castlegrey2": {
+    "criteria": {
+      "has_base_item": "2022-08-08 02:02:40 -0500"
+    },
+    "done": true
+  },
+  "minecraft:nether/root": {
+    "criteria": {
+      "entered_nether": "2022-08-08 01:38:33 -0500"
+    },
+    "done": true
+  },
+  "pixelmon:recipes/decoration/master_displayball": {
+    "criteria": {
+      "has_base_item": "2022-08-08 01:18:17 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_fir": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "beaches": "2022-08-08 02:00:53 -0500",
+      "forest_hills": "2022-08-08 02:01:47 -0500",
+      "plains": "2022-08-08 01:10:49 -0500",
+      "ocean": "2022-08-08 02:02:16 -0500",
+      "river": "2022-08-08 01:27:33 -0500",
+      "desert": "2022-08-08 01:23:44 -0500"
+    },
+    "done": false
+  },
+  "pixelmon:recipes/breeding/ranch": {
+    "criteria": {
+      "has_base_item": "2022-08-08 01:23:17 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_magic": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_ebony": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/birch_boat": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "pixelmon:recipes/breeding/ever_stone": {
+    "criteria": {
+      "has_base_item": "2022-08-08 02:02:40 -0500"
+    },
+    "done": true
+  },
+  "pixelmon:worlds/enter_the_nether": {
+    "criteria": {
+      "enter_nether": "2022-08-08 01:38:33 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_hellbark": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_willow": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "pixelmon:recipes/decoration/boulder": {
+    "criteria": {
+      "has_base_item": "2022-08-08 02:02:40 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_sacred_oak": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_mangrove": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/acacia_boat": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/stone_button": {
+    "criteria": {
+      "has_stone": "2022-08-08 02:02:40 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_pine": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_palm": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "pixelmon:recipes/tools/stone_hammer": {
+    "criteria": {
+      "has_base_item": "2022-08-08 02:02:40 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_redwood": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/stone_slab": {
+    "criteria": {
+      "has_stone": "2022-08-08 02:02:40 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/stone_pressure_plate": {
+    "criteria": {
+      "has_stone": "2022-08-08 02:02:40 -0500"
+    },
+    "done": true
+  },
+  "pixelmon:recipes/decoration/rock": {
+    "criteria": {
+      "has_base_item": "2022-08-08 02:02:40 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/boat": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "biomesoplenty:recipes/transportation/boat_eucalyptus": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/jungle_boat": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "pixelmon:recipes/decoration/castlegrey": {
+    "criteria": {
+      "has_base_item": "2022-08-08 02:02:40 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/spruce_boat": {
+    "criteria": {
+      "entered_water": "2022-08-08 02:02:16 -0500"
+    },
+    "done": true
+  },
+  "pixelmon:balls/master_ball_capture": {
+    "criteria": {
+      "master_ball_capture": "2022-08-08 01:18:31 -0500"
+    },
+    "done": true
+  }
+}

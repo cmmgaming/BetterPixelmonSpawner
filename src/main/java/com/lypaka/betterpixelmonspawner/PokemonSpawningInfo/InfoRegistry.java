@@ -256,7 +256,13 @@ public class InfoRegistry {
                                 Map<String, String> m6 = e5.getValue();
                                 String levelRange = m6.get("level-range");
                                 double spawnChance = Double.parseDouble(m6.get("spawn-chance"));
-                                FishingSpawnInfo fishingSpawnInfo = new FishingSpawnInfo(name, biome, location, rod, time, weather, levelRange, spawnChance);
+                                String heldItemID = null;
+                                if (m6.containsKey("held-item")) {
+
+                                    heldItemID = m6.get("held-item");
+
+                                }
+                                FishingSpawnInfo fishingSpawnInfo = new FishingSpawnInfo(name, biome, location, rod, time, weather, levelRange, spawnChance, heldItemID);
                                 fishingSpawnInfo.register();
                                 List<FishingSpawnInfo> fsi = new ArrayList<>();
                                 if (BiomeList.biomeFishMap.containsKey(biome)) {

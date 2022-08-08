@@ -22,7 +22,12 @@ public class ConfigGetters {
     public static boolean bossesCanBeNormal;
     public static double bossSpawnChance;
     public static Map<String, Double> bossSpawnMap;
+    public static boolean enableGroupSize;
+    public static boolean externalAbilitiesEnabled;
     public static double gmaxChance;
+    public static boolean heldItemsEnabled;
+    public static boolean ignoreCreativePokemon;
+    public static boolean ignoreSpectatorPokemon;
     public static int pokemonLevelModifier;
     public static boolean marksEnabled;
     public static int maxPokemonScaleLevel;
@@ -42,6 +47,8 @@ public class ConfigGetters {
     public static boolean validateSpawns;
 
     public static boolean legendarySpawnerEnabled;
+    public static boolean ignoreCreativeLegendary;
+    public static boolean ignoreSpectatorLegendary;
     public static double legendarySpawnChance;
     public static boolean legendarySpawnFilterEnabled;
     public static int legendarySpawnLocationXZ;
@@ -56,6 +63,8 @@ public class ConfigGetters {
     public static int blocksBeforeNPCIncrease;
     public static int npcDespawnTimer;
     public static boolean npcSpawnerEnabled;
+    public static boolean ignoreCreativeNPC;
+    public static boolean ignoreSpectatorNPC;
     public static int npcLevelModifier;
     public static int maxNPCs;
     public static int maxNPCScaleLevel;
@@ -68,6 +77,8 @@ public class ConfigGetters {
     public static Map<String, String> miscBroadcastMap;
     public static int miscDespawnTimer;
     public static boolean miscSpawnerEnabled;
+    public static boolean ignoreCreativeMisc;
+    public static boolean ignoreSpectatorMisc;
     public static int maxMiscEntities;
     public static int miscEntityInterval;
     public static int miscRadiusXZ;
@@ -111,7 +122,12 @@ public class ConfigGetters {
         bossesCanBeNormal = ConfigManager.getConfigNode(2, "Bosses-Can-Be-Normals").getBoolean();
         bossSpawnChance = ConfigManager.getConfigNode(2, "Boss-Spawn-Chance").getDouble();
         bossSpawnMap = ConfigManager.getConfigNode(2, "Boss-Spawn-Map").getValue(new TypeToken<Map<String, Double>>() {});
+        enableGroupSize = ConfigManager.getConfigNode(2, "Enable-Group-Size").getBoolean();
+        externalAbilitiesEnabled = ConfigManager.getConfigNode(2, "External-Abilities").getBoolean();
         gmaxChance = ConfigManager.getConfigNode(2, "GMax-Factor-Chance").getDouble();
+        heldItemsEnabled = ConfigManager.getConfigNode(2, "Held-Items").getBoolean();
+        ignoreCreativePokemon = ConfigManager.getConfigNode(2, "Ignore-Creative").getBoolean();
+        ignoreSpectatorPokemon = ConfigManager.getConfigNode(2, "Ignore-Spectator").getBoolean();
         pokemonLevelModifier = ConfigManager.getConfigNode(2, "Level-Modifier").getInt();
         marksEnabled = ConfigManager.getConfigNode(2, "Marks-Enabled").getBoolean();
         maxPokemonScaleLevel = ConfigManager.getConfigNode(2, "Max-Scaled-Level").getInt();
@@ -131,6 +147,8 @@ public class ConfigGetters {
         validateSpawns = ConfigManager.getConfigNode(2, "Validate-Spawns").getBoolean();
 
         legendarySpawnerEnabled = ConfigManager.getConfigNode(3, "Enabled").getBoolean();
+        ignoreCreativeLegendary = ConfigManager.getConfigNode(3, "Ignore-Creative").getBoolean();
+        ignoreSpectatorLegendary = ConfigManager.getConfigNode(3, "Ignore-Spectator").getBoolean();
         legendarySpawnChance = ConfigManager.getConfigNode(3, "Spawn-Chance").getDouble();
         legendarySpawnFilterEnabled = ConfigManager.getConfigNode(3, "Spawn-Filter-Enabled").getBoolean();
         legendaryGracePeriod = ConfigManager.getConfigNode(3, "Spawn-Grace-Period").getInt();
@@ -145,6 +163,8 @@ public class ConfigGetters {
         blocksBeforeNPCIncrease = ConfigManager.getConfigNode(4, "Blocks-Before-Level-Increase").getInt();
         npcDespawnTimer = ConfigManager.getConfigNode(4, "Despawn-Timer").getInt();
         npcSpawnerEnabled = ConfigManager.getConfigNode(4, "Enabled").getBoolean();
+        ignoreCreativeNPC = ConfigManager.getConfigNode(4, "Ignore-Creative").getBoolean();
+        ignoreSpectatorNPC = ConfigManager.getConfigNode(4, "Ignore-Spectator").getBoolean();
         npcLevelModifier = ConfigManager.getConfigNode(4, "Level-Modifier").getInt();
         maxNPCs = ConfigManager.getConfigNode(4, "Max-NPCs").getInt();
         maxNPCScaleLevel = ConfigManager.getConfigNode(4, "Max-Scaled-Level").getInt();
@@ -157,6 +177,8 @@ public class ConfigGetters {
         miscBroadcastMap = ConfigManager.getConfigNode(5, "Broadcasts").getValue(new TypeToken<Map<String, String>>() {});
         miscDespawnTimer = ConfigManager.getConfigNode(5, "Despawn-Timer").getInt();
         miscSpawnerEnabled = ConfigManager.getConfigNode(5, "Enabled").getBoolean();
+        ignoreCreativeMisc = ConfigManager.getConfigNode(5, "Ignore-Creative").getBoolean();
+        ignoreSpectatorMisc = ConfigManager.getConfigNode(5, "Ignore-Spectator").getBoolean();
         maxMiscEntities = ConfigManager.getConfigNode(5, "Max-Entities").getInt();
         miscEntityInterval = ConfigManager.getConfigNode(5, "Spawn-Interval").getInt();
         miscRadiusXZ = ConfigManager.getConfigNode(5, "Spawn-Location-XZ").getInt();

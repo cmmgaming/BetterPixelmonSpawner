@@ -1,20 +1,18 @@
 package com.lypaka.betterpixelmonspawner;
 
-import com.lypaka.betterpixelmonspawner.Areas.Area;
-import com.lypaka.betterpixelmonspawner.Areas.AreaRegistry;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZone;
+import com.lypaka.betterpixelmonspawner.DeadZones.DeadZoneRegistry;
 import com.lypaka.betterpixelmonspawner.Commands.PixelmonSpawnerCommand;
 import com.lypaka.betterpixelmonspawner.Config.ConfigGetters;
 import com.lypaka.betterpixelmonspawner.Config.ConfigManager;
+import com.lypaka.betterpixelmonspawner.Config.ConfigUpdater;
 import com.lypaka.betterpixelmonspawner.Config.PokemonConfig;
 import com.lypaka.betterpixelmonspawner.Holidays.HolidayHandler;
 import com.lypaka.betterpixelmonspawner.Listeners.*;
 import com.lypaka.betterpixelmonspawner.PokeClear.ClearTask;
-import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.BiomeList;
 import com.lypaka.betterpixelmonspawner.PokemonSpawningInfo.InfoRegistry;
-import com.lypaka.betterpixelmonspawner.Spawners.LegendarySpawner;
-import com.lypaka.betterpixelmonspawner.Spawners.MiscSpawner;
-import com.lypaka.betterpixelmonspawner.Spawners.NPCSpawner;
-import com.lypaka.betterpixelmonspawner.Spawners.PokemonSpawner;
+import com.lypaka.betterpixelmonspawner.Spawners.*;
+import com.lypaka.betterpixelmonspawner.Utils.HeldItemUtils;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.BossPokemonUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,7 +31,6 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 @Mod(
@@ -41,13 +38,13 @@ import java.util.Random;
         name = BetterPixelmonSpawner.MOD_NAME,
         version = BetterPixelmonSpawner.VERSION,
         acceptableRemoteVersions = "*",
-        dependencies = "required-after:lypakautils;required-after:gooeylibs2"
+        dependencies = "required-after:lypakautils"
 )
 public class BetterPixelmonSpawner {
 
     public static final String MOD_ID = "betterpixelmonspawner";
     public static final String MOD_NAME = "BetterPixelmonSpawner";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.6.0";
     public static Logger logger = LogManager.getLogger("Better Pixelmon Spawner");
     public static Path dir;
     public static List<String> alolans = new ArrayList<>();
@@ -56,13 +53,14 @@ public class BetterPixelmonSpawner {
     public static Random random = new Random();
     public static LocalDate currentDay = LocalDate.now();
     public static MinecraftServer server;
-    public static List<Area> areas = new ArrayList<>();
+    public static List<DeadZone> deadZones = new ArrayList<>();
 
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event) throws ObjectMappingException {
 
         dir = event.getModConfigurationDirectory().toPath().resolve(MOD_ID);
         ConfigManager.setup(dir);
+        ConfigUpdater.updateConfig();
         ConfigGetters.load();
         PokemonConfig.setup(dir.resolve("pokemon"));
         loadRegionalLists();
@@ -93,6 +91,9 @@ public class BetterPixelmonSpawner {
         // Loads holidays from config, not worth having config getters for it since it only loads on startup unless reload command is ran
         HolidayHandler.loadHolidays();
 
+        // Loads in the held item registry for all Pokemon that have held item data
+        HeldItemUtils.load();
+
     }
 
     @Mod.EventHandler
@@ -114,10 +115,12 @@ public class BetterPixelmonSpawner {
         MinecraftForge.EVENT_BUS.register(new JoinListener());
         MinecraftForge.EVENT_BUS.register(new PokemonSpawnListener());
         MinecraftForge.EVENT_BUS.register(new ShinySpawnListener());
-        MinecraftForge.EVENT_BUS.register(new HolidayHandler());
+        MinecraftForge.EVENT_BUS.register(new FishSpawner());
+        MinecraftForge.EVENT_BUS.register(new RespawnListener());
+        MinecraftForge.EVENT_BUS.register(new CommandListener());
 
         // Loads the areas
-        AreaRegistry.loadAreas();
+        DeadZoneRegistry.loadAreas();
 
     }
 
@@ -128,6 +131,7 @@ public class BetterPixelmonSpawner {
         ConfigManager.getConfigNode(6, "Misc-Opt-Out").setValue(ConfigGetters.miscOptOut);
         ConfigManager.getConfigNode(6, "NPC-Opt-Out").setValue(ConfigGetters.npcOptOut);
         ConfigManager.getConfigNode(6, "Pokemon-Opt-Out").setValue(ConfigGetters.pokemonOptOut);
+        ConfigManager.getConfigNode(6, "Spawner-Filter").setValue(ConfigGetters.locationMap);
         ConfigManager.save();
 
     }
