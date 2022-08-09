@@ -117,81 +117,81 @@ public class LegendarySpawner {
 
                 List<LegendarySpawnInfo> possibleSpawns = new ArrayList<>();
                 List<String> usedNames = new ArrayList<>();
-                String location;
-                PlayerStorage party = PixelmonStorage.pokeBallManager.getPlayerStorageFromUUID(player.getUniqueID()).get();
-                EntityPixelmon firstPartyPokemon = null;
-                for (int i = 0; i < 6; i++) {
+                FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-                    EntityPixelmon p = party.getPokemon(party.getIDFromPosition(i), player.world);
-                    if (p != null) {
+                    String location;
+                    PlayerStorage party = PixelmonStorage.pokeBallManager.getPlayerStorageFromUUID(player.getUniqueID()).get();
+                    EntityPixelmon firstPartyPokemon = null;
+                    for (int i = 0; i < 6; i++) {
 
-                        firstPartyPokemon = p;
-                        break;
+                        EntityPixelmon p = party.getPokemon(party.getIDFromPosition(i), player.world);
+                        if (p != null) {
+
+                            firstPartyPokemon = p;
+                            break;
+
+                        }
 
                     }
+                    if (!ConfigGetters.locationMap.containsKey(player.getUniqueID().toString())) {
 
-                }
-                if (!ConfigGetters.locationMap.containsKey(player.getUniqueID().toString())) {
+                        if (player.getRidingEntity() != null) {
 
-                    if (player.getRidingEntity() != null) {
+                            Entity mount = player.getRidingEntity();
+                            if (mount.isInWater()) {
 
-                        Entity mount = player.getRidingEntity();
-                        if (mount.isInWater()) {
+                                location = "water";
 
-                            location = "water";
+                            } else if (mount.onGround) {
 
-                        } else if (mount.onGround) {
+                                if (mount.getPosition().getY() <= 63) {
 
-                            if (mount.getPosition().getY() <= 63) {
+                                    location = "underground";
 
-                                location = "underground";
+                                } else {
+
+                                    location = "land";
+
+                                }
 
                             } else {
 
-                                location = "land";
+                                location = "air";
 
                             }
 
                         } else {
 
-                            location = "air";
+                            if (player.isInWater()) {
+
+                                location = "water";
+
+                            } else if (player.onGround) {
+
+                                if (player.getPosition().getY() <= 63) {
+
+                                    location = "underground";
+
+                                } else {
+
+                                    location = "land";
+
+                                }
+
+                            } else {
+
+                                location = "air";
+
+                            }
 
                         }
 
                     } else {
 
-                        if (player.isInWater()) {
-
-                            location = "water";
-
-                        } else if (player.onGround) {
-
-                            if (player.getPosition().getY() <= 63) {
-
-                                location = "underground";
-
-                            } else {
-
-                                location = "land";
-
-                            }
-
-                        } else {
-
-                            location = "air";
-
-                        }
+                        location = ConfigGetters.locationMap.get(player.getUniqueID().toString());
 
                     }
-
-                } else {
-
-                    location = ConfigGetters.locationMap.get(player.getUniqueID().toString());
-
-                }
-                EntityPixelmon finalFirstPartyPokemon = firstPartyPokemon;
-                FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
-
+                    EntityPixelmon finalFirstPartyPokemon = firstPartyPokemon;
                     if (!ConfigGetters.legendarySpawnFilterEnabled) {
 
                         for (String name : BiomeList.biomesToPokemon.get(biomeID)) {
