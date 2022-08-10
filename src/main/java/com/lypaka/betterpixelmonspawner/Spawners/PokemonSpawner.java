@@ -473,7 +473,7 @@ public class PokemonSpawner {
                                         if (distance > ConfigGetters.blocksBeforePokemonIncrease) {
 
                                             int mod = (distance / ConfigGetters.blocksBeforePokemonIncrease) * ConfigGetters.pokemonLevelModifier;
-                                            level = mod + level;
+                                            level = RandomHelper.getRandomNumberBetween((int) (0.6 * mod), mod);
 
                                         }
 
