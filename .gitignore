@@ -4120,3 +4120,173 @@ build/tmp/reobfJar/reobf-default6139476141238213724.srg
 build/tmp/reobfJar/reobf-extraLines1521194804171986627.srg
 build/tmp/reobfShadowJar/reobf-default114211854473154848.srg
 build/tmp/reobfShadowJar/reobf-extraLines1995749180081787322.srg
+.gradle/4.10.3/fileHashes/fileHashes.bin
+.gradle/4.10.3/fileHashes/fileHashes.lock
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+build/resources/main/assets/betterpixelmonspawner/heldItems.conf
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Config/ConfigGetters.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/PokeClear/ClearTask.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/LegendarySpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/MiscSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/NPCSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/PokemonSpawner.java
+build/tmp/extractAnnotationsJar/input1124026370902557293.jar
+build/tmp/extractAnnotationsJar/input638371999192433633.jar
+build/tmp/extractAnnotationsShadowJar/input1324237996865554845.jar
+build/tmp/extractAnnotationsShadowJar/input147737005261366422.jar
+build/tmp/reobfJar/reobf-default2458218812560993937.srg
+build/tmp/reobfJar/reobf-default8027852246700307548.srg
+build/tmp/reobfJar/reobf-extraLines2416231992078351731.srg
+build/tmp/reobfJar/reobf-extraLines5061842920812714366.srg
+build/tmp/reobfShadowJar/reobf-default3617976434097076491.srg
+build/tmp/reobfShadowJar/reobf-default878165667022098247.srg
+build/tmp/reobfShadowJar/reobf-extraLines5179790714754403063.srg
+build/tmp/reobfShadowJar/reobf-extraLines7580798621003476787.srg
+run/config/betterpixelmonspawner/pokemon/missingno-aerodactyl.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon10.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon11.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon12.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon13.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon14.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon15.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon16.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon17.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon18.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon19.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon20.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon21.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon22.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon23.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon24.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon25.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon26.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon27.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon28.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon29.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon30.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon31.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon32.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon33.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon34.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon35.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon36.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon37.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon38.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon39.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon40.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon41.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon42.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon43.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon44.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon45.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon46.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon47.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon48.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon49.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon5.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon50.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon51.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon52.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon53.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon54.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon6.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon7.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon8.conf
+run/config/betterpixelmonspawner/pokemon/missingno-fakemon9.conf
+run/config/betterpixelmonspawner/pokemon/missingno-ghost.conf
+run/config/betterpixelmonspawner/pokemon/missingno-kabutops.conf
+run/config/betterpixelmonspawner/pokemon/missingno-redblue.conf
+run/config/betterpixelmonspawner/pokemon/missingno-yellow.conf
+run/config/betterpixelmonspawner/pokemon/missingno.conf
+run/config/betterpixelmonspawner/pokemon/silvally-normal.conf
+run/crash-reports/crash-2022-08-10_21.29.48-server.txt
+run/logs/2022-08-08-1.log.gz
+run/logs/2022-08-08-2.log.gz
+run/logs/2022-08-09-1.log.gz
+run/logs/2022-08-09-2.log.gz
+run/logs/2022-08-10-1.log.gz
+run/logs/2022-08-10-2.log.gz
+run/logs/2022-08-10-3.log.gz
+run/logs/2022-08-10-4.log.gz
+run/logs/2022-08-10-5.log.gz
+run/logs/2022-08-10-6.log.gz
+run/saves/New World/advancements/46c1b760-ca01-3b6f-9924-2c0867885238.json
+run/saves/New World/advancements/79f8754e-14dd-38b7-8860-09cab9cfb920.json
+run/saves/New World/advancements/80db04bb-566c-3ad4-b0e2-8e4330dc410b.json
+run/saves/New World/advancements/9a479c15-8100-309d-8c38-1d323bfdcf80.json
+run/saves/New World/advancements/c262fde9-3bcd-3326-9294-f86ce09da0bb.json
+run/saves/New World/advancements/f0c5379b-0e4e-34aa-808d-37fef9b5ce6c.json
+run/saves/New World/advancements/fcaee4c1-1fdb-389e-bc03-5d6c73d69c2a.json
+run/saves/New World/playerdata/46c1b760-ca01-3b6f-9924-2c0867885238.dat
+run/saves/New World/playerdata/79f8754e-14dd-38b7-8860-09cab9cfb920.dat
+run/saves/New World/playerdata/80db04bb-566c-3ad4-b0e2-8e4330dc410b.dat
+run/saves/New World/playerdata/9a479c15-8100-309d-8c38-1d323bfdcf80.dat
+run/saves/New World/playerdata/c262fde9-3bcd-3326-9294-f86ce09da0bb.dat
+run/saves/New World/playerdata/f0c5379b-0e4e-34aa-808d-37fef9b5ce6c.dat
+run/saves/New World/playerdata/fcaee4c1-1fdb-389e-bc03-5d6c73d69c2a.dat
+run/saves/New World/pokemon/46c1b760-ca01-3b6f-9924-2c0867885238.pk
+run/saves/New World/pokemon/79f8754e-14dd-38b7-8860-09cab9cfb920.pk
+run/saves/New World/pokemon/80db04bb-566c-3ad4-b0e2-8e4330dc410b.pk
+run/saves/New World/pokemon/9a479c15-8100-309d-8c38-1d323bfdcf80.pk
+run/saves/New World/pokemon/c262fde9-3bcd-3326-9294-f86ce09da0bb.pk
+run/saves/New World/pokemon/f0c5379b-0e4e-34aa-808d-37fef9b5ce6c.pk
+run/saves/New World/pokemon/fcaee4c1-1fdb-389e-bc03-5d6c73d69c2a.pk
+run/saves/New World/stats/46c1b760-ca01-3b6f-9924-2c0867885238.json
+run/saves/New World/stats/79f8754e-14dd-38b7-8860-09cab9cfb920.json
+run/saves/New World/stats/80db04bb-566c-3ad4-b0e2-8e4330dc410b.json
+run/saves/New World/stats/9a479c15-8100-309d-8c38-1d323bfdcf80.json
+run/saves/New World/stats/c262fde9-3bcd-3326-9294-f86ce09da0bb.json
+run/saves/New World/stats/f0c5379b-0e4e-34aa-808d-37fef9b5ce6c.json
+run/saves/New World/stats/fcaee4c1-1fdb-389e-bc03-5d6c73d69c2a.json
+.gradle/4.10.3/fileHashes/fileHashes.bin
+.gradle/4.10.3/fileHashes/fileHashes.lock
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+build/libs/BetterPixelmonSpawner-1.6.0.jar
+build/resources/main/assets/betterpixelmonspawner/heldItems.conf
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Config/ConfigGetters.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/LegendarySpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/MiscSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/NPCSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/PokemonSpawner.java
+build/tmp/extractAnnotationsJar/input202156336761228531.jar
+build/tmp/extractAnnotationsJar/input441224823446210484.jar
+build/tmp/extractAnnotationsJar/input4605132363102448990.jar
+build/tmp/extractAnnotationsJar/input672408418102438007.jar
+build/tmp/extractAnnotationsJar/input7695642255814426490.jar
+build/tmp/extractAnnotationsJar/input8762303306293309281.jar
+build/tmp/extractAnnotationsJar/input9082375724041630946.jar
+build/tmp/extractAnnotationsShadowJar/input1438127516367084532.jar
+build/tmp/extractAnnotationsShadowJar/input1849602224773187004.jar
+build/tmp/extractAnnotationsShadowJar/input2666822477911275306.jar
+build/tmp/extractAnnotationsShadowJar/input3282550489945492331.jar
+build/tmp/extractAnnotationsShadowJar/input5075622401960717665.jar
+build/tmp/extractAnnotationsShadowJar/input5433673481791865003.jar
+build/tmp/extractAnnotationsShadowJar/input8145726292102872774.jar
+build/tmp/reobfJar/reobf-default1361325501697060623.srg
+build/tmp/reobfJar/reobf-default17754821214218699.srg
+build/tmp/reobfJar/reobf-default2783751821897541702.srg
+build/tmp/reobfJar/reobf-default4461598633525494383.srg
+build/tmp/reobfJar/reobf-default4735532961450971739.srg
+build/tmp/reobfJar/reobf-default6979614131462827773.srg
+build/tmp/reobfJar/reobf-default8830953538048966985.srg
+build/tmp/reobfJar/reobf-extraLines3024673812838571840.srg
+build/tmp/reobfJar/reobf-extraLines5705521261023779658.srg
+build/tmp/reobfJar/reobf-extraLines6272032281275564475.srg
+build/tmp/reobfJar/reobf-extraLines7826979424885427406.srg
+build/tmp/reobfJar/reobf-extraLines8439669441937027070.srg
+build/tmp/reobfJar/reobf-extraLines8518200865637866657.srg
+build/tmp/reobfJar/reobf-extraLines978221424011602241.srg
+build/tmp/reobfShadowJar/reobf-default3328417910593913420.srg
+build/tmp/reobfShadowJar/reobf-default4209021014873213873.srg
+build/tmp/reobfShadowJar/reobf-default7619740957101080670.srg
+build/tmp/reobfShadowJar/reobf-default7773503207100736960.srg
+build/tmp/reobfShadowJar/reobf-default7796039301070992649.srg
+build/tmp/reobfShadowJar/reobf-default7800064785825841730.srg
+build/tmp/reobfShadowJar/reobf-default8529936155129691400.srg
+build/tmp/reobfShadowJar/reobf-extraLines2228729368451876506.srg
+build/tmp/reobfShadowJar/reobf-extraLines2380731577276087705.srg
+build/tmp/reobfShadowJar/reobf-extraLines2878028945202016627.srg
+build/tmp/reobfShadowJar/reobf-extraLines344703572565415127.srg
+build/tmp/reobfShadowJar/reobf-extraLines3588479736804057406.srg
+build/tmp/reobfShadowJar/reobf-extraLines3720767505094650835.srg
+build/tmp/reobfShadowJar/reobf-extraLines9064321890317610380.srg

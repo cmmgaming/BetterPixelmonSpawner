@@ -30,6 +30,9 @@ public class ConfigGetters {
     public static boolean ignoreSpectatorPokemon;
     public static int pokemonLevelModifier;
     public static boolean marksEnabled;
+    public static int maxAlphas;
+    public static int maxBosses;
+    public static int maxTotems;
     public static int maxPokemonScaleLevel;
     public static int maxPokemon;
     public static String highIVSoundID;
@@ -130,6 +133,9 @@ public class ConfigGetters {
         ignoreSpectatorPokemon = ConfigManager.getConfigNode(2, "Ignore-Spectator").getBoolean();
         pokemonLevelModifier = ConfigManager.getConfigNode(2, "Level-Modifier").getInt();
         marksEnabled = ConfigManager.getConfigNode(2, "Marks-Enabled").getBoolean();
+        maxAlphas = ConfigManager.getConfigNode(2, "Max-Alphas").getInt();
+        maxBosses = ConfigManager.getConfigNode(2, "Max-Bosses").getInt();
+        maxTotems = ConfigManager.getConfigNode(2, "Max-Totems").getInt();
         maxPokemonScaleLevel = ConfigManager.getConfigNode(2, "Max-Scaled-Level").getInt();
         maxPokemon = ConfigManager.getConfigNode(2, "Max-Pokemon-Per-Player").getInt();
         highIVSoundID = ConfigManager.getConfigNode(2, "Play-High-IV-Sound").getString();

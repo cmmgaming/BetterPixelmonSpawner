@@ -8,8 +8,11 @@ import com.lypaka.betterpixelmonspawner.DebugSystem.NPCDebug;
 import com.lypaka.betterpixelmonspawner.Listeners.JoinListener;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.EntityUtils;
 import com.lypaka.betterpixelmonspawner.Utils.Counters.NPCCounter;
-import com.pixelmongenerations.common.entity.npcs.EntityNPC;
-import com.pixelmongenerations.common.entity.npcs.NPCTrainer;
+import com.pixelmongenerations.common.entity.npcs.*;
+import com.pixelmongenerations.common.entity.npcs.registry.GeneralNPCData;
+import com.pixelmongenerations.common.entity.npcs.registry.ServerNPCRegistry;
+import com.pixelmongenerations.common.entity.npcs.registry.ShopkeeperData;
+import com.pixelmongenerations.core.enums.EnumTrainerAI;
 import com.pixelmongenerations.core.util.helper.RandomHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -131,7 +134,7 @@ public class NPCSpawner {
                                 BetterPixelmonSpawner.logger.info("NPC DEBUG: Pinging " + entry.getKey() + " / " + entry.getValue());
 
                             }
-                            if (Double.compare(entry.getValue(), rng) <= 0) {
+                            if (Double.compare(rng, entry.getValue()) <= 0) {
 
                                 selectedID = entry.getKey();
                                 if (debugEnabled) {
@@ -167,6 +170,35 @@ public class NPCSpawner {
 
                             BetterPixelmonSpawner.logger.error("Couldn't get an entity from ID: " + selectedID);
                             continue;
+
+                        }
+                        if (entity instanceof EntityNPC) {
+
+                            ((EntityNPC) entity).initWanderingAI();
+
+                        }
+                        if (entity instanceof NPCChatting) {
+
+                            NPCChatting chatting = (NPCChatting) entity;
+                            GeneralNPCData data = ServerNPCRegistry.villagers.getRandom();
+                            chatting.init(data);
+                            chatting.initWanderingAI();
+                            chatting.setTextureIndex(data.getRandomChatIndex());
+
+                        } else if (entity instanceof NPCTutor) {
+
+                            NPCTutor tutor = (NPCTutor) entity;
+                            tutor.init("Tutor");
+
+                        } else if (entity instanceof NPCShopkeeper) {
+
+                            NPCShopkeeper shopkeep = (NPCShopkeeper) entity;
+                            ShopkeeperData shopData = ServerNPCRegistry.shopkeepers.getRandom();
+                            if (shopData != null) {
+
+                                shopkeep.init(shopData);
+
+                            }
 
                         }
                         entity.setLocationAndAngles(spawn.getX() + 0.5, spawn.getY(), spawn.getZ() + 0.5, 0, 0);

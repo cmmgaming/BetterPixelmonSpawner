@@ -18,7 +18,7 @@ public class DeadZone {
     private final int minZ;
     private final World world;
 
-    public DeadZone(List<String> entities, int maxX, int maxY, int maxZ, int minX, int minY, int minZ, World world) {
+    public DeadZone (List<String> entities, int maxX, int maxY, int maxZ, int minX, int minY, int minZ, World world) {
 
         this.entities = entities;
         this.maxX = maxX;
@@ -145,10 +145,10 @@ public class DeadZone {
 
             for (DeadZone a : BetterPixelmonSpawner.deadZones) {
 
-                if (x >= deadZone.getMinX() && x <= deadZone.getMaxX() &&
-                        y >= deadZone.getMinY() && y <= deadZone.getMaxY() &&
-                        z >= deadZone.getMinZ() && z <= deadZone.getMaxZ() &&
-                        WorldDimGetter.getDimID(deadZone.getWorld(), player) == playerDim) {
+                if (x >= a.getMinX() && x <= a.getMaxX() &&
+                        y >= a.getMinY() && y <= a.getMaxY() &&
+                        z >= a.getMinZ() && z <= a.getMaxZ() &&
+                        WorldDimGetter.getDimID(a.getWorld(), player) == playerDim) {
 
                     deadZone = a;
                     break;

@@ -112,7 +112,7 @@ public class MiscSpawner {
                         String selectedID = null;
                         for (Map.Entry<String, Double> entry : ConfigGetters.miscEntitySpawnMap.entrySet()) {
 
-                            if (Double.compare(entry.getValue(), rng) <= 0) {
+                            if (Double.compare(rng, entry.getValue()) <= 0) {
 
                                 selectedID = entry.getKey();
                                 break;

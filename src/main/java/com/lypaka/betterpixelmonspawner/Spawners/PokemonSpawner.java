@@ -459,7 +459,8 @@ public class PokemonSpawner {
                                     Synchronize.applySynchronize(pokemon, finalFirstPartyPokemon);
 
                                 }
-                                pokemon.setLocationAndAngles(x + BetterPixelmonSpawner.random.nextDouble(), y, z + BetterPixelmonSpawner.random.nextDouble(),0, 0);
+
+                                pokemon.setLocationAndAngles(x + RandomHelper.getRandomNumberBetween(2.75f, 6f), y, z + RandomHelper.getRandomNumberBetween(2.75f, 6f),0, 0);
                                 int level = 3;
                                 if (ConfigGetters.scalePokemonLevelsByDistance) {
 
@@ -473,7 +474,7 @@ public class PokemonSpawner {
                                         if (distance > ConfigGetters.blocksBeforePokemonIncrease) {
 
                                             int mod = (distance / ConfigGetters.blocksBeforePokemonIncrease) * ConfigGetters.pokemonLevelModifier;
-                                            level = RandomHelper.getRandomNumberBetween((int) (0.6 * mod), mod);
+                                            level = Math.max(3, RandomHelper.getRandomNumberBetween((int) (0.6 * mod), mod));
 
                                         }
 
@@ -497,7 +498,7 @@ public class PokemonSpawner {
 
                                 }
                                 pokemon = PokemonUtils.validatePokemon(pokemon, level);
-                                pokemon.setLocationAndAngles(safeSpawn.getX() + BetterPixelmonSpawner.random.nextDouble(), safeSpawn.getY(), safeSpawn.getZ() + BetterPixelmonSpawner.random.nextDouble(),0, 0);
+                                pokemon.setLocationAndAngles(x + RandomHelper.getRandomNumberBetween(2.75f, 6f), y, z + RandomHelper.getRandomNumberBetween(2.75f, 6f),0, 0);
                                 pokemon.updateStats();
                                 boolean hostile = false;
 
@@ -716,27 +717,30 @@ public class PokemonSpawner {
 
                                                 if (RandomHelper.getRandomChance(ConfigGetters.bossSpawnChance)) {
 
-                                                    BossSpawnEvent bossSpawnEvent = new BossSpawnEvent(pokemon, player, selectedSpawn);
-                                                    MinecraftForge.EVENT_BUS.post(bossSpawnEvent);
-                                                    if (!bossSpawnEvent.isCanceled()) {
+                                                    if (BossPokemonUtils.canSpawn(player)) {
 
-                                                        pokemon.setBoss(BossPokemonUtils.getBossMode());
-                                                        pokeModified = true;
-                                                        FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
+                                                        BossSpawnEvent bossSpawnEvent = new BossSpawnEvent(pokemon, player, selectedSpawn);
+                                                        MinecraftForge.EVENT_BUS.post(bossSpawnEvent);
+                                                        if (!bossSpawnEvent.isCanceled()) {
 
-                                                            player.world.spawnEntity(bossSpawnEvent.getPokemon());
-                                                            PokemonCounter.increment(bossSpawnEvent.getPokemon(), player.getUniqueID());
-                                                            // Sets this tag for the PokeClear to be able to know what a Boss is, in the event of a "normal" Boss
-                                                            bossSpawnEvent.getPokemon().addTag("PixelmonDefaultBoss");
-                                                            PokemonCounter.addPokemon(bossSpawnEvent.getPokemon(), player.getUniqueID());
+                                                            pokemon.setBoss(BossPokemonUtils.getBossMode());
+                                                            pokeModified = true;
+                                                            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-                                                        });
-                                                        continue;
+                                                                player.world.spawnEntity(bossSpawnEvent.getPokemon());
+                                                                PokemonCounter.increment(bossSpawnEvent.getPokemon(), player.getUniqueID());
+                                                                // Sets this tag for the PokeClear to be able to know what a Boss is, in the event of a "normal" Boss
+                                                                bossSpawnEvent.getPokemon().addTag("PixelmonDefaultBoss");
+                                                                PokemonCounter.addPokemon(bossSpawnEvent.getPokemon(), player.getUniqueID());
+
+                                                            });
+                                                            continue;
+
+                                                        }
 
                                                     }
 
                                                 }
-
 
                                             }
 
@@ -751,20 +755,24 @@ public class PokemonSpawner {
 
                                         if (RandomHelper.getRandomChance(ConfigGetters.totemSpawnChance)) {
 
-                                            TotemSpawnEvent totemSpawnEvent = new TotemSpawnEvent(pokemon, player, selectedSpawn);
-                                            MinecraftForge.EVENT_BUS.post(totemSpawnEvent);
-                                            if (!totemSpawnEvent.isCanceled()) {
+                                            if (TotemPokemonUtils.canSpawn(player)) {
 
-                                                pokemon.setTotem(true);
-                                                pokeModified = true;
-                                                FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
+                                                TotemSpawnEvent totemSpawnEvent = new TotemSpawnEvent(pokemon, player, selectedSpawn);
+                                                MinecraftForge.EVENT_BUS.post(totemSpawnEvent);
+                                                if (!totemSpawnEvent.isCanceled()) {
 
-                                                    player.world.spawnEntity(totemSpawnEvent.getPokemon());
-                                                    PokemonCounter.increment(totemSpawnEvent.getPokemon(), player.getUniqueID());
-                                                    PokemonCounter.addPokemon(totemSpawnEvent.getPokemon(), player.getUniqueID());
+                                                    pokemon.setTotem(true);
+                                                    pokeModified = true;
+                                                    FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-                                                });
-                                                continue;
+                                                        player.world.spawnEntity(totemSpawnEvent.getPokemon());
+                                                        PokemonCounter.increment(totemSpawnEvent.getPokemon(), player.getUniqueID());
+                                                        PokemonCounter.addPokemon(totemSpawnEvent.getPokemon(), player.getUniqueID());
+
+                                                    });
+                                                    continue;
+
+                                                }
 
                                             }
 
@@ -777,22 +785,26 @@ public class PokemonSpawner {
 
                                     if (AlphaPokemonUtils.spawnAlpha()) {
 
-                                        if (AlphaPokemonUtils.isDefaultAlpha(pokemon.getSpecies())) {
+                                        if (AlphaPokemonUtils.isDefaultAlpha(pokemon.getSpecies(), pokemon.getForm())) {
 
-                                            pokemon.setAlpha(true, true);
-                                            pokeModified = true;
-                                            AlphaSpawnEvent alphaSpawnEvent = new AlphaSpawnEvent(pokemon, player, selectedSpawn);
-                                            MinecraftForge.EVENT_BUS.post(alphaSpawnEvent);
-                                            if (!alphaSpawnEvent.isCanceled()) {
+                                            if (AlphaPokemonUtils.canSpawn(player)) {
 
-                                                FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
+                                                pokemon.setAlpha(true, true);
+                                                pokeModified = true;
+                                                AlphaSpawnEvent alphaSpawnEvent = new AlphaSpawnEvent(pokemon, player, selectedSpawn);
+                                                MinecraftForge.EVENT_BUS.post(alphaSpawnEvent);
+                                                if (!alphaSpawnEvent.isCanceled()) {
 
-                                                    player.world.spawnEntity(alphaSpawnEvent.getPokemon());
-                                                    PokemonCounter.increment(alphaSpawnEvent.getPokemon(), player.getUniqueID());
-                                                    PokemonCounter.addPokemon(alphaSpawnEvent.getPokemon(), player.getUniqueID());
+                                                    FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 
-                                                });
-                                                continue;
+                                                        player.world.spawnEntity(alphaSpawnEvent.getPokemon());
+                                                        PokemonCounter.increment(alphaSpawnEvent.getPokemon(), player.getUniqueID());
+                                                        PokemonCounter.addPokemon(alphaSpawnEvent.getPokemon(), player.getUniqueID());
+
+                                                    });
+                                                    continue;
+
+                                                }
 
                                             }
 

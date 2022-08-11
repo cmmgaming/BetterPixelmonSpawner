@@ -139,14 +139,14 @@ public class DebugCommand extends CommandBase {
                     if (NPCSpawner.debugEnabled) {
 
                         NPCSpawner.debugEnabled = false;
-                        mode = "&aEnabled";
-                        opposite = "disable";
+                        mode = "&cDisabled";
+                        opposite = "enable";
 
                     } else {
 
                         NPCSpawner.debugEnabled = true;
-                        mode = "&cDisabled";
-                        opposite = "enable";
+                        mode = "&aEnabled";
+                        opposite = "disable";
 
                     }
 

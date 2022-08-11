@@ -2,6 +2,9 @@ package com.lypaka.betterpixelmonspawner.Utils.Counters;
 
 import com.lypaka.betterpixelmonspawner.BetterPixelmonSpawner;
 import com.lypaka.betterpixelmonspawner.PokeClear.ClearTask;
+import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.AlphaPokemonUtils;
+import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.BossPokemonUtils;
+import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.TotemPokemonUtils;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 
 import java.util.*;
@@ -50,6 +53,19 @@ public class PokemonCounter {
 
         }
         pokeList.add(pokemon);
+        if (pokemon.isAlpha()) {
+
+            AlphaPokemonUtils.addCount(uuid);
+
+        } else if (pokemon.isTotem()) {
+
+            TotemPokemonUtils.addCount(uuid);
+
+        } else if (pokemon.getTags().contains("PixelmonDefaultBoss") || pokemon.getTags().contains("BossPokemon:Tier-")) {
+
+            BossPokemonUtils.addCount(uuid);
+
+        }
         pokemonMap.put(uuid, pokeList);
 
     }
@@ -81,6 +97,19 @@ public class PokemonCounter {
 
         });
         pokemonMap.put(uuid, pokeList);
+        if (pokemon.isAlpha()) {
+
+            AlphaPokemonUtils.removeCount(uuid);
+
+        } else if (pokemon.isTotem()) {
+
+            TotemPokemonUtils.removeCount(uuid);
+
+        } else if (pokemon.getTags().contains("PixelmonDefaultBoss") || pokemon.getTags().contains("BossPokemon:Tier-")) {
+
+            BossPokemonUtils.removeCount(uuid);
+
+        }
 
     }
 
@@ -110,6 +139,26 @@ public class PokemonCounter {
                             return true;
 
                         }
+
+                    }
+
+                    if (pokemon.isAlpha()) {
+
+                        AlphaPokemonUtils.removeCount(uuid);
+                        pokemon.setDead();
+                        ClearTask.count++;
+
+                    } else if (pokemon.isTotem()) {
+
+                        TotemPokemonUtils.removeCount(uuid);
+                        pokemon.setDead();
+                        ClearTask.count++;
+
+                    } else if (pokemon.getTags().contains("PixelmonDefaultBoss") || pokemon.getTags().contains("BossPokemon:Tier-")) {
+
+                        BossPokemonUtils.removeCount(uuid);
+                        pokemon.setDead();
+                        ClearTask.count++;
 
                     }
 

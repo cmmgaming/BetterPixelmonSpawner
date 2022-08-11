@@ -7,14 +7,14 @@ import com.pixelmongenerations.common.entity.pixelmon.drops.BossInfo;
 import com.pixelmongenerations.core.enums.EnumBossMode;
 import com.pixelmongenerations.core.enums.EnumSpecies;
 import com.pixelmongenerations.core.util.helper.RandomHelper;
+import net.minecraft.entity.player.EntityPlayerMP;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BossPokemonUtils {
 
     private static List<String> possibleBosses = new ArrayList<>();
+    public static Map<UUID, Integer> amountMap = new HashMap<>();
 
     public static void loadBossList() {
 
@@ -102,6 +102,40 @@ public class BossPokemonUtils {
         }
 
         return mode;
+
+    }
+
+    public static boolean canSpawn (EntityPlayerMP player) {
+
+        if (!amountMap.containsKey(player.getUniqueID())) return true;
+        int amount = amountMap.get(player.getUniqueID());
+        return amount < ConfigGetters.maxBosses;
+
+    }
+
+    public static void addCount (UUID uuid) {
+
+        int amount = 0;
+        if (amountMap.containsKey(uuid)) {
+
+            amount = amountMap.get(uuid);
+
+        }
+
+        int updated = amount + 1;
+        amountMap.put(uuid, updated);
+
+    }
+
+    public static void removeCount (UUID uuid) {
+
+        if (amountMap.containsKey(uuid)) {
+
+            int amount = amountMap.get(uuid);
+            int updated = amount - 1;
+            amountMap.put(uuid, updated);
+
+        }
 
     }
 

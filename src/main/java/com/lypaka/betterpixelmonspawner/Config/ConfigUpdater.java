@@ -277,6 +277,52 @@ public class ConfigUpdater {
 
         }
 
+        /** Version 1.6.1 */
+        if (ConfigManager.getConfigNode(2, "Max-Alphas").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(2, "Max-Alphas").setComment("Sets the maximum allowed amount of Alpha Pokemon spawned per player");
+            ConfigManager.getConfigNode(2, "Max-Alphas").setValue(3);
+
+        }
+        if (ConfigManager.getConfigNode(2, "Max-Bosses").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(2, "Max-Bosses").setComment("Sets the maximum allowed amount of Boss Pokemon spawned per player");
+            ConfigManager.getConfigNode(2, "Max-Bosses").setValue(2);
+
+        }
+        if (ConfigManager.getConfigNode(2, "Max-Totems").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(2, "Max-Totems").setComment("Sets the maximum allowed amount of Totem Pokemon spawned per player");
+            ConfigManager.getConfigNode(2, "Max-Totems").setValue(3);
+
+        }
+        if (ConfigManager.getConfigNode(5, "Spawn-Interval").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+            ConfigManager.getConfigNode(5, "Spawn-Interval").setComment("Sets the interval in which the misc entity spawner runs at, in seconds");
+            ConfigManager.getConfigNode(5, "Spawn-Interval").setValue(240);
+
+        }
+
         if (needsSaving) {
 
             ConfigManager.save();
