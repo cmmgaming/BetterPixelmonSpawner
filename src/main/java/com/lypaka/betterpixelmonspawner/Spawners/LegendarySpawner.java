@@ -13,6 +13,8 @@ import com.lypaka.betterpixelmonspawner.Utils.*;
 import com.lypaka.betterpixelmonspawner.ExternalAbilities.*;
 import com.lypaka.betterpixelmonspawner.Utils.PokemonUtils.LegendaryUtils;
 import com.lypaka.lypakautils.WorldDimGetter;
+import com.lypaka.pixelboosters.Boosters.BoosterTask;
+import com.lypaka.pixelboosters.PixelBoosters;
 import com.pixelmongenerations.api.pokemon.PokemonSpec;
 import com.pixelmongenerations.api.spawning.conditions.WorldTime;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
@@ -106,7 +108,62 @@ public class LegendarySpawner {
 
                 } else {
 
-                    player = onlinePlayers.get(BetterPixelmonSpawner.random.nextInt(onlinePlayers.size()));
+                    if (BetterPixelmonSpawner.isPixelBoostersLoaded) {
+
+                        BoosterTask legendaryTask = null;
+                        for (BoosterTask task : BoosterTask.activeTasks) {
+
+                            if (task.getBooster().getBooster().equalsIgnoreCase("Legendary")) {
+
+                                legendaryTask = task;
+                                break;
+
+                            }
+
+                        }
+                        if (legendaryTask != null) {
+
+                            int option = PixelBoosters.boosterConfigManager.getConfigNode(com.lypaka.pixelboosters.Config.ConfigGetters.getIndexFromBooster("legendary"), "Options", "Use-Option").getInt();
+                            if (option == 1) {
+
+                                List<UUID> boostedPlayerUUIDs = legendaryTask.playerList;
+                                if (boostedPlayerUUIDs.size() > 0) {
+
+                                    double boostedChance = PixelBoosters.boosterConfigManager.getConfigNode(com.lypaka.pixelboosters.Config.ConfigGetters.getIndexFromBooster("legendary"), "Option-1-Settings", "Boosted-Chance").getDouble();
+                                    if (RandomHelper.getRandomChance(boostedChance)) {
+
+                                        UUID uuid = RandomHelper.getRandomElementFromList(boostedPlayerUUIDs);
+                                        player = JoinListener.playerMap.get(uuid);
+
+                                    } else {
+
+                                        player = RandomHelper.getRandomElementFromList(onlinePlayers);
+
+                                    }
+
+                                } else {
+
+                                    player = RandomHelper.getRandomElementFromList(onlinePlayers);
+
+                                }
+
+                            } else {
+
+                                player = RandomHelper.getRandomElementFromList(onlinePlayers);
+
+                            }
+
+                        } else {
+
+                            player = RandomHelper.getRandomElementFromList(onlinePlayers);
+
+                        }
+
+                    } else {
+
+                        player = RandomHelper.getRandomElementFromList(onlinePlayers);
+
+                    }
 
                 }
                 String worldName = player.world.getWorldInfo().getWorldName();

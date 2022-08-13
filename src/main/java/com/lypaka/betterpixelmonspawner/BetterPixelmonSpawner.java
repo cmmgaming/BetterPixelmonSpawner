@@ -54,6 +54,7 @@ public class BetterPixelmonSpawner {
     public static LocalDate currentDay = LocalDate.now();
     public static MinecraftServer server;
     public static List<DeadZone> deadZones = new ArrayList<>();
+    public static boolean isPixelBoostersLoaded = false;
 
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event) throws ObjectMappingException {
@@ -99,6 +100,12 @@ public class BetterPixelmonSpawner {
     @Mod.EventHandler
     public void onServerStarted (FMLServerStartedEvent event) throws ObjectMappingException {
 
+        if (Loader.isModLoaded("pixelboosters")) {
+
+            isPixelBoostersLoaded = true;
+            logger.info("Detected PixelBoosters, integrating...");
+
+        }
         server = FMLCommonHandler.instance().getMinecraftServerInstance();
         logger.info("Starting spawners...");
         PokemonSpawner.startTimer();

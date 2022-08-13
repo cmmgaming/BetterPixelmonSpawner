@@ -20,7 +20,7 @@ apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: 'com.github.johnrengelman.shadow'
 
 group = 'com.lypaka'
-version = '1.6.1'
+version = '1.6.3'
 archivesBaseName = 'BetterPixelmonSpawner'
 
 minecraft {
@@ -47,7 +47,7 @@ dependencies {
     compileOnly fileTree(dir: 'C:\\Users\\Ryan\\Documents\\GitHub\\LIBRARIES', include: ['LypakaUtils.jar'])
     compileOnly fileTree(dir: 'C:\\Users\\Ryan\\Documents\\GitHub\\LIBRARIES', include: ['BetterBosses.jar'])
     compileOnly fileTree(dir: 'C:\\Users\\Ryan\\Documents\\GitHub\\LIBRARIES', include: ['GooeyLibs-2.2.0.jar'])
-    compileOnly fileTree(dir: 'C:\\Users\\Ryan\\Documents\\GitHub\\LIBRARIES', include: ['PixelBoosters-Generations-Full.jar'])
+    compileOnly fileTree(dir: 'C:\\Users\\Ryan\\Documents\\GitHub\\LIBRARIES', include: ['PixelBoosters-6.2.3-Generations.jar'])
     compile 'net.objecthunter:exp4j:0.4.4'
 }
 

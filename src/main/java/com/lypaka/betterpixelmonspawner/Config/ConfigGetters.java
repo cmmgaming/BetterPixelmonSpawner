@@ -44,6 +44,9 @@ public class ConfigGetters {
     public static boolean scalePokemonLevelsByDistance;
     public static boolean spawnerEnabled;
     public static int spawnInterval;
+    public static boolean spawnLevelRandomizationEnabled;
+    public static double spawnLevelRandomizationValueMax;
+    public static double spawnLevelRandomizationValueMin;
     public static int xzRadius;
     public static int yRadius;
     public static double totemSpawnChance;
@@ -147,6 +150,9 @@ public class ConfigGetters {
         scalePokemonLevelsByDistance = ConfigManager.getConfigNode(2, "Scale-Levels-By-Distance").getBoolean();
         spawnerEnabled = ConfigManager.getConfigNode(2, "Spawner-Enabled").getBoolean();
         spawnInterval = ConfigManager.getConfigNode(2, "Spawn-Interval").getInt();
+        spawnLevelRandomizationEnabled = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization").getBoolean();
+        spawnLevelRandomizationValueMax = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization-Value-Max").getDouble();
+        spawnLevelRandomizationValueMin = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization-Value-Min").getDouble();
         xzRadius = ConfigManager.getConfigNode(2, "Spawn-Location-XZ").getInt();
         yRadius = ConfigManager.getConfigNode(2, "Spawn-Location-Y").getInt();
         totemSpawnChance = ConfigManager.getConfigNode(2, "Totem-Spawn-Chance").getDouble();
