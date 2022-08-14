@@ -25,6 +25,7 @@ import com.pixelmongenerations.common.block.tileEntities.TileEntityScarecrow;
 import com.pixelmongenerations.common.entity.pixelmon.EntityPixelmon;
 import com.pixelmongenerations.common.entity.pixelmon.EnumAggression;
 import com.pixelmongenerations.core.config.PixelmonConfig;
+import com.pixelmongenerations.core.enums.EnumType;
 import com.pixelmongenerations.core.event.RepelHandler;
 import com.pixelmongenerations.core.storage.PixelmonStorage;
 import com.pixelmongenerations.core.storage.PlayerStorage;
@@ -443,7 +444,20 @@ public class PokemonSpawner {
                                 Block block = player.world.getBlockState(safeSpawn).getBlock();
                                 if (block != Blocks.AIR && block != Blocks.TALLGRASS && block != Blocks.GRASS) {
 
-                                    return;
+                                    if (location.equalsIgnoreCase("water") && block != Blocks.WATER &&
+                                        location.equalsIgnoreCase("water") && block != Blocks.FLOWING_WATER) {
+
+                                        return;
+
+                                    } else if (pokemon.baseStats.type1 == EnumType.Fire || pokemon.baseStats.type2 == EnumType.Fire) {
+
+                                        if (block != Blocks.LAVA && block != Blocks.FLOWING_LAVA) {
+
+                                            return;
+
+                                        }
+
+                                    }
 
                                 }
                                 int x = safeSpawn.getX();
@@ -462,27 +476,31 @@ public class PokemonSpawner {
 
                                 pokemon.setLocationAndAngles(x + RandomHelper.getRandomNumberBetween(2.75f, 6f), y, z + RandomHelper.getRandomNumberBetween(2.75f, 6f),0, 0);
                                 int level = 3;
+                                int playerX = player.getPosition().getX();
+                                int playerY = player.getPosition().getY();
+                                int playerZ = player.getPosition().getZ();
                                 if (ConfigGetters.scalePokemonLevelsByDistance) {
 
-                                    if ((int)((double)level + Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, y, z)) / (double)ConfigGetters.blocksBeforePokemonIncrease + Math.random() * 3.0)) > ConfigGetters.maxPokemonScaleLevel) {
+                                    if ((int)((double)level + Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(playerX, playerY, playerZ)) / (double)ConfigGetters.blocksBeforePokemonIncrease + Math.random() * 3.0)) > ConfigGetters.maxPokemonScaleLevel) {
 
                                         level = ConfigGetters.maxPokemonScaleLevel;
 
                                     } else {
 
-                                        int distance = (int) Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, y, z)));
+                                        int distance = (int) Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(playerX, playerY, playerZ)));
                                         if (distance > ConfigGetters.blocksBeforePokemonIncrease) {
 
                                             int mod = (distance / ConfigGetters.blocksBeforePokemonIncrease) * ConfigGetters.pokemonLevelModifier;
-                                            if (ConfigGetters.spawnLevelRandomizationEnabled) {
+                                            if (ConfigGetters.pokemonSpawnLevelRandomizationEnabled) {
 
-                                                float randomMin = (float) ConfigGetters.spawnLevelRandomizationValueMin;
-                                                float randomMax = (float) ConfigGetters.spawnLevelRandomizationValueMax;
-                                                level = (int) (mod * RandomHelper.getRandomNumberBetween(randomMin, randomMax));
+                                                float randomMin = ConfigGetters.pokemonSpawnLevelRandomizationValueMin;
+                                                float randomMax = ConfigGetters.pokemonSpawnLevelRandomizationValueMax;
+                                                level = (int) (mod * RandomHelper.getRandomNumberBetween(randomMin, randomMax)) + level;
+
 
                                             } else {
 
-                                                level = mod;
+                                                level = mod + level;
 
                                             }
 

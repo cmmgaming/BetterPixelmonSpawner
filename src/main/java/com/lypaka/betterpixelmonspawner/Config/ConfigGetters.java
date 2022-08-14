@@ -44,9 +44,9 @@ public class ConfigGetters {
     public static boolean scalePokemonLevelsByDistance;
     public static boolean spawnerEnabled;
     public static int spawnInterval;
-    public static boolean spawnLevelRandomizationEnabled;
-    public static double spawnLevelRandomizationValueMax;
-    public static double spawnLevelRandomizationValueMin;
+    public static boolean pokemonSpawnLevelRandomizationEnabled;
+    public static float pokemonSpawnLevelRandomizationValueMax;
+    public static float pokemonSpawnLevelRandomizationValueMin;
     public static int xzRadius;
     public static int yRadius;
     public static double totemSpawnChance;
@@ -76,6 +76,9 @@ public class ConfigGetters {
     public static int maxNPCScaleLevel;
     public static boolean scaleNPCLevelsByDistance;
     public static int npcSpawnInterval;
+    public static boolean npcSpawnLevelRandomizationEnabled;
+    public static float npcSpawnLevelRandomizationValueMax;
+    public static float npcSpawnLevelRandomizationValueMin;
     public static int npcSpawnLocationXZ;
     public static Map<String, Double> npcSpawnMap;
     public static boolean unsafeSpawnLocations;
@@ -150,9 +153,9 @@ public class ConfigGetters {
         scalePokemonLevelsByDistance = ConfigManager.getConfigNode(2, "Scale-Levels-By-Distance").getBoolean();
         spawnerEnabled = ConfigManager.getConfigNode(2, "Spawner-Enabled").getBoolean();
         spawnInterval = ConfigManager.getConfigNode(2, "Spawn-Interval").getInt();
-        spawnLevelRandomizationEnabled = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization").getBoolean();
-        spawnLevelRandomizationValueMax = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization-Value-Max").getDouble();
-        spawnLevelRandomizationValueMin = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization-Value-Min").getDouble();
+        pokemonSpawnLevelRandomizationEnabled = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization").getBoolean();
+        pokemonSpawnLevelRandomizationValueMax = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization-Value-Max").getFloat();
+        pokemonSpawnLevelRandomizationValueMin = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization-Value-Min").getFloat();
         xzRadius = ConfigManager.getConfigNode(2, "Spawn-Location-XZ").getInt();
         yRadius = ConfigManager.getConfigNode(2, "Spawn-Location-Y").getInt();
         totemSpawnChance = ConfigManager.getConfigNode(2, "Totem-Spawn-Chance").getDouble();
@@ -182,6 +185,9 @@ public class ConfigGetters {
         maxNPCScaleLevel = ConfigManager.getConfigNode(4, "Max-Scaled-Level").getInt();
         scaleNPCLevelsByDistance = ConfigManager.getConfigNode(4, "Scale-Levels-By-Distance").getBoolean();
         npcSpawnInterval = ConfigManager.getConfigNode(4, "Spawn-Interval").getInt();
+        npcSpawnLevelRandomizationEnabled = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization").getBoolean();
+        npcSpawnLevelRandomizationValueMax = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization-Value-Max").getFloat();
+        npcSpawnLevelRandomizationValueMin = ConfigManager.getConfigNode(2, "Spawn-Level-Randomization-Value-Min").getFloat();
         npcSpawnLocationXZ = ConfigManager.getConfigNode(4, "Spawn-Location-XZ").getInt();
         npcSpawnMap = ConfigManager.getConfigNode(4, "Spawn-Map").getValue(new TypeToken<Map<String, Double>>() {});
         unsafeSpawnLocations = ConfigManager.getConfigNode(4, "Unsafe-Spawn-Locations").getBoolean();

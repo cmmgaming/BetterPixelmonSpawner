@@ -4321,3 +4321,90 @@ build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/LegendarySpawn
 build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/MiscSpawner.java
 build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/NPCSpawner.java
 build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/PokemonSpawner.java
+.gradle/4.10.3/fileHashes/fileHashes.bin
+.gradle/4.10.3/fileHashes/fileHashes.lock
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+build/libs/BetterPixelmonSpawner-1.6.4.jar
+build/libs/BetterPixelmonSpawner-1.6.5.jar
+build/resources/main/assets/betterpixelmonspawner/heldItems.conf
+build/sources/main/java/com/lypaka/betterpixelmonspawner/BetterPixelmonSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Config/ConfigGetters.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/LegendarySpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/MiscSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/NPCSpawner.java
+build/sources/main/java/com/lypaka/betterpixelmonspawner/Spawners/PokemonSpawner.java
+build/tmp/extractAnnotationsJar/input3068791762636057958.jar
+build/tmp/extractAnnotationsShadowJar/input6836905294276040947.jar
+build/tmp/reobfJar/reobf-default5461739685345961049.srg
+build/tmp/reobfJar/reobf-extraLines2230536432056658520.srg
+build/tmp/reobfShadowJar/reobf-default4164154273013157376.srg
+build/tmp/reobfShadowJar/reobf-extraLines5574892536335111341.srg
+run/logs/2022-08-10-7.log.gz
+run/logs/2022-08-14-1.log.gz
+run/logs/2022-08-14-2.log.gz
+run/logs/2022-08-14-3.log.gz
+run/saves/New World--/advancements/f2ba1573-0c0d-3978-bb86-e2dc9c0eb9a4.json
+run/saves/New World--/data/capabilities.dat
+run/saves/New World--/data/gyminfo.dat
+run/saves/New World--/data/Mineshaft.dat
+run/saves/New World--/data/Temple.dat
+run/saves/New World--/data/Village.dat
+run/saves/New World--/data/villages.dat
+run/saves/New World--/DIM-1/data/capabilities.dat
+run/saves/New World--/DIM-1/data/villages_nether.dat
+run/saves/New World--/DIM-1/forcedchunks.dat
+run/saves/New World--/DIM1/data/capabilities.dat
+run/saves/New World--/DIM1/data/villages_end.dat
+run/saves/New World--/DIM1/forcedchunks.dat
+run/saves/New World--/forcedchunks.dat
+run/saves/New World--/icon.png
+run/saves/New World--/level.dat
+run/saves/New World--/level.dat_old
+run/saves/New World--/playerdata/f2ba1573-0c0d-3978-bb86-e2dc9c0eb9a4.dat
+run/saves/New World--/pokemon/f2ba1573-0c0d-3978-bb86-e2dc9c0eb9a4.pk
+run/saves/New World--/region/r.0.-1.mca
+run/saves/New World--/region/r.0.0.mca
+run/saves/New World--/session.lock
+run/saves/New World--/stats/f2ba1573-0c0d-3978-bb86-e2dc9c0eb9a4.json
+run/saves/New World--/ultraspace/data/capabilities.dat
+run/saves/New World--/ultraspace/data/villages_ultraspace.dat
+run/saves/New World--/ultraspace/forcedchunks.dat
+run/saves/New World-/advancements/6421d26c-b813-3e76-bed7-39f6f8e7da7e.json
+run/saves/New World-/data/capabilities.dat
+run/saves/New World-/data/gyminfo.dat
+run/saves/New World-/data/Mineshaft.dat
+run/saves/New World-/data/Temple.dat
+run/saves/New World-/data/Village.dat
+run/saves/New World-/data/villages.dat
+run/saves/New World-/DIM-1/data/capabilities.dat
+run/saves/New World-/DIM-1/data/villages_nether.dat
+run/saves/New World-/DIM-1/forcedchunks.dat
+run/saves/New World-/DIM1/data/capabilities.dat
+run/saves/New World-/DIM1/data/villages_end.dat
+run/saves/New World-/DIM1/forcedchunks.dat
+run/saves/New World-/forcedchunks.dat
+run/saves/New World-/icon.png
+run/saves/New World-/level.dat
+run/saves/New World-/level.dat_old
+run/saves/New World-/playerdata/6421d26c-b813-3e76-bed7-39f6f8e7da7e.dat
+run/saves/New World-/pokemon/6421d26c-b813-3e76-bed7-39f6f8e7da7e.pk
+run/saves/New World-/region/r.-1.-1.mca
+run/saves/New World-/region/r.-1.0.mca
+run/saves/New World-/region/r.-2.-1.mca
+run/saves/New World-/region/r.-2.0.mca
+run/saves/New World-/region/r.0.0.mca
+run/saves/New World-/session.lock
+run/saves/New World-/stats/6421d26c-b813-3e76-bed7-39f6f8e7da7e.json
+run/saves/New World-/ultraspace/data/capabilities.dat
+run/saves/New World-/ultraspace/data/villages_ultraspace.dat
+run/saves/New World-/ultraspace/forcedchunks.dat
+run/saves/New World/advancements/8896e73a-aee7-316e-8768-fb46f8d5ace7.json
+run/saves/New World/advancements/a73b0b5d-2d3b-3ddb-ba64-20632ca9f512.json
+run/saves/New World/playerdata/8896e73a-aee7-316e-8768-fb46f8d5ace7.dat
+run/saves/New World/playerdata/a73b0b5d-2d3b-3ddb-ba64-20632ca9f512.dat
+run/saves/New World/pokemon/8896e73a-aee7-316e-8768-fb46f8d5ace7.pk
+run/saves/New World/pokemon/a73b0b5d-2d3b-3ddb-ba64-20632ca9f512.pk
+run/saves/New World/stats/8896e73a-aee7-316e-8768-fb46f8d5ace7.json
+run/saves/New World/stats/a73b0b5d-2d3b-3ddb-ba64-20632ca9f512.json
+run/screenshots/2022-08-14_13.19.34.png
+run/screenshots/2022-08-14_13.19.49.png

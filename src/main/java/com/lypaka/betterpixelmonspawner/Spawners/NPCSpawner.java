@@ -216,17 +216,28 @@ public class NPCSpawner {
                                     if (ConfigGetters.scaleNPCLevelsByDistance) {
 
                                         int level = 3;
-                                        if ((int)((double)level + Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, finalY, z)) / (double)ConfigGetters.blocksBeforeNPCIncrease + Math.random() * 3.0)) > ConfigGetters.maxNPCScaleLevel) {
+                                        if ((int)((double)level + Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(playerX, playerY, playerZ)) / (double)ConfigGetters.blocksBeforeNPCIncrease + Math.random() * 3.0)) > ConfigGetters.maxNPCScaleLevel) {
 
                                             level = ConfigGetters.maxNPCScaleLevel;
 
                                         } else {
 
-                                            int distance = (int) Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(x, finalY, z)));
+                                            int distance = (int) Math.floor(Math.sqrt(player.world.getSpawnPoint().distanceSq(playerX, playerY, playerZ)));
                                             if (distance > ConfigGetters.blocksBeforeNPCIncrease) {
 
                                                 int mod = (distance / ConfigGetters.blocksBeforeNPCIncrease) * ConfigGetters.npcLevelModifier;
-                                                level = mod + level;
+                                                if (ConfigGetters.npcSpawnLevelRandomizationEnabled) {
+
+                                                    float randomMin = ConfigGetters.npcSpawnLevelRandomizationValueMin;
+                                                    float randomMax = ConfigGetters.npcSpawnLevelRandomizationValueMax;
+                                                    level = (int) (mod * RandomHelper.getRandomNumberBetween(randomMin, randomMax)) + level;
+
+
+                                                } else {
+
+                                                    level = mod + level;
+
+                                                }
 
                                             }
 

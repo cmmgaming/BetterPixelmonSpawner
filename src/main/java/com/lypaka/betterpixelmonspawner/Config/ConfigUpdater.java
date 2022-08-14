@@ -339,6 +339,22 @@ public class ConfigUpdater {
 
         }
 
+        /** Version 1.6.5 */
+        if (ConfigManager.getConfigNode(4, "Spawn-Level-Randomization").isVirtual()) {
+
+            if (!needsSaving) {
+
+                needsSaving = true;
+
+            }
+
+            ConfigManager.getConfigNode(4, "Spawn-Level-Randomization").setComment("If true, will apply a little randomization to the spawn level selection (only used if \"Scale-Levels-By-Distance\" = true)");
+            ConfigManager.getConfigNode(4, "Spawn-Level-Randomization").setValue(true);
+            ConfigManager.getConfigNode(4, "Spawn-Level-Randomization-Value-Max").setValue(1.15);
+            ConfigManager.getConfigNode(4, "Spawn-Level-Randomization-Value-Min").setValue(0.75);
+
+        }
+
         if (needsSaving) {
 
             ConfigManager.save();
